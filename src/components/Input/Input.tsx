@@ -1,5 +1,5 @@
 import React from 'react';
-import './Input.css'
+import './Input.css';
 
 export type InputProps = Omit<
   React.InputHTMLAttributes<HTMLInputElement>,
@@ -14,23 +14,27 @@ export type InputProps = Omit<
 };
 
 const Input = React.forwardRef<HTMLInputElement, InputProps>(
-  ({
-    value,
-    onChange,
-    afterSlot,
-    type="text",
-    className = '',
-    disabled,
-    placeholder, 
-    ...props
-  }, ref) => {
-
-    const wrapperClassNames =[
+  (
+    {
+      value,
+      onChange,
+      afterSlot,
+      type = 'text',
+      className = '',
+      disabled,
+      placeholder,
+      ...props
+    },
+    ref
+  ) => {
+    const wrapperClassNames = [
       'input-wrapper',
       className,
       disabled ? 'input-disabled' : '',
       value ? 'input-not-empty' : 'input-empty',
-    ].filter(Boolean).join(' ');
+    ]
+      .filter(Boolean)
+      .join(' ');
 
     return (
       <div className={wrapperClassNames}>
@@ -43,11 +47,11 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
           onChange={(e) => onChange(e.target.value)}
           className="input-element"
           disabled={disabled}
-          >
-        </input>
+        ></input>
         {afterSlot && <div className="input-after-slot">{afterSlot}</div>}
       </div>
-    )
-  });
+    );
+  }
+);
 
 export default Input;

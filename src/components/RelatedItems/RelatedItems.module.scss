@@ -6,7 +6,7 @@
   margin-top: 32px;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: auto;
+  gap: 79px;
 
   @media (max-width: 768px) {
     grid-template-columns: 1fr;

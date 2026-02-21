@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
-import Input from '../Input'
-import './MultiDropdown.css'
+import Input from '../Input';
+import './MultiDropdown.css';
 import ArrowDownIcon from '../icons/ArrowDownIcon';
 import Text from '../Text';
 
@@ -27,43 +27,45 @@ export type MultiDropdownProps = {
 };
 
 const MultiDropdown: React.FC<MultiDropdownProps> = ({
-    className,
-    options,
-    value,
-    onChange,
-    disabled,
-    getTitle,
-  }) => {
-    const [isOpen, setIsOpen] = useState(false); // открыт ли список опций
-    const [filter, setFilter] = useState(options); // отфильтрованные опции
-    const [currentInput, setCurrentInput] = useState('');  // текущий текст, введенный в поле
-    const dropdownRef = useRef<HTMLDivElement>(null); // ссылка на корневой компонент
+  className,
+  options,
+  value,
+  onChange,
+  disabled,
+  getTitle,
+}) => {
+  const [isOpen, setIsOpen] = useState(false); // открыт ли список опций
+  const [filter, setFilter] = useState(options); // отфильтрованные опции
+  const [currentInput, setCurrentInput] = useState(''); // текущий текст, введенный в поле
+  const dropdownRef = useRef<HTMLDivElement>(null); // ссылка на корневой компонент
 
-    // обработчик изменения текста в инпуте
-    const handleInputChange = (inputValue: string) => {
-      if (value.length) {
-        return;
-      }
+  // обработчик изменения текста в инпуте
+  const handleInputChange = (inputValue: string) => {
+    if (value.length) {
+      return;
+    }
 
-      setCurrentInput(inputValue);
+    setCurrentInput(inputValue);
 
-      //фильтрация исходных опций 
-      const newFilteredOptions = options.filter((option) =>
-        option.value.toLowerCase().startsWith(inputValue.toLowerCase())
+    //фильтрация исходных опций
+    const newFilteredOptions = options.filter((option) =>
+      option.value.toLowerCase().startsWith(inputValue.toLowerCase())
+    );
+    setFilter(newFilteredOptions);
+  };
+
+  //обработчик клика по опции
+  const handleOptionClick = (option: Option) => {
+    // поиск индекса выбранной опции
+    const optionIndex = value.findIndex((item) => item.key === option.key);
+
+    if (optionIndex !== -1) {
+      // если уже выбрана - удаляем ее
+      onChange(
+        value.slice(0, optionIndex).concat(value.slice(optionIndex + 1))
       );
-      setFilter(newFilteredOptions);
-    };
-
-    //обработчик клика по опции
-    const handleOptionClick = (option: Option) => {
-      // поиск индекса выбранной опции
-      const optionIndex = value.findIndex((item) => item.key === option.key);
-      
-      if (optionIndex !== -1) {
-        // если уже выбрана - удаляем ее
-        onChange(value.slice(0, optionIndex).concat(value.slice(optionIndex + 1)));
-        return;
-      }
+      return;
+    }
     // если не выбрана - добавляем к уже выбранным
     onChange([...value, option]);
   };
@@ -84,7 +86,7 @@ const MultiDropdown: React.FC<MultiDropdownProps> = ({
     return () => document.removeEventListener('click', handleClickOutside);
   }, []);
 
-  // для синхронизации отфильтрованных с исходными 
+  // для синхронизации отфильтрованных с исходными
   useEffect(() => {
     setFilter(options);
   }, [options, setFilter]);
@@ -118,6 +120,5 @@ const MultiDropdown: React.FC<MultiDropdownProps> = ({
     </div>
   );
 };
-
 
 export default MultiDropdown;

@@ -1,7 +1,7 @@
-import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
-import ProductsPage from "@/pages/ProductsPage/ProductsPage";
-import ProductPage from "@/pages/ProductPage/ProductPage";
-import AboutPage from "@/pages/AboutPage";
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
+import ProductsPage from '@/pages/ProductsPage/ProductsPage';
+import ProductPage from '@/pages/ProductPage/ProductPage';
+import AboutPage from '@/pages/AboutPage';
 
 function App() {
   return (

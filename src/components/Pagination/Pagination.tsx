@@ -24,7 +24,11 @@ const Pagination = () => {
       </svg>
 
       {/* Номера страниц */}
-      <span className={`${styles.pagination__item} ${styles['pagination__item--active']}`}>1</span>
+      <span
+        className={`${styles.pagination__item} ${styles['pagination__item--active']}`}
+      >
+        1
+      </span>
       <span className={styles.pagination__item}>2</span>
       <span className={styles.pagination__item}>3</span>
       <span className={styles.pagination__item}>...</span>

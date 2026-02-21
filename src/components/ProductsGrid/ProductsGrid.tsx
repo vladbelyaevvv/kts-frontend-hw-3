@@ -1,4 +1,4 @@
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import Card from '@/components/Card';
 import Button from '@/components/Button';
 import { Product } from '@/api/productsApi';
@@ -9,7 +9,6 @@ interface ProductsGridProps {
 }
 
 const ProductsGrid = ({ products }: ProductsGridProps) => {
-
   const navigate = useNavigate();
 
   const handleCardClick = (documentId: string) => {
@@ -18,8 +17,8 @@ const ProductsGrid = ({ products }: ProductsGridProps) => {
 
   const handleAddToCart = (e: React.MouseEvent, productId: number) => {
     e.stopPropagation();
-    console.log('Добавить в корзину', productId);
-  }
+    // console.log('Добавить в корзину', productId);
+  };
 
   return (
     <div className={styles.grid}>
@@ -32,7 +31,11 @@ const ProductsGrid = ({ products }: ProductsGridProps) => {
           title={product.title}
           subtitle={product.description}
           contentSlot={`$${product.price}`}
-          actionSlot={<Button onClick={(e) => handleAddToCart(e, product.id)}>Add to Cart</Button>}
+          actionSlot={
+            <Button onClick={(e) => handleAddToCart(e, product.id)}>
+              Add to Cart
+            </Button>
+          }
           onClick={() => handleCardClick(product.documentId)}
         />
       ))}
