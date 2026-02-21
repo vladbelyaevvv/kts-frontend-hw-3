@@ -1,0 +1,59 @@
+.productImage {
+    flex: 0 0 600px;            
+    position: relative;
+
+    @media (max-width: 1024px) {
+        flex: 0 0 auto;
+        max-width: 600px;
+        width: 100%;
+        margin: 0 auto;
+    }
+
+    img {
+        width: 100%;
+        height: auto;
+        aspect-ratio: 1 / 1;
+        object-fit: cover;
+    }
+}
+
+.controls {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: space-between;
+    transform: translateY(-50%);
+    padding: 0 10px;
+    pointer-events: none;
+}
+
+.controlButton {
+    background-color: rgba(0, 0, 0, 0.5);
+    border: none;
+    border-radius: 50%;
+    width: 64px;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    pointer-events: auto;
+    color: white;
+    transition: background-color 0.2s;
+
+    &:hover {
+        background-color: rgba(0, 0, 0, 1);
+    }
+}
+
+.controlIcon {
+    transform: rotate(-90deg); // базовая иконка смотрит вниз
+    &.prev {
+        transform: rotate(90deg); // стрелка влево
+    }
+    &.next {
+        transform: rotate(-90deg); // стрелка вправо (или оставить как есть)
+    }
+}

@@ -1,0 +1,49 @@
+.searchSection {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+}
+
+.searchBar {
+    margin-top: 50px;
+    margin-bottom: 24px;
+    display: flex;
+    gap: 10px;
+
+    @media (max-width: 768px) {
+        flex-direction: column;
+    }
+}
+
+.searchInput {
+    flex: 1;
+}
+
+.searchButton {
+    min-width: 137px;
+    min-height: 52px;
+    margin-left: 24px;
+
+    @media (max-width: 768px){
+        margin-left: 0;
+    }
+}
+
+.filter {
+    max-width: 300px;
+
+    @media (max-width: 768px) {
+        max-width: 100%;
+    }
+}
+
+.total {
+    margin-top: 48px;
+    font-size: 32px;
+    line-height: 113%;
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    gap:24px;
+}

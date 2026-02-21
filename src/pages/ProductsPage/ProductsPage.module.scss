@@ -1,0 +1,21 @@
+.content {
+    padding: 0 100px;
+    max-width: 1440px;
+    margin: 0 auto;
+    width: 100%;
+    box-sizing: border-box;
+
+    @media (max-width: 768px) {
+        padding: 0 20px;
+    }
+}
+
+.text {
+    max-width: 653px;
+    text-align: center;
+    margin: 100px auto 0;
+}
+
+.title {
+    margin-bottom: 24px;
+}
