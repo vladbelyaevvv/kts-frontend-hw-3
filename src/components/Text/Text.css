@@ -1,57 +1,63 @@
-.text { 
-    font-family: var(--font-family);
-    color: inherit;
+.text {
+  font-family: var(--font-family);
+  color: inherit;
 }
 
 .text-normal {
-    font-weight: normal;
+  font-weight: normal;
 }
 .text-medium {
-    font-weight: 500;
+  font-weight: 500;
 }
 .text-bold {
-    font-weight: bold;
+  font-weight: bold;
 }
 
 .text-title {
-    font-weight: 700;
-    font-size: 44px;
-    line-height: 109%;
-    color: #000;
+  font-weight: 700;
+  font-size: 44px;
+  line-height: 109%;
+  color: #000;
 }
 
 .text-button {
-    font-weight: 400;
-    font-size: 18px;
-    line-height: 100%;
-    color: #000;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 100%;
+  color: #000;
 }
 
-.text-p-20{
-    font-weight: 400;
-    font-size: 20px;
-    line-height: 120%;
-    color: #000;
+.text-p-20 {
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 120%;
+  color: #000;
 }
-.text-p-18{
-    font-weight: 400;
-    font-size: 18px;
-    line-height: 122%;
-    color: #000;
+.text-p-18 {
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 122%;
+  color: #000;
 }
-.text-p-16{
-    font-weight: 400;
-    font-size: 16px;
-    line-height: 125%;
-    color: #000;
+.text-p-16 {
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 125%;
+  color: #000;
 }
-.text-p-14{
-    font-weight: 400;
-    font-size: 14px;
-    line-height: 129%;
-    color: #000;
+.text-p-14 {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 129%;
+  color: #000;
 }
 
-.text-color-primary { color: var(--text-primary); }
-.text-color-secondary { color: var(--text-secondary); }
-.text-color-accent { color: var(--text-accent); }
+.text-color-primary {
+  color: var(--text-primary);
+}
+.text-color-secondary {
+  color: var(--text-secondary);
+}
+.text-color-accent {
+  color: var(--text-accent);
+}

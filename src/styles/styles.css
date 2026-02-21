@@ -1,11 +1,12 @@
 @import './variables.css';
 @import './Roboto/fonts';
 
-html, body {
+html,
+body {
   font-family: 'Roboto';
   margin: 0;
   padding: 0;
-  background-color: #FAFAFA;
+  background-color: #fafafa;
 }
 
 * {

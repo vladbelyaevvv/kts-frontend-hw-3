@@ -1,15 +1,15 @@
 .icon {
-    color: currentColor;
+  color: currentColor;
 }
 
-.icon-color-primary { 
-    color: var(--text-primary);
+.icon-color-primary {
+  color: var(--text-primary);
 }
 
 .icon-color-secondary {
-    color: var(--text-secondary);
+  color: var(--text-secondary);
 }
 
 .icon-color-accent {
-    color: var(--text-accent);
+  color: var(--text-accent);
 }

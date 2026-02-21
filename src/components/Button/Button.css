@@ -1,19 +1,19 @@
 /* Default loading=false*/
 .button {
-    width: auto;
-    height: 52px;
-    padding: var(--spacing-s) var(--spacing-l);
-    gap: var(--spacing-xxs);
-    min-width: 52px;
-    color: var(--button-primary-text);
-    border: none;
-    background-color: var(--button-primary-bg);
+  width: auto;
+  height: 52px;
+  padding: var(--spacing-s) var(--spacing-l);
+  gap: var(--spacing-xxs);
+  min-width: 52px;
+  color: var(--button-primary-text);
+  border: none;
+  background-color: var(--button-primary-bg);
 
-    font-family: var(--font-family);
-    font-weight: 400;
-    font-size: 18px;
-    line-height: 100%;
-    color: #fff;
+  font-family: var(--font-family);
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 100%;
+  color: #fff;
 }
 
 /* default, Loading=true */
@@ -26,7 +26,7 @@
 
 /* hover loading=false */
 .button:hover:not(.button-disabled):not(.button-loading) {
-    background: #86aaa7;
+  background: #86aaa7;
 }
 
 /* disabled, Loading=false */
@@ -34,7 +34,7 @@
   background: #d9d9d9;
 }
 
- /* disabled, Loading=true */
+/* disabled, Loading=true */
 .button-loading.button-disabled {
   background: #d9d9d9;
 }

@@ -1,77 +1,77 @@
 .wrapper {
-    padding: 0 100px 143px 100px;
-    max-width: 1440px;
-    margin: 0 auto;
-    width: 100%;
-    box-sizing:border-box;
+  padding: 0 100px 143px 100px;
+  max-width: 1440px;
+  margin: 0 auto;
+  width: 100%;
+  box-sizing: border-box;
 
-    @media (max-width: 768px) {
-        padding: 0 20px 143px 20px;
-    }
+  @media (max-width: 768px) {
+    padding: 0 20px 143px 20px;
+  }
 }
 
 .content {
-    margin-top: 35px;
-    display: flex;
-    gap:48px;
+  margin-top: 35px;
+  display: flex;
+  gap: 48px;
 
-    @media (max-width: 1024px) {
-        flex-direction: column;
-    }   
+  @media (max-width: 1024px) {
+    flex-direction: column;
+  }
 }
 
 .productImage {
-    flex: 0 0 600px;
-    position: relative;
+  flex: 0 0 600px;
+  position: relative;
 
-    @media (max-width: 1024px) {
-        flex: 0 0 auto;
-        max-width: 600px;
-        width: 100%;
-        margin: 0 auto;
-    }
+  @media (max-width: 1024px) {
+    flex: 0 0 auto;
+    max-width: 600px;
+    width: 100%;
+    margin: 0 auto;
+  }
 
-    img {
-        width: 100%;
-        height: auto;
-        aspect-ratio: 1 / 1;
-        object-fit: cover;
-    }
+  img {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+  }
 }
 
 .productInfo {
-    flex: 1;
+  flex: 1;
 
-    @media (max-width: 1024px) {
-        width: 100%;
-    }
+  @media (max-width: 1024px) {
+    width: 100%;
+  }
 }
 
 .description {
-    margin-top: 24px;
-    text-align: left;
+  margin-top: 24px;
+  text-align: left;
 }
 
 .priceSection {
-    margin-top: 48px;
+  margin-top: 48px;
 }
 
 .price {
-    margin-top: 32px;
+  margin-top: 32px;
 }
 
-.actions { 
-    margin-top: 48px;
-    display: flex;
-    gap: 48px;
+.actions {
+  margin-top: 48px;
+  display: flex;
+  gap: 48px;
 
-    .addToCart {
-        border: 1px solid var(--text-secondary);;
-        background-color: #fff;
-        color: #000;
+  .addToCart {
+    border: 1px solid var(--text-secondary);
+    background-color: #fff;
+    color: #000;
 
-        &:hover {
-            background-color: #d9d9d9 !important;
-        }
-    }   
+    &:hover {
+      background-color: #d9d9d9 !important;
+    }
+  }
 }

@@ -13,7 +13,7 @@
 
 /* компенсация border*/
 .checkbox svg {
-  margin: -1px;  
+  margin: -1px;
 }
 
 .checkbox {
@@ -49,7 +49,7 @@
   opacity: 0.5;
 }
 .checkbox-wrapper.disabled .checkbox {
-  border: 1px solid transparent; 
+  border: 1px solid transparent;
   background-color: #fff;
 }
 

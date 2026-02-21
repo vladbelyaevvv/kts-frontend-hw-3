@@ -1,15 +1,15 @@
 .linkBack {
-    margin-top: 60px;
-    display: inline-flex;
-    align-items: center;
-    cursor: pointer;
-    color: #333;               // базовый цвет для иконки (можно заменить на var(--text-primary))
+  margin-top: 60px;
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+  color: #333; // базовый цвет для иконки (можно заменить на var(--text-primary))
 
-    &:hover {
-        color: #518581;        // цвет иконки при наведении
+  &:hover {
+    color: #518581; // цвет иконки при наведении
 
-        .linkBackText {
-            color: #518581;    // цвет текста при наведении
-        }
+    .linkBackText {
+      color: #518581; // цвет текста при наведении
     }
+  }
 }
