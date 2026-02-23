@@ -1,15 +1,17 @@
-.productImage {
+@use '@/styles/variables.scss' as *;
+
+.product-image {
   flex: 0 0 600px;
   position: relative;
 
-  @media (max-width: 1024px) {
+  @include md {
     flex: 0 0 auto;
     max-width: 600px;
     width: 100%;
     margin: 0 auto;
   }
 
-  img {
+  &__image {
     width: 100%;
     height: auto;
     aspect-ratio: 1 / 1;
@@ -17,7 +19,7 @@
   }
 }
 
-.controls {
+.product-image__controls {
   position: absolute;
   top: 50%;
   left: 0;
@@ -29,15 +31,13 @@
   pointer-events: none;
 }
 
-.controlButton {
+.product-image__control-button {
   background-color: rgba(0, 0, 0, 0.5);
   border: none;
   border-radius: 50%;
   width: 64px;
   height: 64px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  @include flex-center;
   cursor: pointer;
   pointer-events: auto;
   color: white;
@@ -48,12 +48,13 @@
   }
 }
 
-.controlIcon {
-  transform: rotate(-90deg); // базовая иконка смотрит вниз
-  &.prev {
+.product-image__control-icon {
+  transform: rotate(-90deg);
+
+  &--prev {
     transform: rotate(90deg); // стрелка влево
   }
-  &.next {
-    transform: rotate(-90deg); // стрелка вправо (или оставить как есть)
+  &--next {
+    transform: rotate(-90deg); // стрелка вправо
   }
 }

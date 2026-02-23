@@ -4,9 +4,9 @@ import Navbar from '@/components/Navbar';
 
 const AboutPage = () => {
   return (
-    <main className={styles.about}>
+    <main className={styles['about-page']}>
       <Navbar></Navbar>
-      <div className={styles.content}>
+      <div className={styles['about-page__content']}>
         <Text view="title">About us</Text>
       </div>
     </main>

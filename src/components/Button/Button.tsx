@@ -1,6 +1,6 @@
 import React from 'react';
 import classNames from 'classnames';
-import './Button.css';
+import styles from './Button.module.scss';
 import Loader from '../Loader';
 
 export type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
@@ -18,9 +18,9 @@ const Button: React.FC<ButtonProps> = ({
   children,
   ...props
 }) => {
-  const classes = classNames('button', className, {
-    'button-loading': loading,
-    'button-disabled': disabled,
+  const classes = classNames(styles.button, className, {
+    [styles['button--loading']]: loading,
+    [styles['button--disabled']]: disabled,
   });
 
   return (

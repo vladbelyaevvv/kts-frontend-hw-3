@@ -1,48 +1,53 @@
-.searchSection {
+@use '@/styles/variables.scss' as *;
+
+.search-section {
   display: flex;
   flex-direction: column;
   gap: 10px;
 }
 
-.searchBar {
+.search-section__bar {
   margin-top: 50px;
   margin-bottom: 24px;
   display: flex;
   gap: 10px;
 
-  @media (max-width: 768px) {
+  @include sm {
     flex-direction: column;
   }
 }
 
-.searchInput {
+.search-section__input {
   flex: 1;
 }
 
-.searchButton {
+.search-section__button {
   min-width: 137px;
   min-height: 52px;
   margin-left: 24px;
 
-  @media (max-width: 768px) {
+  @include sm {
     margin-left: 0;
+    width: 100%;
   }
 }
 
-.filter {
+.search-section__filter {
   max-width: 300px;
 
-  @media (max-width: 768px) {
+  @include sm {
     max-width: 100%;
   }
 }
 
-.total {
+.search-section__total {
   margin-top: 48px;
   font-size: 32px;
   line-height: 113%;
-  display: flex;
-  gap: 8px;
-  align-items: center;
+  @include flex-center;
   gap: 24px;
+
+  @include sm {
+    font-size: 24px;
+  }
 }

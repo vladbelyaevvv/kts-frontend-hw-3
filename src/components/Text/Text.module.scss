@@ -1,0 +1,71 @@
+.text {
+  font-family: var(--font-family);
+  color: inherit;
+
+  //weights
+  &--normal {
+    font-weight: normal;
+  }
+  &--medium {
+    font-weight: 500;
+  }
+  &--bold {
+    font-weight: bold;
+  }
+
+  //views
+  &--title {
+    font-weight: 700;
+    font-size: 44px;
+    line-height: 109%;
+    color: #000;
+  }
+
+  &--button {
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 100%;
+    color: #000;
+  }
+
+  &--p-20 {
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 120%;
+    color: #000;
+  }
+
+  &--p-18 {
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 122%;
+    color: #000;
+  }
+
+  &--p-16 {
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 125%;
+    color: #000;
+  }
+
+  &--p-14 {
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 129%;
+    color: #000;
+  }
+
+  //colors
+  &--color-primary {
+    color: var(--text-primary);
+  }
+
+  &--color-secondary {
+    color: var(--text-secondary);
+  }
+
+  &--color-accent {
+    color: var(--text-accent);
+  }
+}

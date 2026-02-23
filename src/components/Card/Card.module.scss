@@ -1,0 +1,37 @@
+@use '@/styles/variables.scss' as *;
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+
+.card {
+  display: flex;
+  flex-direction: column;
+  width: 348px;
+  padding: 0px 0px 24px;
+  background: var(--card-bg);
+  overflow: hidden;
+  font-family: 'Roboto', -apple-system, sans-serif;
+
+  &:hover {
+    box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.25);
+  }
+
+  &__image {
+    height: 348px;
+    background-color: var(--card-image-bg);
+  }
+
+  &__body {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin: 12px;
+    margin-top: 24px;
+    margin-bottom: 20px;
+    font-family: 'Roboto', -apple-system, sans-serif;
+  }
+
+  &__footer {
+    @include flex-center;
+    justify-content: space-between;
+    margin: 0 14px;
+  }
+}

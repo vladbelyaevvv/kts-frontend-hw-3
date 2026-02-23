@@ -10,11 +10,11 @@ interface RelatedItemsProps {
 
 const RelatedItems = ({ products }: RelatedItemsProps) => {
   return (
-    <div className={styles.related}>
-      <Text tag="h1" className={styles.title}>
+    <div className={styles['related-items']}>
+      <Text tag="h1" className={styles['related-items__title']}>
         Related Items
       </Text>
-      <div className={styles.grid}>
+      <div className={styles['related-items__grid']}>
         {products.map((product) => (
           <Card
             key={product.id}

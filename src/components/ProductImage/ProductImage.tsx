@@ -8,23 +8,23 @@ interface ProductImageProps {
 
 const ProductImage = ({ product }: ProductImageProps) => {
   return (
-    <div className={styles.productImage}>
+    <div className={styles['product-image']}>
       <img
         src={product.images?.[0]?.url || ''}
         alt={product.title}
-        className={styles.image}
+        className={styles['product-image__image']}
       />
-      <div className={styles.controls}>
-        <button className={styles.controlButton}>
+      <div className={styles['product-image__controls']}>
+        <button className={styles['product-image__control-button']}>
           <ArrowDownIcon
-            className={`${styles.controlIcon} ${styles.prev}`}
+            className={`${styles['product-image__control-icon']} ${styles['product-image__control-icon--prev']}`}
             width={30}
             height={40}
           />
         </button>
-        <button className={styles.controlButton}>
+        <button className={styles['product-image__control-button']}>
           <ArrowDownIcon
-            className={`${styles.controlIcon} ${styles.next}`}
+            className={`${styles['product-image__control-icon']} ${styles['product-image__control-icon--next']}`}
             width={30}
             height={40}
           />

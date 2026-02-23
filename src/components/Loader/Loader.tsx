@@ -1,5 +1,5 @@
 import React from 'react';
-import './Loader.css';
+import styles from './Loader.module.scss';
 
 export type LoaderProps = {
   /** Размер */
@@ -60,7 +60,11 @@ const Loader: React.FC<LoaderProps> = ({
   };
 
   return (
-    <div className={`loader loader-${size} ${className || ''}`}>
+    <div
+      className={`${styles.loader} ${styles[`loader-${size}`]} ${
+        className || ''
+      }`}
+    >
       {svgs[size || 'm']}
     </div>
   );

@@ -28,20 +28,23 @@ const SearchSection = ({
   onSearchSubmit,
 }: SearchSectionProps) => {
   return (
-    <div className={styles.searchSection}>
-      <div className={styles.searchBar}>
+    <div className={styles['search-section']}>
+      <div className={styles['search-section__bar']}>
         <Input
           value={searchValue}
           onChange={onSearchChange}
           placeholder="Search product"
-          className={styles.searchInput}
+          className={styles['search-section__input']}
         />
-        <Button onClick={onSearchSubmit} className={styles.searchButton}>
+        <Button
+          onClick={onSearchSubmit}
+          className={styles['search-section__button']}
+        >
           Find now
         </Button>
       </div>
       <MultiDropdown
-        className={styles.filter}
+        className={styles['search-section__filter']}
         options={categoryOptions}
         value={selectedCategories}
         onChange={onCategoriesChange}
@@ -51,7 +54,7 @@ const SearchSection = ({
             : options.map((opt) => opt.value).join(', ')
         }
       />
-      <div className={styles.total}>
+      <div className={styles['search-section__total']}>
         <Text tag="h4" weight="bold">
           Total products
         </Text>

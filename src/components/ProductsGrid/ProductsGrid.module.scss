@@ -1,19 +1,26 @@
-.grid {
+@use '@/styles/variables.scss' as *;
+
+.products-grid {
   margin-top: 40px;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 30px;
 
-  @media (max-width: 768px) {
+  @include sm {
     justify-items: center;
+  }
+
+  @include xs {
+    grid-template-columns: 1fr;
+    gap: 20px;
   }
 }
 
-.link {
+.products-grid__link {
   text-decoration: none;
   color: inherit;
 }
 
-.cardPointer {
+.products-grid__card-pointer {
   cursor: pointer;
 }

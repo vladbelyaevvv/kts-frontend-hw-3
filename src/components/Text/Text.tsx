@@ -1,5 +1,5 @@
 import * as React from 'react';
-import './Text.css';
+import styles from './Text.module.scss';
 
 export type TextProps = {
   /** Дополнительный класс */
@@ -28,37 +28,37 @@ const Text: React.FC<TextProps> = ({
   maxLines,
 }) => {
   const Tag = tag;
-  let textClass = 'text';
+  let textClass = styles.text;
 
   if (weight === 'normal') {
-    textClass = 'text-normal';
+    textClass = styles['text--normal'];
   } else if (weight === 'medium') {
-    textClass = 'text-medium';
+    textClass = styles['text--medium'];
   } else if (weight === 'bold') {
-    textClass = 'text-bold';
+    textClass = styles['text--bold'];
   } else if (view) {
     switch (view) {
       case 'title':
-        textClass = 'text-title';
+        textClass = styles['text--title'];
         break;
       case 'button':
-        textClass = 'text-button';
+        textClass = styles['text--button'];
         break;
       case 'p-20':
-        textClass = 'text-p-20';
+        textClass = styles['text--p-20'];
         break;
       case 'p-18':
-        textClass = 'text-p-18';
+        textClass = styles['text--p-18'];
         break;
       case 'p-16':
-        textClass = 'text-p-16';
+        textClass = styles['text--p-16'];
         break;
       case 'p-14':
-        textClass = 'text-p-14';
+        textClass = styles['text--p-14'];
         break;
     }
   }
-  const colorClass = color ? `text-color-${color}` : '';
+  const colorClass = color ? styles[`text--color-${color}`] : '';
   const style = maxLines
     ? {
         display: '-webkit-box',

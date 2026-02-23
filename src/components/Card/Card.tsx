@@ -1,5 +1,5 @@
 import React from 'react';
-import './Card.css';
+import styles from './Card.module.scss';
 import Text from '../Text';
 
 export type CardProps = {
@@ -32,10 +32,10 @@ const Card: React.FC<CardProps> = ({
   actionSlot,
 }) => {
   return (
-    <div className={`card ${className}`} onClick={onClick}>
-      <img src={image} alt="card-image" className="card-image" />
+    <div className={`${styles.card} ${className || ''}`} onClick={onClick}>
+      <img src={image} alt="card-image" className={styles.card__image} />
 
-      <div className="card-body">
+      <div className={styles.card__body}>
         {captionSlot && (
           <Text tag="p" color="secondary" view="p-14">
             {captionSlot}
@@ -45,7 +45,7 @@ const Card: React.FC<CardProps> = ({
         {title && (
           <Text
             tag="h3"
-            className="card-title"
+            className={styles.card__title}
             weight="bold"
             view="p-20"
             color="primary"
@@ -58,7 +58,7 @@ const Card: React.FC<CardProps> = ({
         {subtitle && (
           <Text
             tag="p"
-            className="card-subtitle"
+            className={styles.card__subtitle}
             color="secondary"
             view="p-16"
             maxLines={3}
@@ -68,7 +68,7 @@ const Card: React.FC<CardProps> = ({
         )}
       </div>
 
-      <div className="card-footer">
+      <div className={styles.card__footer}>
         {contentSlot && (
           <Text tag="span" weight="bold" view="p-18" color="primary">
             {contentSlot}

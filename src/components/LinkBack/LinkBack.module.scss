@@ -1,15 +1,29 @@
-.linkBack {
+@use '@/styles/variables.scss' as *;
+
+.link-back {
   margin-top: 60px;
-  display: inline-flex;
-  align-items: center;
+  @include flex-center;
+  justify-content: flex-start;
   cursor: pointer;
-  color: #333; // базовый цвет для иконки (можно заменить на var(--text-primary))
+  color: #333;
+
+  @include sm {
+    margin-top: 40px;
+  }
+
+  @include xs {
+    margin-top: 24px;
+  }
 
   &:hover {
-    color: #518581; // цвет иконки при наведении
+    color: var(--brand);
 
-    .linkBackText {
-      color: #518581; // цвет текста при наведении
+    .link-back__text {
+      color: var(--brand);
     }
   }
+}
+
+.link-back__text {
+  margin-left: 8px;
 }

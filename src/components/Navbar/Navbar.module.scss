@@ -1,31 +1,47 @@
+@use '@/styles/variables.scss' as *;
+
 .navbar {
   display: flex;
   height: 90px;
   justify-content: space-between;
   align-items: center;
-  background-color: #fff;
+  background-color: var(--card-bg);
   box-shadow: 0px 2px 0px #f3f3f3;
   border-bottom: 2px solid #f3f3f3;
   padding: 0 100px;
 
-  @media (max-width: 768px) {
+  @include sm {
     padding: 0 20px;
+    height: 70px;
+  }
+
+  @include xs {
+    padding: 0 12px;
+    height: 60px;
   }
 }
 
-.logo {
+.navbar__logo {
   overflow: visible;
   height: 42px;
-  display: flex;
-  align-items: center;
+  @include flex-center;
+
+  @include sm {
+    height: 35px;
+  }
 }
 
-.headerNav {
+.navbar__header-nav {
   display: flex;
+  flex-direction: row;
   gap: var(--spacing-xl);
+
+  @include sm {
+    gap: var(--spacing-m);
+  }
 }
 
-.link {
+.navbar__link {
   text-decoration: none;
   color: var(--text-primary);
 
@@ -43,18 +59,18 @@
   }
 }
 
-.icons {
+.navbar__icons {
   width: 132px;
   display: flex;
   justify-content: flex-end;
   gap: 20px;
 }
 
-.icon {
+.navbar__icon {
   text-decoration: none;
   color: #555;
 
   &:hover {
-    color: #518581;
+    color: var(--brand);
   }
 }

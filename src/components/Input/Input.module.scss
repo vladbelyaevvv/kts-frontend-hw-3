@@ -1,0 +1,54 @@
+@use '@/styles/variables.scss' as *;
+
+.input {
+  &__wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    background-color: var(--input-bg);
+    padding: 5px 0;
+    font-size: 16px;
+    border: 1px solid var(--input-border);
+
+    &.input--disabled {
+      background-color: var(--input-bg-disabled);
+      color: var(--input-text-disabled);
+      cursor: not-allowed;
+    }
+
+    &:focus-within {
+      border: 1px solid var(--input-border-focus);
+    }
+  }
+
+  &__element {
+    width: 100%;
+    padding-left: 8px;
+    height: 40px;
+    font-size: 16px;
+    border: none;
+    color: var(--input-text);
+
+    &:focus {
+      outline: none;
+      color: var(--input-text-focus);
+    }
+
+    &::placeholder {
+      color: var(--input-placeholder);
+    }
+
+    &:disabled {
+      background-color: var(--input-bg-disabled);
+      color: var(--input-text-disabled);
+      opacity: 0.6;
+    }
+  }
+
+  &__after-slot {
+    position: absolute;
+    right: 14px;
+    @include flex-center;
+    color: #999999;
+  }
+}

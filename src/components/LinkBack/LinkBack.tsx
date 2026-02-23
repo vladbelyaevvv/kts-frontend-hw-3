@@ -5,7 +5,7 @@ import Text from '@/components/Text';
 const LinkBack = () => {
   const navigate = useNavigate();
   return (
-    <div className={styles.linkBack} onClick={() => navigate(-1)}>
+    <div className={styles['link-back']} onClick={() => navigate(-1)}>
       <svg
         width="32"
         height="32"
@@ -22,7 +22,7 @@ const LinkBack = () => {
           strokeLinejoin="round"
         />
       </svg>
-      <Text view="p-20" color="primary" className={styles.linkBackText}>
+      <Text view="p-20" color="primary" className={styles['link-back__text']}>
         Назад
       </Text>
     </div>

@@ -21,10 +21,10 @@ const ProductsGrid = ({ products }: ProductsGridProps) => {
   };
 
   return (
-    <div className={styles.grid}>
+    <div className={styles['products-grid']}>
       {products.map((product) => (
         <Card
-          className={styles.cardPointer}
+          className={styles['products-grid__card-pointer']}
           key={product.id}
           captionSlot={product.productCategory?.title}
           image={product.images?.[0]?.url || ''}

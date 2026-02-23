@@ -1,6 +1,6 @@
 import React from 'react';
 import CheckIcon from '../icons/CheckIcon';
-import './CheckBox.css';
+import styles from './CheckBox.module.scss';
 
 export type CheckBoxProps = Omit<
   React.InputHTMLAttributes<HTMLInputElement>,
@@ -26,17 +26,19 @@ const CheckBox: React.FC<CheckBoxProps> = ({
 
   return (
     <label
-      className={`checkbox-wrapper ${disabled ? 'disabled' : ''} ${className}`}
+      className={`${styles.checkbox__wrapper} ${
+        disabled ? styles['checkbox--disabled'] : ''
+      } ${className}`}
     >
       <input
         type="checkbox"
         checked={checked}
         onChange={handleChange}
         disabled={disabled}
-        className="checkbox-input"
+        className={styles.checkbox__input}
         {...props}
       />
-      <div className="checkbox">
+      <div className={styles.checkbox__box}>
         {checked && (
           <CheckIcon
             width={48}

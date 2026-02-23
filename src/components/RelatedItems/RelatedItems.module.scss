@@ -1,14 +1,16 @@
-.related {
+@use '@/styles/variables.scss' as *;
+
+.related-items {
   margin-top: 48px;
 }
 
-.grid {
+.related-items__grid {
   margin-top: 32px;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 79px;
 
-  @media (max-width: 768px) {
+  @include md {
     grid-template-columns: 1fr;
     justify-items: center;
     gap: 20px;

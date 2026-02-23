@@ -1,21 +1,23 @@
-.content {
+@use '@/styles/variables.scss' as *;
+
+.products-page__content {
   padding: 0 100px;
   max-width: 1440px;
   margin: 0 auto;
   width: 100%;
   box-sizing: border-box;
 
-  @media (max-width: 768px) {
+  @include sm {
     padding: 0 20px;
   }
 }
 
-.text {
+.products-page__text {
   max-width: 653px;
   text-align: center;
   margin: 100px auto 0;
 }
 
-.title {
+.products-page__title {
   margin-bottom: 24px;
 }

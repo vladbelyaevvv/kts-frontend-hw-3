@@ -29,7 +29,7 @@ const ProductsPage = () => {
 
   if (loading) {
     return (
-      <div className={styles.text}>
+      <div className={styles['products-page__text']}>
         <Loader></Loader>
         <Text view="p-20">Загрузка...</Text>
       </div>
@@ -37,15 +37,15 @@ const ProductsPage = () => {
   }
 
   if (error) {
-    return <div className={styles.text}>Error</div>;
+    return <div className={styles['products-page__text']}>Error</div>;
   }
 
   return (
     <div className="main_page">
       <Navbar></Navbar>
-      <div className={styles.content}>
-        <div className={styles.text}>
-          <Text view="title" className={styles.title}>
+      <div className={styles['products-page__content']}>
+        <div className={styles['products-page__text']}>
+          <Text view="title" className={styles['products-page__title']}>
             Products
           </Text>
           <Text view="p-20" color="secondary" className="">

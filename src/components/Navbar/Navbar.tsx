@@ -6,7 +6,7 @@ const Navbar = () => {
   return (
     <header className={styles.navbar}>
       {/* Логотип */}
-      <div className={styles.logo}>
+      <div className={styles.navbar__logo}>
         <svg
           width="42"
           height="42"
@@ -75,11 +75,13 @@ const Navbar = () => {
       </div>
 
       {/* Навигационные ссылки по центру */}
-      <nav className={styles.headerNav}>
+      <nav className={styles['navbar__header-nav']}>
         <NavLink
           to="/"
           className={({ isActive }) =>
-            isActive ? `${styles.link} ${styles.active}` : styles.link
+            isActive
+              ? `${styles['navbar__link']} ${styles['navbar__link--active']}`
+              : styles['navbar__link']
           }
         >
           <Text view="p-18">Products</Text>
@@ -87,7 +89,9 @@ const Navbar = () => {
         <NavLink
           to="/categories"
           className={({ isActive }) =>
-            isActive ? `${styles.link} ${styles.active}` : styles.link
+            isActive
+              ? `${styles['navbar__link']} ${styles['navbar__link--active']}`
+              : styles['navbar__link']
           }
         >
           <Text view="p-18">Categories</Text>
@@ -95,7 +99,9 @@ const Navbar = () => {
         <NavLink
           to="/about"
           className={({ isActive }) =>
-            isActive ? `${styles.link} ${styles.active}` : styles.link
+            isActive
+              ? `${styles['navbar__link']} ${styles['navbar__link--active']}`
+              : styles['navbar__link']
           }
         >
           <Text view="p-18">About us</Text>
@@ -103,8 +109,8 @@ const Navbar = () => {
       </nav>
 
       {/* Иконки справа */}
-      <div className={styles.icons}>
-        <Link to="/cart" className={styles.icon}>
+      <div className={styles['navbar__icons']}>
+        <Link to="/cart" className={styles['navbar__icon']}>
           <svg
             width="30"
             height="30"

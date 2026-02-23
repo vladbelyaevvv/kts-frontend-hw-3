@@ -50,7 +50,7 @@ const ProductPage = () => {
 
   if (loading) {
     return (
-      <div className={styles.text}>
+      <div className={styles['product-page__text']}>
         <Loader></Loader>
         <Text view="p-20">Загрузка...</Text>
       </div>
@@ -58,31 +58,37 @@ const ProductPage = () => {
   }
 
   if (error || !product) {
-    return <div className={styles.text}>Error</div>;
+    return <div className={styles['product-page__text']}>Error</div>;
   }
 
   return (
-    <div className={styles.page}>
+    <div className={styles['product-page']}>
       <Navbar />
-      <div className={styles.wrapper}>
+      <div className={styles['product-page__wrapper']}>
         <LinkBack />
-        <div className={styles.content}>
+        <div className={styles['product-page__content']}>
           <ProductImage product={product}></ProductImage>
           {/* Информация о товаре */}
-          <div className={styles.productInfo}>
+          <div className={styles['product-page__info']}>
             <Text view="title" tag="h1">
               {product.title}
             </Text>
-            <Text tag="p" color="secondary" className={styles.description}>
+            <Text
+              tag="p"
+              color="secondary"
+              className={styles['product-page__description']}
+            >
               {product.description}
             </Text>
-            <div className={styles.priceSection}>
-              <Text view="title" className={styles.price}>
+            <div className={styles['product-page__price-section']}>
+              <Text view="title" className={styles['product-page__price']}>
                 ${product.price}
               </Text>
-              <div className={styles.actions}>
+              <div className={styles['product-page__actions']}>
                 <Button>Buy Now</Button>
-                <Button className={styles.addToCart}>Add to Cart</Button>
+                <Button className={styles['product-page__add-to-cart']}>
+                  Add to Cart
+                </Button>
               </div>
             </div>
           </div>
