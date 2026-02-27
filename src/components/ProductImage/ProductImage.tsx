@@ -1,3 +1,4 @@
+import React from 'react';
 import { Product } from '@/api/productsApi';
 import ArrowDownIcon from '@/components/icons/ArrowDownIcon';
 import styles from './ProductImage.module.scss';
@@ -6,7 +7,7 @@ interface ProductImageProps {
   product: Product;
 }
 
-const ProductImage = ({ product }: ProductImageProps) => {
+const ProductImage = React.memo(({ product }: ProductImageProps) => {
   return (
     <div className={styles['product-image']}>
       <img
@@ -32,6 +33,6 @@ const ProductImage = ({ product }: ProductImageProps) => {
       </div>
     </div>
   );
-};
+});
 
 export default ProductImage;

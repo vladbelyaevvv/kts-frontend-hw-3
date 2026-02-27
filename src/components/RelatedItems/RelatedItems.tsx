@@ -3,12 +3,13 @@ import Button from '@/components/Button';
 import Card from '@/components/Card';
 import { Product } from '@/api/productsApi';
 import styles from './RelatedItems.module.scss';
+import React from 'react';
 
 interface RelatedItemsProps {
   products: Product[];
 }
 
-const RelatedItems = ({ products }: RelatedItemsProps) => {
+const RelatedItems = React.memo(({ products }: RelatedItemsProps) => {
   return (
     <div className={styles['related-items']}>
       <Text tag="h1" className={styles['related-items__title']}>
@@ -33,6 +34,6 @@ const RelatedItems = ({ products }: RelatedItemsProps) => {
       </div>
     </div>
   );
-};
+});
 
 export default RelatedItems;

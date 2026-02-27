@@ -1,13 +1,14 @@
 import Loader from '@/components/Loader';
 import Text from '@/components/Text';
+import React from 'react';
 
-const PageLoader = () => {
+const PageLoader = React.memo(() => {
     return (
         <div>
             <Loader/>
             <Text view="p-20">Загрузка...</Text>
         </div>
     )
-}
+});
 
 export default PageLoader

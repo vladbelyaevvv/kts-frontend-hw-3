@@ -9,7 +9,7 @@ export type LoaderProps = {
   color?: string;
 };
 
-const Loader: React.FC<LoaderProps> = ({
+const Loader: React.FC<LoaderProps> = React.memo(({
   size = 'l',
   className,
   color = 'var(--brand)',
@@ -68,6 +68,6 @@ const Loader: React.FC<LoaderProps> = ({
       {svgs[size || 'm']}
     </div>
   );
-};
+});
 
 export default Loader;

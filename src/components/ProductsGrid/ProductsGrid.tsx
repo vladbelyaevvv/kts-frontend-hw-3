@@ -3,12 +3,13 @@ import Card from '@/components/Card';
 import Button from '@/components/Button';
 import { Product } from '@/api/productsApi';
 import styles from './ProductsGrid.module.scss';
+import React from 'react';
 
 interface ProductsGridProps {
   products: Product[];
 }
 
-const ProductsGrid = ({ products }: ProductsGridProps) => {
+const ProductsGrid = React.memo(({ products }: ProductsGridProps) => {
   const navigate = useNavigate();
 
   const handleCardClick = (documentId: string) => {
@@ -41,6 +42,6 @@ const ProductsGrid = ({ products }: ProductsGridProps) => {
       ))}
     </div>
   );
-};
+});
 
 export default ProductsGrid;

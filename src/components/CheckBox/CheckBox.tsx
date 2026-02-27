@@ -11,7 +11,7 @@ export type CheckBoxProps = Omit<
   className?: string;
 };
 
-const CheckBox: React.FC<CheckBoxProps> = ({
+const CheckBox: React.FC<CheckBoxProps> = React.memo(({
   checked,
   disabled,
   onChange,
@@ -49,6 +49,6 @@ const CheckBox: React.FC<CheckBoxProps> = ({
       </div>
     </label>
   );
-};
+});
 
 export default CheckBox;

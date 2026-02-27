@@ -1,6 +1,7 @@
-import styles from './Pagination.module.scss';
+import React from 'react';
+import styles from './Pagination.module.scss'
 
-const Pagination = () => {
+const Pagination = React.memo(() => {
   return (
     <div className={styles.pagination}>
       {/* Левая стрелка */}
@@ -54,6 +55,6 @@ const Pagination = () => {
       </svg>
     </div>
   );
-};
+});
 
 export default Pagination;

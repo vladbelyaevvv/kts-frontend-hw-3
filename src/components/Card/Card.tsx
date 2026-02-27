@@ -21,7 +21,7 @@ export type CardProps = {
   actionSlot?: React.ReactNode;
 };
 
-const Card: React.FC<CardProps> = ({
+const Card: React.FC<CardProps> = React.memo(({
   className,
   image,
   captionSlot,
@@ -78,6 +78,6 @@ const Card: React.FC<CardProps> = ({
       </div>
     </div>
   );
-};
+});
 
 export default Card;

@@ -1,8 +1,9 @@
 import styles from './Navbar.module.scss';
 import Text from '@/components/Text';
+import React from 'react';
 import { Link, NavLink } from 'react-router-dom';
 
-const Navbar = () => {
+const Navbar = React.memo(() => {
   return (
     <header className={styles.navbar}>
       {/* Логотип */}
@@ -178,6 +179,6 @@ const Navbar = () => {
       </div>
     </header>
   );
-};
+});
 
 export default Navbar;

@@ -1,8 +1,9 @@
 import { useNavigate } from 'react-router-dom';
 import styles from './LinkBack.module.scss';
 import Text from '@/components/Text';
+import React from 'react';
 
-const LinkBack = () => {
+const LinkBack = React.memo(() => {
   const navigate = useNavigate();
   return (
     <div className={styles['link-back']} onClick={() => navigate(-1)}>
@@ -27,6 +28,6 @@ const LinkBack = () => {
       </Text>
     </div>
   );
-};
+});
 
 export default LinkBack;

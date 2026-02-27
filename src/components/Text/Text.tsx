@@ -18,7 +18,7 @@ export type TextProps = {
   maxLines?: number;
 };
 
-const Text: React.FC<TextProps> = ({
+const Text: React.FC<TextProps> = React.memo(({
   className = '',
   view,
   tag = 'p',
@@ -73,6 +73,6 @@ const Text: React.FC<TextProps> = ({
       {children}
     </Tag>
   );
-};
+});
 
 export default Text;

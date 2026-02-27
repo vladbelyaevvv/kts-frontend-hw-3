@@ -11,7 +11,7 @@ export type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
   children: React.ReactNode;
 };
 
-const Button: React.FC<ButtonProps> = ({
+const Button: React.FC<ButtonProps> = React.memo(({
   loading = false,
   disabled = false,
   className = '',
@@ -35,6 +35,6 @@ const Button: React.FC<ButtonProps> = ({
       )}
     </button>
   );
-};
+});
 
 export default Button;
