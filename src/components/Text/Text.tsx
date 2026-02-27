@@ -69,7 +69,7 @@ const Text: React.FC<TextProps> = ({
     : undefined;
   const classes = `${textClass} ${colorClass} ${className}`.trim();
   return (
-    <Tag className={`${classes}`} style={style}>
+    <Tag className={classes} style={style}>
       {children}
     </Tag>
   );

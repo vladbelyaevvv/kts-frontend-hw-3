@@ -1,23 +1,24 @@
 @use '@/styles/variables.scss' as *;
 
-.products-page__content {
-  padding: 0 100px;
-  max-width: 1440px;
-  margin: 0 auto;
-  width: 100%;
-  box-sizing: border-box;
+.products-page{
+  &__content {
+    padding: 0 100px;
+    max-width: 1440px;
+    margin: 0 auto;
+    width: 100%;
+    box-sizing: border-box;
 
-  @include sm {
-    padding: 0 20px;
+    @include sm {
+      padding: 0 20px;
+    }
   }
-}
-
-.products-page__text {
-  max-width: 653px;
-  text-align: center;
-  margin: 100px auto 0;
-}
-
-.products-page__title {
-  margin-bottom: 24px;
+  
+  &__text {
+    max-width: 653px;
+    text-align: center;
+    margin: 100px auto 0;
+  }
+  &__title{
+    margin-bottom: 24px;
+  }
 }
