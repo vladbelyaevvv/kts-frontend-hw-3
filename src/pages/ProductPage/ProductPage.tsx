@@ -7,12 +7,12 @@ import Button from '@/components/Button';
 import RelatedItems from '@/components/RelatedItems';
 import { useProduct } from '@/hooks/useProduct';
 import { Product } from '@/api/productsApi';
-import Loader from '@/components/Loader';
 import ProductImage from '@/components/ProductImage';
 
 import image1 from './imagesRelated/1.png';
 import image2 from './imagesRelated/2.png';
 import image3 from './imagesRelated/3.png';
+import PageLoader from '@/components/PageLoader/PageLoader';
 
 const ProductPage = () => {
   const { documentId } = useParams<{ documentId: string }>();
@@ -51,8 +51,7 @@ const ProductPage = () => {
   if (loading) {
     return (
       <div className={styles['product-page__text']}>
-        <Loader></Loader>
-        <Text view="p-20">Загрузка...</Text>
+        <PageLoader/>
       </div>
     );
   }

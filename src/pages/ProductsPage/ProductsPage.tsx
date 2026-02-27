@@ -7,7 +7,7 @@ import SearchSection from '@/components/SearchSection';
 import { Option } from '@/components/MultiDropdown';
 import ProductsGrid from '@/components/ProductsGrid';
 import Pagination from '@/components/Pagination';
-import Loader from '@/components/Loader';
+import PageLoader from '@/components/PageLoader/PageLoader';
 
 const PAGE_SIZE = 9;
 
@@ -30,8 +30,7 @@ const ProductsPage = () => {
   if (loading) {
     return (
       <div className={styles['products-page__text']}>
-        <Loader></Loader>
-        <Text view="p-20">Загрузка...</Text>
+        <PageLoader/>
       </div>
     );
   }
