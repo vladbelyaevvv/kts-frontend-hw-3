@@ -1,3 +1,4 @@
+@use '@/styles/mixins.scss' as *;
 @use '@/styles/variables.scss' as *;
 
 .link-back {
@@ -5,7 +6,7 @@
   @include flex-center;
   justify-content: flex-start;
   cursor: pointer;
-  color: #333;
+  color: $BLACK;
 
   @include sm {
     margin-top: 40px;
@@ -16,10 +17,10 @@
   }
 
   &:hover {
-    color: var(--brand);
+    color: $brand;
 
     .link-back__text {
-      color: var(--brand);
+      color: $brand;
     }
   }
 }

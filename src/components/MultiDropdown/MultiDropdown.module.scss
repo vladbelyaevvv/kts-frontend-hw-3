@@ -1,3 +1,5 @@
+@use '@/styles/variables.scss' as *;
+
 .multi-dropdown {
   &__container {
     position: relative;
@@ -11,7 +13,7 @@
     position: absolute;
     top: 100%;
     left: 0;
-    background-color: var(--dropdown-options-bg);
+    background-color: $dropdown-options-bg;
     border: 1px solid #ccc;
     max-height: 150px;
     overflow-y: auto;
@@ -27,15 +29,15 @@
       padding: 14px 12px;
       height: 48px;
       cursor: pointer;
-      color: var(--text-primary);
+      color: $text-primary;
       font-size: 16px;
 
       &:hover {
-        background-color: var(--text-secondary);
+        background-color: $text-secondary;
       }
 
       &--selected {
-        color: var(--text-accent);
+        color: $text-accent;
       }
     }
   }

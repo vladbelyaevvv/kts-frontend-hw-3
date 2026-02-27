@@ -1,3 +1,4 @@
+@use '@/styles/mixins.scss' as *;
 @use '@/styles/variables.scss' as *;
 
 .product-image {
@@ -40,8 +41,8 @@
   @include flex-center;
   cursor: pointer;
   pointer-events: auto;
-  color: white;
-  transition: background-color 0.2s;
+  color: $WHITE;
+  transition: background-color $transition-duration;
 
   &:hover {
     background-color: rgba(0, 0, 0, 1);

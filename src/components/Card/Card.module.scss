@@ -1,3 +1,4 @@
+@use '@/styles/mixins.scss' as *;
 @use '@/styles/variables.scss' as *;
 
 .card {
@@ -5,7 +6,7 @@
   flex-direction: column;
   width: 348px;
   padding: 0px 0px 24px;
-  background: var(--card-bg);
+  background: $card-bg;
   overflow: hidden;
 
   &:hover {
@@ -14,7 +15,7 @@
 
   &__image {
     height: 348px;
-    background-color: var(--card-image-bg);
+    background-color: $card-image-bg;
   }
 
   &__body {

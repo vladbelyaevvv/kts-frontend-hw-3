@@ -1,3 +1,4 @@
+@use '@/styles/mixins.scss' as *;
 @use '@/styles/variables.scss' as *;
 
 .input {
@@ -5,19 +6,19 @@
     position: relative;
     display: flex;
     align-items: center;
-    background-color: var(--input-bg);
+    background-color: $input-bg;
     padding: 5px 0;
     font-size: 16px;
-    border: 1px solid var(--input-border);
+    border: 1px solid $input-border;
 
     &.input--disabled {
-      background-color: var(--input-bg-disabled);
-      color: var(--input-text-disabled);
+      background-color: $input-bg-disabled;
+      color: $input-text-disabled;
       cursor: not-allowed;
     }
 
     &:focus-within {
-      border: 1px solid var(--input-border-focus);
+      border: 1px solid $input-border-focus;
     }
   }
 
@@ -27,20 +28,20 @@
     height: 40px;
     font-size: 16px;
     border: none;
-    color: var(--input-text);
+    color: $input-text;
 
     &:focus {
       outline: none;
-      color: var(--input-text-focus);
+      color: $input-text-focus;
     }
 
     &::placeholder {
-      color: var(--input-placeholder);
+      color: $input-placeholder;
     }
 
     &:disabled {
-      background-color: var(--input-bg-disabled);
-      color: var(--input-text-disabled);
+      background-color: $input-bg-disabled;
+      color: $input-text-disabled;
       opacity: 0.6;
     }
   }

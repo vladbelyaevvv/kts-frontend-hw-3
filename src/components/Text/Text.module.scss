@@ -1,3 +1,5 @@
+@use '@/styles/variables.scss' as *;
+
 .text {
   font-family: var(--font-family);
   color: inherit;
@@ -18,54 +20,54 @@
     font-weight: 700;
     font-size: 44px;
     line-height: 109%;
-    color: #000;
+    color: $BLACK;
   }
 
   &--button {
     font-weight: 400;
     font-size: 18px;
     line-height: 100%;
-    color: #000;
+    color: $BLACK;
   }
 
   &--p-20 {
     font-weight: 400;
     font-size: 20px;
     line-height: 120%;
-    color: #000;
+    color: $BLACK;
   }
 
   &--p-18 {
     font-weight: 400;
     font-size: 18px;
     line-height: 122%;
-    color: #000;
+    color: $BLACK;
   }
 
   &--p-16 {
     font-weight: 400;
     font-size: 16px;
     line-height: 125%;
-    color: #000;
+    color: $BLACK;
   }
 
   &--p-14 {
     font-weight: 400;
     font-size: 14px;
     line-height: 129%;
-    color: #000;
+    color: $BLACK;
   }
 
   //colors
   &--color-primary {
-    color: var(--text-primary);
+    color: $text-primary;
   }
 
   &--color-secondary {
-    color: var(--text-secondary);
+    color: $text-secondary;
   }
 
   &--color-accent {
-    color: var(--text-accent);
+    color: $text-accent;
   }
 }
