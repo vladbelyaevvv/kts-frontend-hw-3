@@ -5,7 +5,6 @@ import LinkBack from '@/components/LinkBack';
 import Text from '@/components/Text';
 import Button from '@/components/Button';
 import RelatedItems from '@/components/RelatedItems';
-import { useProduct } from '@/hooks/useProduct';
 import { Product } from '@/api/productsApi';
 import ProductImage from '@/components/ProductImage';
 
@@ -13,10 +12,18 @@ import image1 from './imagesRelated/1.png';
 import image2 from './imagesRelated/2.png';
 import image3 from './imagesRelated/3.png';
 import PageLoader from '@/components/PageLoader/PageLoader';
+import { observer } from 'mobx-react-lite';
+import { useEffect } from 'react';
+import { productStore } from '@/stores/productStore';
 
-const ProductPage = () => {
+const ProductPage = observer(() => {
   const { documentId } = useParams<{ documentId: string }>();
-  const { product, loading, error } = useProduct(documentId);
+
+  useEffect(() => {
+    if(documentId) {
+      productStore.fetchProduct(documentId);
+    }
+  }, [documentId]);
 
   const relatedProducts: Product[] = [
     {
@@ -48,7 +55,7 @@ const ProductPage = () => {
     },
   ];
 
-  if (loading) {
+  if (productStore.loading) {
     return (
       <div className={styles['product-page__text']}>
         <PageLoader/>
@@ -56,7 +63,7 @@ const ProductPage = () => {
     );
   };
 
-  if (error || !product) {
+  if (productStore.error || !productStore.product) {
     return <div className={styles['product-page__text']}>Error</div>;
   }
 
@@ -66,22 +73,22 @@ const ProductPage = () => {
       <div className={styles['product-page__wrapper']}>
         <LinkBack />
         <div className={styles['product-page__content']}>
-          <ProductImage product={product}></ProductImage>
+          <ProductImage product={productStore.product}></ProductImage>
           {/* Информация о товаре */}
           <div className={styles['product-page__info']}>
             <Text view="title" tag="h1">
-              {product.title}
+              {productStore.product.title}
             </Text>
             <Text
               tag="p"
               color="secondary"
               className={styles['product-page__description']}
             >
-              {product.description}
+              {productStore.product.description}
             </Text>
             <div className={styles['product-page__price-section']}>
               <Text view="title" className={styles['product-page__price']}>
-                ${product.price}
+                ${productStore.product.price}
               </Text>
               <div className={styles['product-page__actions']}>
                 <Button>Buy Now</Button>
@@ -96,6 +103,6 @@ const ProductPage = () => {
       </div>
     </div>
   );
-};
+});
 
 export default ProductPage;
