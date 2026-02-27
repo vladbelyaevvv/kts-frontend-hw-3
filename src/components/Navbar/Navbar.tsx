@@ -1,6 +1,7 @@
 import styles from './Navbar.module.scss';
 import Text from '@/components/Text';
 import React from 'react';
+import classNames from 'classnames';
 import { Link, NavLink } from 'react-router-dom';
 
 const Navbar = React.memo(() => {
@@ -80,9 +81,9 @@ const Navbar = React.memo(() => {
         <NavLink
           to="/"
           className={({ isActive }) =>
-            isActive
-              ? `${styles['navbar__link']} ${styles['navbar__link--active']}`
-              : styles['navbar__link']
+            classNames(styles['navbar__link'], {
+              [styles['navbar__link--active']]: isActive,
+            })
           }
         >
           <Text view="p-18">Products</Text>
@@ -90,9 +91,9 @@ const Navbar = React.memo(() => {
         <NavLink
           to="/categories"
           className={({ isActive }) =>
-            isActive
-              ? `${styles['navbar__link']} ${styles['navbar__link--active']}`
-              : styles['navbar__link']
+            classNames(styles['navbar__link'], {
+              [styles['navbar__link--active']]: isActive,
+            })
           }
         >
           <Text view="p-18">Categories</Text>
@@ -100,9 +101,9 @@ const Navbar = React.memo(() => {
         <NavLink
           to="/about"
           className={({ isActive }) =>
-            isActive
-              ? `${styles['navbar__link']} ${styles['navbar__link--active']}`
-              : styles['navbar__link']
+            classNames(styles['navbar__link'], {
+              [styles['navbar__link--active']]: isActive,
+            })
           }
         >
           <Text view="p-18">About us</Text>

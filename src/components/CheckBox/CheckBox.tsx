@@ -1,6 +1,7 @@
 import React from 'react';
 import CheckIcon from '../icons/CheckIcon';
 import styles from './CheckBox.module.scss';
+import classNames from 'classnames';
 
 export type CheckBoxProps = Omit<
   React.InputHTMLAttributes<HTMLInputElement>,
@@ -26,9 +27,10 @@ const CheckBox: React.FC<CheckBoxProps> = React.memo(({
 
   return (
     <label
-      className={`${styles.checkbox__wrapper} ${
-        disabled ? styles['checkbox--disabled'] : ''
-      } ${className}`}
+      className={classNames(
+        styles.checkbox__wrapper,
+        { [styles['checkbox--disabled']]: disabled },
+        className)}
     >
       <input
         type="checkbox"

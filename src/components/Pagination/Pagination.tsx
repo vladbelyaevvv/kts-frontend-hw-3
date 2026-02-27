@@ -1,12 +1,16 @@
 import React from 'react';
 import styles from './Pagination.module.scss'
+import classNames from 'classnames';
 
 const Pagination = React.memo(() => {
   return (
     <div className={styles.pagination}>
       {/* Левая стрелка */}
       <svg
-        className={`${styles.pagination__arrow} ${styles['pagination__arrow--prev']}`}
+        className={classNames(
+          styles.pagination__arrow,
+          styles['pagination__arrow--prev']
+        )}
         width="35"
         height="35"
         viewBox="0 0 35 35"
@@ -26,7 +30,10 @@ const Pagination = React.memo(() => {
 
       {/* Номера страниц */}
       <span
-        className={`${styles.pagination__item} ${styles['pagination__item--active']}`}
+        className={classNames(
+          styles.pagination__item,
+          styles['pagination__item--active']
+        )}
       >
         1
       </span>
@@ -37,7 +44,10 @@ const Pagination = React.memo(() => {
 
       {/* Правая стрелка */}
       <svg
-        className={`${styles.pagination__arrow} ${styles['pagination__arrow--next']}`}
+        className={classNames(
+          styles.pagination__arrow,
+          styles['pagination__arrow--next']
+        )}
         width="35"
         height="35"
         viewBox="0 0 35 35"

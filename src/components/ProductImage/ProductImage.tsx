@@ -1,4 +1,5 @@
 import React from 'react';
+import classNames from 'classnames';
 import { Product } from '@/api/productsApi';
 import ArrowDownIcon from '@/components/icons/ArrowDownIcon';
 import styles from './ProductImage.module.scss';
@@ -18,14 +19,20 @@ const ProductImage = React.memo(({ product }: ProductImageProps) => {
       <div className={styles['product-image__controls']}>
         <button className={styles['product-image__control-button']}>
           <ArrowDownIcon
-            className={`${styles['product-image__control-icon']} ${styles['product-image__control-icon--prev']}`}
+            className={classNames(
+              styles['product-image__control-icon'],
+              styles['product-image__control-icon--prev']
+            )}
             width={30}
             height={40}
           />
         </button>
         <button className={styles['product-image__control-button']}>
           <ArrowDownIcon
-            className={`${styles['product-image__control-icon']} ${styles['product-image__control-icon--next']}`}
+            className={classNames(
+              styles['product-image__control-icon'],
+              styles['product-image__control-icon--next']
+            )}
             width={30}
             height={40}
           />

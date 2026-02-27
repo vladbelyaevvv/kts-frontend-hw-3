@@ -1,5 +1,7 @@
 import * as React from 'react';
+import classNames from 'classnames';
 import styles from './Text.module.scss';
+import { text } from 'node:stream/consumers';
 
 export type TextProps = {
   /** Дополнительный класс */
@@ -67,7 +69,7 @@ const Text: React.FC<TextProps> = React.memo(({
         overflow: 'hidden',
       }
     : undefined;
-  const classes = `${textClass} ${colorClass} ${className}`.trim();
+  const classes = classNames(textClass, colorClass, className);
   return (
     <Tag className={classes} style={style}>
       {children}

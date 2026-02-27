@@ -1,5 +1,6 @@
 import React from 'react';
 import styles from './Loader.module.scss';
+import classNames from 'classnames';
 
 export type LoaderProps = {
   /** Размер */
@@ -61,9 +62,11 @@ const Loader: React.FC<LoaderProps> = React.memo(({
 
   return (
     <div
-      className={`${styles.loader} ${styles[`loader-${size}`]} ${
-        className || ''
-      }`}
+      className = {classNames(
+        styles.loader,
+        styles[`loader-${size}`],
+        className
+      )}
     >
       {svgs[size || 'm']}
     </div>

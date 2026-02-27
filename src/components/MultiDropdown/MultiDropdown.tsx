@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import classNames from 'classnames';
 import Input from '../Input';
 import styles from './MultiDropdown.module.scss';
 import ArrowDownIcon from '../icons/ArrowDownIcon';
@@ -93,7 +94,7 @@ const MultiDropdown: React.FC<MultiDropdownProps> = ({
 
   return (
     <div
-      className={`${styles['multi-dropdown__container']} ${className || ''}`}
+      className={classNames(styles['multi-dropdown__container'], className)}
       ref={dropdownRef}
     >
       <Input

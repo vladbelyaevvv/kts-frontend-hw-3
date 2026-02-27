@@ -54,7 +54,7 @@ const ProductPage = () => {
         <PageLoader/>
       </div>
     );
-  }
+  };
 
   if (error || !product) {
     return <div className={styles['product-page__text']}>Error</div>;
