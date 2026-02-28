@@ -22,6 +22,8 @@ const ProductsPage = observer(() => {
   }, []);
 
   const handleSearch = () => {
+    const categoryIds = selectedCategories.map((opt) => Number(opt.key));
+    productsStore.setCategories(categoryIds);
     productsStore.setSearch(searchValue);
     productsStore.fetchProducts();
   };

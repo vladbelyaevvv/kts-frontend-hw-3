@@ -26,19 +26,37 @@ export type Product = {
   productCategory?: { title: string };
 };
 
+export interface GetProductsParams {
+  search?: string;
+  categoryIds?: number[];
+}
+
 // получить весь список товаров
-export const getProducts = async (params?: {search?: string }) => {
-  const queryConfig: Record<string, unknown> = {
-    populate: ['images', 'productCategory'],
-  };
+export const getProducts = async (params?: GetProductsParams ) => {
+  const filters: Record<string, unknown> = {};
 
   if (params?.search){
-    queryConfig.filters = {
-      title: {
+    filters.title = {
         $containsi: params.search,
-      }
-    }
+    };
   }
+
+  if(params?.categoryIds && params.categoryIds.length > 0) {
+    filters.productCategory = {
+      id: {
+        $in: params.categoryIds,
+      },
+    };
+  }
+
+  const queryConfig: Record<string, unknown> = {
+    populate: ['images', 'productCategory'],
+  }
+
+  if (Object.keys(filters).length > 0) {
+    queryConfig.filters = filters;
+  }
+
   const query = qs.stringify(queryConfig)
 
   const response = await api.get<ProductsResponse>(`?${query}`);
@@ -53,3 +71,21 @@ export const getProductById = async (documentId: string) => {
   const response = await api.get<{ data: Product }>(`/${documentId}?${query}`);
   return response.data.data;
 };
+
+export type Category = {
+  id: number;
+  title: string;
+}
+
+export type CategoriesResponse = {
+  data: Category[];
+}
+
+// получить список категорий
+export const getCategories = async () => {
+  const apiCategories = axios.create({
+    baseURL: 'https://front-school-strapi.ktsdev.ru/api/product-categories',
+  });
+  const response = await apiCategories.get<CategoriesResponse>('');
+  return response.data;
+}

@@ -3,6 +3,9 @@ import Button from '@/components/Button';
 import MultiDropdown, { Option } from '@/components/MultiDropdown';
 import Text from '@/components/Text';
 import styles from './SearchSection.module.scss';
+import { observer } from 'mobx-react-lite';
+import { useEffect } from 'react';
+import { productsStore } from '@/stores/productsStore';
 
 interface SearchSectionProps {
   searchValue: string;
@@ -13,13 +16,7 @@ interface SearchSectionProps {
   onSearchSubmit: () => void;
 }
 
-const categoryOptions: Option[] = [
-  { key: '1', value: 'Electronics' },
-  { key: '2', value: 'Furniture' },
-  { key: '3', value: 'Clothing' },
-];
-
-const SearchSection = ({
+const SearchSection = observer(({
   searchValue,
   onSearchChange,
   selectedCategories,
@@ -27,6 +24,15 @@ const SearchSection = ({
   totalProducts,
   onSearchSubmit,
 }: SearchSectionProps) => {
+  useEffect(() => {
+    productsStore.fetchCategories();
+  }, []);
+
+  const categoryOptions: Option[] = productsStore.categories.map((category) => ({
+    key: String(category.id),
+    value: category.title,
+  }));
+
   return (
     <div className={styles['search-section']}>
       <div className={styles['search-section__bar']}>
@@ -64,6 +70,6 @@ const SearchSection = ({
       </div>
     </div>
   );
-};
+});
 
 export default SearchSection;
