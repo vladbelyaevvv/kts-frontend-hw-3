@@ -22,8 +22,8 @@ const ProductsPage = observer(() => {
   }, []);
 
   const handleSearch = () => {
-    // console.log('Поиск', searchValue);
-    // console.log('Категории', selectedCategories);
+    productsStore.setSearch(searchValue);
+    productsStore.fetchProducts();
   };
 
   const startIndex = (currentPage - 1) * PAGE_SIZE;

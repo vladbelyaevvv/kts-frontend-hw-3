@@ -27,14 +27,19 @@ export type Product = {
 };
 
 // получить весь список товаров
-export const getProducts = async () => {
-  const query = qs.stringify({
+export const getProducts = async (params?: {search?: string }) => {
+  const queryConfig: Record<string, unknown> = {
     populate: ['images', 'productCategory'],
-    //Сейчас пока что по 25 приходит, только первая страница
-    // pagination: {
-    //     pageSize: 100,
-    // }
-  });
+  };
+
+  if (params?.search){
+    queryConfig.filters = {
+      title: {
+        $containsi: params.search,
+      }
+    }
+  }
+  const query = qs.stringify(queryConfig)
 
   const response = await api.get<ProductsResponse>(`?${query}`);
   return response.data;
