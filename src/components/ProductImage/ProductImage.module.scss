@@ -18,44 +18,44 @@
     aspect-ratio: 1 / 1;
     object-fit: cover;
   }
-}
 
-.product-image__controls {
-  position: absolute;
-  top: 50%;
-  left: 0;
-  right: 0;
-  display: flex;
-  justify-content: space-between;
-  transform: translateY(-50%);
-  padding: 0 10px;
-  pointer-events: none;
-}
-
-.product-image__control-button {
-  background-color: rgba(0, 0, 0, 0.5);
-  border: none;
-  border-radius: 50%;
-  width: 64px;
-  height: 64px;
-  @include flex-center;
-  cursor: pointer;
-  pointer-events: auto;
-  color: $WHITE;
-  transition: background-color $transition-duration;
-
-  &:hover {
-    background-color: rgba(0, 0, 0, 1);
+  &__controls {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: space-between;
+    transform: translateY(-50%);
+    padding: 0 10px;
+    pointer-events: none;
   }
-}
 
-.product-image__control-icon {
-  transform: rotate(-90deg);
+  &__control-button {
+    background-color: rgba(0, 0, 0, 0.5);
+    border: none;
+    border-radius: 50%;
+    width: 64px;
+    height: 64px;
+    @include flex-center;
+    cursor: pointer;
+    pointer-events: auto;
+    color: $WHITE;
+    transition: background-color $transition-duration;
 
-  &--prev {
-    transform: rotate(90deg); // стрелка влево
+    &:hover {
+      background-color: rgba(0, 0, 0, 1);
+    }
   }
-  &--next {
-    transform: rotate(-90deg); // стрелка вправо
+
+  &__control-icon {
+    transform: rotate(-90deg);
+
+    &--prev {
+      transform: rotate(90deg); // стрелка влево
+    }
+    &--next {
+      transform: rotate(-90deg); // стрелка вправо
+    }
   }
 }

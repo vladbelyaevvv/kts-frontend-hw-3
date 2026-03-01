@@ -2,17 +2,17 @@
 
 .related-items {
   margin-top: 48px;
-}
 
-.related-items__grid {
-  margin-top: 32px;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 79px;
+  &__grid {
+    margin-top: 32px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 79px;
 
-  @include md {
-    grid-template-columns: 1fr;
-    justify-items: center;
-    gap: 20px;
+    @include md {
+      grid-template-columns: 1fr;
+      justify-items: center;
+      gap: 20px;
+    }
   }
 }

@@ -1,4 +1,6 @@
-.about-page__content {
-  margin-top: 200px;
-  text-align: center;
+.about-page{
+  &__content {
+    margin-top: 200px;
+    text-align: center;
+  }
 }

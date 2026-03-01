@@ -20,58 +20,63 @@
     padding: 0 12px;
     height: 60px;
   }
-}
 
-.navbar__logo {
-  overflow: visible;
-  height: 42px;
-  @include flex-center;
+  &__logo {
+    overflow: visible;
+    height: 42px;
+    @include flex-center;
 
-  @include sm {
-    height: 35px;
-  }
-}
-
-.navbar__header-nav {
-  display: flex;
-  flex-direction: row;
-  gap: $spacing-xl;
-
-  @include sm {
-    gap: $spacing-m;
-  }
-}
-
-.navbar__link {
-  text-decoration: none;
-  color: $text-primary;
-
-  * {
-    color: inherit;
+    @include sm {
+      height: 35px;
+    }
   }
 
-  &:hover {
-    color: $brand;
+  &__header-nav {
+    display: flex;
+    flex-direction: row;
+    gap: $spacing-xl;
+
+    @include sm {
+      gap: $spacing-m;
+    }
   }
 
-  &.active {
-    color: $brand;
-    font-weight: 500;
+  &__link {
+    text-decoration: none;
+    color: $text-primary;
+
+    * {
+      color: inherit;
+    }
+
+    &:hover {
+      color: $brand;
+    }
+
+    &.active {
+      color: $brand;
+      font-weight: 500;
+    }
   }
-}
 
-.navbar__icons {
-  width: 132px;
-  display: flex;
-  justify-content: flex-end;
-  gap: 20px;
-}
-
-.navbar__icon {
-  text-decoration: none;
-  color: #555;
-
-  &:hover {
-    color: $brand;
+  &__icons {
+    width: 132px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 20px;
   }
+
+  &__icon {
+    text-decoration: none;
+    color: #555;
+
+    &:hover {
+      color: $brand;
+    }
+  }
+
 }
+
+
+
+

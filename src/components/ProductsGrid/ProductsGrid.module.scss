@@ -14,13 +14,13 @@
     grid-template-columns: 1fr;
     gap: 20px;
   }
-}
 
-.products-grid__link {
-  text-decoration: none;
-  color: inherit;
-}
+  &__link {
+    text-decoration: none;
+    color: inherit;
+  }
 
-.products-grid__card-pointer {
-  cursor: pointer;
+  &__card-pointer {
+    cursor: pointer;
+  }
 }
