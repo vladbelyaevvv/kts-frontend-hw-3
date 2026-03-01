@@ -5,15 +5,14 @@ import Navbar from '@/components/Navbar';
 import SearchSection from '@/components/SearchSection';
 import { Option } from '@/components/MultiDropdown';
 import ProductsGrid from '@/components/ProductsGrid';
-import Pagination from '@/components/Pagination';
 import PageLoader from '@/components/PageLoader/PageLoader';
 import { observer } from 'mobx-react-lite';
 import { productsStore } from '@/stores/productsStore';
+import Button from '@/components/Button';
 
 const PAGE_SIZE = 9;
 
 const ProductsPage = observer(() => {
-  const [currentPage, setCurrentPage] = useState(1);
   const [searchValue, setSearchValue] = useState('');
   const [selectedCategories, setSelectedCategories] = useState<Option[]>([]);
 
@@ -28,10 +27,9 @@ const ProductsPage = observer(() => {
     productsStore.fetchProducts();
   };
 
-  const startIndex = (currentPage - 1) * PAGE_SIZE;
-  const endIndex = startIndex + PAGE_SIZE;
-  const currentProducts = productsStore.products.slice(startIndex, endIndex);
-  const totalPages = Math.ceil(productsStore.products.length / PAGE_SIZE);
+  const handleShowMore = () => {
+    productsStore.loadMore();
+  }
 
   if (productsStore.loading) {
     return (
@@ -68,9 +66,17 @@ const ProductsPage = observer(() => {
           onSearchSubmit={handleSearch}
         />
 
-        <ProductsGrid products={currentProducts} />
+        <ProductsGrid products={productsStore.products} />
 
-        <Pagination />
+        <div className={styles['products-page__show-more']}>
+          {productsStore.loading && <PageLoader />}
+          {!productsStore.loading && productsStore.hasMore && (
+            <Button onClick={handleShowMore}>Show more</Button>
+          )}
+          {!productsStore.hasMore && productsStore.products.length > 0 && (
+            <Text view="p-20" color="secondary">No more products</Text>
+          )}
+        </div>
       </div>
     </div>
   );

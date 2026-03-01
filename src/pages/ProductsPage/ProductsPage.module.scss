@@ -21,4 +21,11 @@
   &__title{
     margin-bottom: 24px;
   }
+
+  &__show-more{
+    @include flex-center;
+    margin-top: 40px;
+    margin-bottom: 40px;
+    min-height: 60px;
+  }
 }

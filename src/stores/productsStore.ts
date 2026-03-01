@@ -1,6 +1,8 @@
 import { Category, getCategories, getProducts, GetProductsParams, Product } from "@/api/productsApi";
 import { makeAutoObservable } from "mobx";
 
+const PAGE_SIZE = 9;
+
 class ProductsStore {
     products: Product[] = [];
     loading = false;
@@ -12,6 +14,8 @@ class ProductsStore {
     categories: Category[] = [];
     categoriesLoading = false;
     categoriesError = '';
+
+    currentPage = 1;
 
     constructor() {
         makeAutoObservable(this);
@@ -37,12 +41,29 @@ class ProductsStore {
             this.categoriesLoading = false;
         }
     }
+    
+    // есть ли еще страницы
+    get hasMore(){
+        const totalPages = Math.ceil(this.total / PAGE_SIZE);
+        return this.currentPage < totalPages;
+    }
 
-    async fetchProducts() {
+    async fetchProducts(append = false) {
         try {
-            this.loading = true;
+            if(!append) {
+                this.loading = true;
+                this.currentPage = 1;
+                this.products = [];
+
+            }
+
             this.error = '';
-            const params: GetProductsParams = {};
+
+            const params: GetProductsParams = {
+                page: this.currentPage,
+                pageSize: PAGE_SIZE,
+            };
+
             if(this.search) {
                 params.search = this.search;
             }
@@ -51,13 +72,28 @@ class ProductsStore {
             }
 
             const data = await getProducts(params);
-            this.products = data.data;
+            
+            if(append) {
+                this.products = [...this.products, ...data.data];
+            } else {
+                this.products = data.data;
+            } 
+
             this.total = data.meta.pagination.total;
         } catch(err) {
             this.error = 'Ошибка при загрузке товаров';
         } finally {
             this.loading = false;
         }
+    }
+
+    async loadMore(){
+        if (!this.hasMore){
+            return;
+        }
+
+        this.currentPage += 1;
+        await this.fetchProducts(true);
     }
 
     clear(){
@@ -67,6 +103,7 @@ class ProductsStore {
         this.total = 0;
         this.search = '';
         this.selectedCategoryIds = [];
+        this.currentPage = 1;
     }
 }
 

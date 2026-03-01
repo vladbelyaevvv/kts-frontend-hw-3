@@ -29,6 +29,8 @@ export type Product = {
 export interface GetProductsParams {
   search?: string;
   categoryIds?: number[];
+  page?: number;
+  pageSize?: number;
 }
 
 // получить весь список товаров
@@ -55,6 +57,13 @@ export const getProducts = async (params?: GetProductsParams ) => {
 
   if (Object.keys(filters).length > 0) {
     queryConfig.filters = filters;
+  }
+
+  if(params?.page && params?.pageSize) {
+    queryConfig.pagination = {
+      page: params.page,
+      pageSize: params.pageSize,
+    }
   }
 
   const query = qs.stringify(queryConfig)
