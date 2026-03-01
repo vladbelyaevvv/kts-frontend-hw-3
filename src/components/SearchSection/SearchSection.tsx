@@ -14,6 +14,7 @@ interface SearchSectionProps {
   onCategoriesChange: (options: Option[]) => void;
   totalProducts: number;
   onSearchSubmit: () => void;
+  onClearFilters?: () => void;
 }
 
 const SearchSection = observer(({
@@ -23,6 +24,7 @@ const SearchSection = observer(({
   onCategoriesChange,
   totalProducts,
   onSearchSubmit,
+  onClearFilters
 }: SearchSectionProps) => {
   useEffect(() => {
     productsStore.fetchCategories();
@@ -32,6 +34,8 @@ const SearchSection = observer(({
     key: String(category.id),
     value: category.title,
   }));
+
+  const hasFilters = searchValue || selectedCategories.length > 0;
 
   return (
     <div className={styles['search-section']}>
@@ -60,6 +64,14 @@ const SearchSection = observer(({
             : options.map((opt) => opt.value).join(', ')
         }
       />
+      {hasFilters && onClearFilters && (
+        <Button
+          onClick={onClearFilters}
+          className={styles['search-section__clear-btn']}
+        >
+          Clear filters
+        </Button>
+      )}
       <div className={styles['search-section__total']}>
         <Text tag="h4" weight="bold">
           Total products

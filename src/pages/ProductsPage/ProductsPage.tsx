@@ -9,23 +9,80 @@ import PageLoader from '@/components/PageLoader/PageLoader';
 import { observer } from 'mobx-react-lite';
 import { productsStore } from '@/stores/productsStore';
 import Button from '@/components/Button';
+import { useSearchParams } from 'react-router-dom';
 
 const PAGE_SIZE = 9;
 
 const ProductsPage = observer(() => {
   const [searchValue, setSearchValue] = useState('');
   const [selectedCategories, setSelectedCategories] = useState<Option[]>([]);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [isRestored, setIsRestored] = useState(false);
 
+  //загрузка категорий про монтировании
   useEffect(() => {
-    productsStore.fetchProducts();
+    productsStore.fetchCategories();
   }, []);
+
+  //восстановление  состояния изи url
+  useEffect(() => {
+    if(productsStore.categories.length === 0) return; // надо дождаться загрузки категорий
+    if (isRestored) return; // если уже восстановили - чтобы один раз толкьо сработало
+
+    const searchFromUrl = searchParams.get('search') || '';
+    const categoriesFromUrl = searchParams.get('categories')?.split(',').filter(Boolean) || [];
+
+    setSearchValue(searchFromUrl);
+
+    if(categoriesFromUrl.length > 0){
+      const options: Option[] = categoriesFromUrl.map((id) => {
+        const category = productsStore.categories.find((categ) => String(categ.id) === id);
+        return category ? { key: id, value: category.title} : null;
+      }).filter((opt): opt is Option => opt !== null);
+      setSelectedCategories(options);
+      productsStore.setCategories(options.map((opt) => Number(opt.key)));
+    }
+
+    //загрузка товаров с учетом параметров
+    if (searchFromUrl) {
+      productsStore.setSearch(searchFromUrl);
+    }
+    if (categoriesFromUrl.length > 0){
+      productsStore.setCategories(categoriesFromUrl.map(Number));
+    }
+    productsStore.fetchProducts();
+
+    setIsRestored(true);
+  }, [productsStore.categories]);
 
   const handleSearch = () => {
     const categoryIds = selectedCategories.map((opt) => Number(opt.key));
     productsStore.setCategories(categoryIds);
     productsStore.setSearch(searchValue);
     productsStore.fetchProducts();
+
+    const params = new URLSearchParams();
+    if (searchValue) {
+      params.set('search', searchValue);
+    }
+    if (categoryIds.length > 0) {
+      params.set('categories', categoryIds.join(','));
+    }
+    setSearchParams(params);
   };
+
+  const handleClearFilters = () => {
+    setSearchValue('');
+    setSelectedCategories([]);
+    productsStore.setSearch('');
+    productsStore.setCategories([]);
+    productsStore.fetchProducts();
+    setSearchParams(new URLSearchParams());
+  }
+
+  const handleCategoriesChange = (options: Option[]) => {
+    setSelectedCategories(options);
+  }
 
   const handleShowMore = () => {
     productsStore.loadMore();
@@ -61,9 +118,10 @@ const ProductsPage = observer(() => {
           searchValue={searchValue}
           onSearchChange={setSearchValue}
           selectedCategories={selectedCategories}
-          onCategoriesChange={setSelectedCategories}
+          onCategoriesChange={handleCategoriesChange}
           totalProducts={productsStore.total}
           onSearchSubmit={handleSearch}
+          onClearFilters = {handleClearFilters}
         />
 
         <ProductsGrid products={productsStore.products} />
