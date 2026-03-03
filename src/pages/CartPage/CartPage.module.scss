@@ -1,0 +1,121 @@
+@use '@/styles/variables.scss' as *;
+@use '@/styles/mixins.scss' as *;
+
+.cart-page {
+  &__centered {
+    @include flex-center(column);
+    min-height: calc(100vh - 90px);
+    gap: $spacing-l;
+  }
+
+  &__container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: $spacing-l;
+  }
+
+  &__title {
+    padding-bottom: $spacing-l;
+    text-align: center;
+  }
+
+  &__error {
+    color: #d32f2f;
+    margin-bottom: $spacing-l;
+  }
+
+  &__empty {
+    text-align: center;
+    padding: $spacing-xlarge;
+    gap: $spacing-l;
+  }
+
+  &__items {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-m;
+    margin-bottom: $spacing-l;
+  }
+
+  &__summary {
+    margin-top: $spacing-l;
+    padding-top: $spacing-l;
+    border-top: 1px solid $text-secondary;
+  }
+}
+
+.cart-item {
+  display: grid;
+  grid-template-columns: 100px 1fr auto auto auto;
+  gap: $spacing-m;
+  align-items: center;
+  padding: $spacing-m;
+  background-color: $card-bg;
+  border-radius: 8px;
+
+  @include xs {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+
+  &__image {
+    width: 100px;
+    height: 100px;
+    background-color: $card-image-bg;
+    border-radius: 8px;
+    overflow: hidden;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  &__info {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-xxs;
+  }
+
+  &__remove {
+    background-color: transparent;
+    color: #d32f2f;
+    border: 1px solid #d32f2f;
+
+    &:hover {
+      background-color: #d32f2f !important;
+      color: $WHITE;
+    }
+  }
+}
+
+.cart-summary {
+  background-color: $card-bg;
+  padding: $spacing-l;
+  border-radius: 8px;
+
+  &__row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: $spacing-s;
+  }
+
+  &__checkout {
+    width: 100%;
+    margin: 0;
+  }
+
+  &__clear {
+    margin-top: $spacing-l;
+    background-color: transparent;
+    color: #d32f2f;
+    border: 1px solid #d32f2f;
+
+    &:hover {
+      background-color: #d32f2f !important;
+      color: $WHITE;
+    }
+  }
+}

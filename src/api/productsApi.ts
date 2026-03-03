@@ -1,9 +1,14 @@
-import axios from 'axios';
-import qs from 'qs';
+import api from './axios';
+import * as qs from 'qs';
 
-const api = axios.create({
-  baseURL: 'https://front-school-strapi.ktsdev.ru/api/products',
-});
+export type Category = {
+  id: number;
+  title: string;
+};
+
+export type CategoriesResponse = {
+  data: Category[];
+};
 
 // в чем приходят все товары
 export type ProductsResponse = {
@@ -34,16 +39,16 @@ export interface GetProductsParams {
 }
 
 // получить весь список товаров
-export const getProducts = async (params?: GetProductsParams ) => {
+export const getProducts = async (params?: GetProductsParams) => {
   const filters: Record<string, unknown> = {};
 
-  if (params?.search){
+  if (params?.search) {
     filters.title = {
-        $containsi: params.search,
+      $containsi: params.search,
     };
   }
 
-  if(params?.categoryIds && params.categoryIds.length > 0) {
+  if (params?.categoryIds && params.categoryIds.length > 0) {
     filters.productCategory = {
       id: {
         $in: params.categoryIds,
@@ -53,22 +58,22 @@ export const getProducts = async (params?: GetProductsParams ) => {
 
   const queryConfig: Record<string, unknown> = {
     populate: ['images', 'productCategory'],
-  }
+  };
 
   if (Object.keys(filters).length > 0) {
     queryConfig.filters = filters;
   }
 
-  if(params?.page && params?.pageSize) {
+  if (params?.page && params?.pageSize) {
     queryConfig.pagination = {
       page: params.page,
       pageSize: params.pageSize,
-    }
+    };
   }
 
-  const query = qs.stringify(queryConfig)
+  const query = qs.stringify(queryConfig);
 
-  const response = await api.get<ProductsResponse>(`?${query}`);
+  const response = await api.get<ProductsResponse>(`/products?${query}`);
   return response.data;
 };
 
@@ -77,24 +82,14 @@ export const getProductById = async (documentId: string) => {
     populate: ['images', 'productCategory'],
   });
 
-  const response = await api.get<{ data: Product }>(`/${documentId}?${query}`);
+  const response = await api.get<{ data: Product }>(
+    `/products/${documentId}?${query}`
+  );
   return response.data.data;
 };
 
-export type Category = {
-  id: number;
-  title: string;
-}
-
-export type CategoriesResponse = {
-  data: Category[];
-}
-
 // получить список категорий
 export const getCategories = async () => {
-  const apiCategories = axios.create({
-    baseURL: 'https://front-school-strapi.ktsdev.ru/api/product-categories',
-  });
-  const response = await apiCategories.get<CategoriesResponse>('');
+  const response = await api.get<CategoriesResponse>('/product-categories');
   return response.data;
-}
+};

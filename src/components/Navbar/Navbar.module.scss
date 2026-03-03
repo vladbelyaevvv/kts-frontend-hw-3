@@ -75,8 +75,22 @@
     }
   }
 
+  &__cart-wrapper {
+    position: relative;
+    display: inline-block;
+  }
+
+  &__cart-badge {
+    position: absolute;
+    top: -4px;
+    right: -4px;
+    background-color: $brand;
+    color: $WHITE;
+    font-size: 10px;
+    font-weight: 600;
+    min-width: 16px;
+    height: 16px;
+    border-radius: 8px;
+    @include flex-center;
+  }
 }
-
-
-
-

@@ -12,45 +12,42 @@ export type CheckBoxProps = Omit<
   className?: string;
 };
 
-const CheckBox: React.FC<CheckBoxProps> = React.memo(({
-  checked,
-  disabled,
-  onChange,
-  className = '',
-  ...props
-}) => {
-  const handleChange = () => {
-    if (!disabled && onChange) {
-      onChange(!checked);
-    }
-  };
+const CheckBox: React.FC<CheckBoxProps> = React.memo(
+  ({ checked, disabled, onChange, className = '', ...props }) => {
+    const handleChange = () => {
+      if (!disabled && onChange) {
+        onChange(!checked);
+      }
+    };
 
-  return (
-    <label
-      className={classNames(
-        styles.checkbox__wrapper,
-        { [styles['checkbox--disabled']]: disabled },
-        className)}
-    >
-      <input
-        type="checkbox"
-        checked={checked}
-        onChange={handleChange}
-        disabled={disabled}
-        className={styles.checkbox__input}
-        {...props}
-      />
-      <div className={styles.checkbox__box}>
-        {checked && (
-          <CheckIcon
-            width={48}
-            height={48}
-            color={disabled ? 'secondary' : 'accent'}
-          />
+    return (
+      <label
+        className={classNames(
+          styles.checkbox__wrapper,
+          { [styles['checkbox--disabled']]: disabled },
+          className
         )}
-      </div>
-    </label>
-  );
-});
+      >
+        <input
+          type="checkbox"
+          checked={checked}
+          onChange={handleChange}
+          disabled={disabled}
+          className={styles.checkbox__input}
+          {...props}
+        />
+        <div className={styles.checkbox__box}>
+          {checked && (
+            <CheckIcon
+              width={48}
+              height={48}
+              color={disabled ? 'secondary' : 'accent'}
+            />
+          )}
+        </div>
+      </label>
+    );
+  }
+);
 
 export default CheckBox;

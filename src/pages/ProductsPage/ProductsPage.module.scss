@@ -1,6 +1,6 @@
 @use '@/styles/mixins.scss' as *;
 
-.products-page{
+.products-page {
   &__content {
     padding: 0 100px;
     max-width: 1440px;
@@ -12,17 +12,17 @@
       padding: 0 20px;
     }
   }
-  
+
   &__text {
     max-width: 653px;
     text-align: center;
     margin: 100px auto 0;
   }
-  &__title{
+  &__title {
     margin-bottom: 24px;
   }
 
-  &__show-more{
+  &__show-more {
     @include flex-center;
     margin-top: 40px;
     margin-bottom: 40px;

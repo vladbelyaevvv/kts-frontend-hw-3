@@ -17,71 +17,75 @@ interface SearchSectionProps {
   onClearFilters?: () => void;
 }
 
-const SearchSection = observer(({
-  searchValue,
-  onSearchChange,
-  selectedCategories,
-  onCategoriesChange,
-  totalProducts,
-  onSearchSubmit,
-  onClearFilters
-}: SearchSectionProps) => {
-  useEffect(() => {
-    productsStore.fetchCategories();
-  }, []);
+const SearchSection = observer(
+  ({
+    searchValue,
+    onSearchChange,
+    selectedCategories,
+    onCategoriesChange,
+    totalProducts,
+    onSearchSubmit,
+    onClearFilters,
+  }: SearchSectionProps) => {
+    useEffect(() => {
+      productsStore.fetchCategories();
+    }, []);
 
-  const categoryOptions: Option[] = productsStore.categories.map((category) => ({
-    key: String(category.id),
-    value: category.title,
-  }));
+    const categoryOptions: Option[] = productsStore.categories.map(
+      (category) => ({
+        key: String(category.id),
+        value: category.title,
+      })
+    );
 
-  const hasFilters = searchValue || selectedCategories.length > 0;
+    const hasFilters = searchValue || selectedCategories.length > 0;
 
-  return (
-    <div className={styles['search-section']}>
-      <div className={styles['search-section__bar']}>
-        <Input
-          value={searchValue}
-          onChange={onSearchChange}
-          placeholder="Search product"
-          className={styles['search-section__input']}
+    return (
+      <div className={styles['search-section']}>
+        <div className={styles['search-section__bar']}>
+          <Input
+            value={searchValue}
+            onChange={onSearchChange}
+            placeholder="Search product"
+            className={styles['search-section__input']}
+          />
+          <Button
+            onClick={onSearchSubmit}
+            className={styles['search-section__button']}
+          >
+            Find now
+          </Button>
+        </div>
+        <MultiDropdown
+          className={styles['search-section__filter']}
+          options={categoryOptions}
+          value={selectedCategories}
+          onChange={onCategoriesChange}
+          getTitle={(options) =>
+            options.length === 0
+              ? 'Filter'
+              : options.map((opt) => opt.value).join(', ')
+          }
         />
-        <Button
-          onClick={onSearchSubmit}
-          className={styles['search-section__button']}
-        >
-          Find now
-        </Button>
+        {hasFilters && onClearFilters && (
+          <Button
+            onClick={onClearFilters}
+            className={styles['search-section__clear-btn']}
+          >
+            Clear filters
+          </Button>
+        )}
+        <div className={styles['search-section__total']}>
+          <Text tag="h4" weight="bold">
+            Total products
+          </Text>
+          <Text view="p-20" color="accent">
+            {totalProducts}
+          </Text>
+        </div>
       </div>
-      <MultiDropdown
-        className={styles['search-section__filter']}
-        options={categoryOptions}
-        value={selectedCategories}
-        onChange={onCategoriesChange}
-        getTitle={(options) =>
-          options.length === 0
-            ? 'Filter'
-            : options.map((opt) => opt.value).join(', ')
-        }
-      />
-      {hasFilters && onClearFilters && (
-        <Button
-          onClick={onClearFilters}
-          className={styles['search-section__clear-btn']}
-        >
-          Clear filters
-        </Button>
-      )}
-      <div className={styles['search-section__total']}>
-        <Text tag="h4" weight="bold">
-          Total products
-        </Text>
-        <Text view="p-20" color="accent">
-          {totalProducts}
-        </Text>
-      </div>
-    </div>
-  );
-});
+    );
+  }
+);
 
 export default SearchSection;

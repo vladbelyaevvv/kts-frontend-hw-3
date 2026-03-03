@@ -11,8 +11,6 @@ import { productsStore } from '@/stores/productsStore';
 import Button from '@/components/Button';
 import { useSearchParams } from 'react-router-dom';
 
-const PAGE_SIZE = 9;
-
 const ProductsPage = observer(() => {
   const [searchValue, setSearchValue] = useState('');
   const [selectedCategories, setSelectedCategories] = useState<Option[]>([]);
@@ -26,19 +24,28 @@ const ProductsPage = observer(() => {
 
   //восстановление  состояния изи url
   useEffect(() => {
-    if(productsStore.categories.length === 0) return; // надо дождаться загрузки категорий
-    if (isRestored) return; // если уже восстановили - чтобы один раз толкьо сработало
+    if (productsStore.categories.length === 0) {
+      return;
+    } // надо дождаться загрузки категорий
+    if (isRestored) {
+      return;
+    } // если уже восстановили - чтобы один раз толкьо сработало
 
     const searchFromUrl = searchParams.get('search') || '';
-    const categoriesFromUrl = searchParams.get('categories')?.split(',').filter(Boolean) || [];
+    const categoriesFromUrl =
+      searchParams.get('categories')?.split(',').filter(Boolean) || [];
 
     setSearchValue(searchFromUrl);
 
-    if(categoriesFromUrl.length > 0){
-      const options: Option[] = categoriesFromUrl.map((id) => {
-        const category = productsStore.categories.find((categ) => String(categ.id) === id);
-        return category ? { key: id, value: category.title} : null;
-      }).filter((opt): opt is Option => opt !== null);
+    if (categoriesFromUrl.length > 0) {
+      const options: Option[] = categoriesFromUrl
+        .map((id) => {
+          const category = productsStore.categories.find(
+            (categ) => String(categ.id) === id
+          );
+          return category ? { key: id, value: category.title } : null;
+        })
+        .filter((opt): opt is Option => opt !== null);
       setSelectedCategories(options);
       productsStore.setCategories(options.map((opt) => Number(opt.key)));
     }
@@ -47,7 +54,7 @@ const ProductsPage = observer(() => {
     if (searchFromUrl) {
       productsStore.setSearch(searchFromUrl);
     }
-    if (categoriesFromUrl.length > 0){
+    if (categoriesFromUrl.length > 0) {
       productsStore.setCategories(categoriesFromUrl.map(Number));
     }
     productsStore.fetchProducts();
@@ -78,20 +85,20 @@ const ProductsPage = observer(() => {
     productsStore.setCategories([]);
     productsStore.fetchProducts();
     setSearchParams(new URLSearchParams());
-  }
+  };
 
   const handleCategoriesChange = (options: Option[]) => {
     setSelectedCategories(options);
-  }
+  };
 
   const handleShowMore = () => {
     productsStore.loadMore();
-  }
+  };
 
   if (productsStore.loading) {
     return (
       <div className={styles['products-page__text']}>
-        <PageLoader/>
+        <PageLoader />
       </div>
     );
   }
@@ -121,7 +128,7 @@ const ProductsPage = observer(() => {
           onCategoriesChange={handleCategoriesChange}
           totalProducts={productsStore.total}
           onSearchSubmit={handleSearch}
-          onClearFilters = {handleClearFilters}
+          onClearFilters={handleClearFilters}
         />
 
         <ProductsGrid products={productsStore.products} />
@@ -132,7 +139,9 @@ const ProductsPage = observer(() => {
             <Button onClick={handleShowMore}>Show more</Button>
           )}
           {!productsStore.hasMore && productsStore.products.length > 0 && (
-            <Text view="p-20" color="secondary">No more products</Text>
+            <Text view="p-20" color="secondary">
+              No more products
+            </Text>
           )}
         </div>
       </div>
