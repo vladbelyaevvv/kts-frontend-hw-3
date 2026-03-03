@@ -4,12 +4,33 @@ import Card from '@/components/Card';
 import { Product } from '@/api/productsApi';
 import styles from './RelatedItems.module.scss';
 import React from 'react';
+import { authStore } from '@/stores/authStore';
+import { cartStore } from '@/stores/cartStore';
+import { useNavigate } from 'react-router-dom';
+import { observer } from 'mobx-react-lite';
 
 interface RelatedItemsProps {
   products: Product[];
 }
 
-const RelatedItems = React.memo(({ products }: RelatedItemsProps) => {
+const RelatedItems = observer(({ products }: RelatedItemsProps) => {
+  const navigate = useNavigate();
+
+  const handleAddToCart = async (e: React.MouseEvent, product: Product) => {
+    e.stopPropagation();
+
+    if (!authStore.isAuthenticated) {
+      navigate('/auth/signin');
+      return;
+    }
+
+    await cartStore.add(product);
+  };
+
+  const handleCardClick = (documentId: string) => {
+    navigate(`/product/${documentId}`);
+  };
+
   return (
     <div className={styles['related-items']}>
       <Text tag="h1" className={styles['related-items__title']}>
@@ -19,6 +40,7 @@ const RelatedItems = React.memo(({ products }: RelatedItemsProps) => {
         {products.map((product) => (
           <Card
             key={product.id}
+            className={styles['related-items__card-pointer']}
             image={product.images?.[0]?.url || ''}
             title={product.title}
             subtitle={product.description}
@@ -27,8 +49,15 @@ const RelatedItems = React.memo(({ products }: RelatedItemsProps) => {
                 ${product.price}
               </Text>
             }
-            actionSlot={<Button>Add to Cart</Button>}
+            actionSlot={
+              <Button onClick={(e) => handleAddToCart(e, product)}>
+                {cartStore.isInCart(product.id)
+                  ? 'Already in cart'
+                  : 'Add to Cart'}
+              </Button>
+            }
             captionSlot={product.productCategory?.title}
+            onClick={() => handleCardClick(product.documentId)}
           />
         ))}
       </div>

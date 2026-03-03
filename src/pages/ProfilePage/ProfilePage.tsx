@@ -14,7 +14,7 @@ const ProfilePage = observer(() => {
   };
 
   if (!authStore.isAuthenticated) {
-    return <Navigate to="/auth/login" replace />;
+    return <Navigate to="/auth/signin" replace />;
   }
 
   return (

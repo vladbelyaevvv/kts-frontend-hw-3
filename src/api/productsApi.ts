@@ -28,7 +28,7 @@ export type Product = {
   description: string;
   price: number;
   images?: { url: string }[];
-  productCategory?: { title: string };
+  productCategory?: { title: string; id?: number };
 };
 
 export interface GetProductsParams {
@@ -92,4 +92,29 @@ export const getProductById = async (documentId: string) => {
 export const getCategories = async () => {
   const response = await api.get<CategoriesResponse>('/product-categories');
   return response.data;
+};
+
+export const getRelatedProducts = async (
+  categoryId: number,
+  currentProductId: number
+) => {
+  const query = qs.stringify({
+    filters: {
+      productCategory: {
+        id: {
+          $eq: categoryId,
+        },
+      },
+      id: {
+        $ne: currentProductId,
+      },
+    },
+    populate: ['images', 'productCategory'],
+    pagination: {
+      limit: 3,
+    },
+  });
+
+  const response = await api.get<ProductsResponse>(`/products?${query}`);
+  return response.data.data;
 };

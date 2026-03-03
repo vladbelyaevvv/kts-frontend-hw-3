@@ -1,8 +1,9 @@
-import { getProductById, Product } from '@/api/productsApi';
+import { getProductById, getRelatedProducts, Product } from '@/api/productsApi';
 import { makeAutoObservable, runInAction } from 'mobx';
 
 class ProductStore {
   product: Product | null = null;
+  relatedProducts: Product[] = [];
   loading = false;
   error = '';
 
@@ -24,6 +25,16 @@ class ProductStore {
       runInAction(() => {
         this.product = data;
       });
+
+      if (data.productCategory?.id) {
+        const related = await getRelatedProducts(
+          data.productCategory.id,
+          data.id
+        );
+        runInAction(() => {
+          this.relatedProducts = related;
+        });
+      }
     } catch (err) {
       runInAction(() => {
         this.error = 'Ошибка при загрузке товара';
@@ -38,6 +49,7 @@ class ProductStore {
   clear() {
     runInAction(() => {
       this.product = null;
+      this.relatedProducts = [];
       this.loading = false;
       this.error = '';
     });

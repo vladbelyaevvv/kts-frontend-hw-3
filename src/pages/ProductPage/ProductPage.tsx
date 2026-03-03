@@ -5,12 +5,7 @@ import LinkBack from '@/components/LinkBack';
 import Text from '@/components/Text';
 import Button from '@/components/Button';
 import RelatedItems from '@/components/RelatedItems';
-import { Product } from '@/api/productsApi';
 import ProductImage from '@/components/ProductImage';
-
-import image1 from './imagesRelated/1.png';
-import image2 from './imagesRelated/2.png';
-import image3 from './imagesRelated/3.png';
 import PageLoader from '@/components/PageLoader/PageLoader';
 import { observer } from 'mobx-react-lite';
 import { useEffect } from 'react';
@@ -38,36 +33,6 @@ const ProductPage = observer(() => {
       await cartStore.add(productStore.product);
     }
   };
-
-  const relatedProducts: Product[] = [
-    {
-      id: 1,
-      documentId: '1',
-      title: 'White Aesthetic Chair',
-      productCategory: { title: 'Chair' },
-      price: 63.47,
-      images: [{ url: image1 }],
-      description: 'Combination of wool and cotton',
-    },
-    {
-      id: 2,
-      documentId: '2',
-      title: 'Wooden Cupboard 3 Row',
-      productCategory: { title: 'Cupboard' },
-      price: 79.88,
-      images: [{ url: image2 }],
-      description: 'Combination of wool and cotton',
-    },
-    {
-      id: 3,
-      documentId: '2',
-      title: 'Minimalist Lounge Chair',
-      productCategory: { title: 'Chair' },
-      price: 14.74,
-      images: [{ url: image3 }],
-      description: 'Combination of wool and cotton',
-    },
-  ];
 
   if (productStore.loading) {
     return (
@@ -118,7 +83,7 @@ const ProductPage = observer(() => {
             </div>
           </div>
         </div>
-        <RelatedItems products={relatedProducts}></RelatedItems>
+        <RelatedItems products={productStore.relatedProducts}></RelatedItems>
       </div>
     </div>
   );
