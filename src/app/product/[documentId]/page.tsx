@@ -9,18 +9,21 @@ import RelatedItems from '@/components/RelatedItems';
 import ProductImage from '@/components/ProductImage';
 import PageLoader from '@/components/PageLoader/PageLoader';
 import { observer } from 'mobx-react-lite';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import { useStores } from '@/providers/StoreProvider';
+import { ProductStore } from '@/stores/productStore';
 
 const ProductPage = observer(() => {
   const { documentId } = useParams<{ documentId: string }>();
   const router = useRouter();
-  const { productStore, authStore, cartStore } = useStores();
+  const { authStore, cartStore } = useStores();
+
+  const [productStore] = useState(() => new ProductStore());
 
   useEffect(() => {
     if (documentId) {
-      productStore.fetchProduct(documentId);
+      productStore.init(documentId);
     }
   }, [documentId]);
 
@@ -35,7 +38,7 @@ const ProductPage = observer(() => {
     }
   };
 
-  if (productStore.loading) {
+  if (productStore.productMeta.isLoading) {
     return (
       <div className={styles['product-page__text']}>
         <PageLoader />
@@ -43,7 +46,7 @@ const ProductPage = observer(() => {
     );
   }
 
-  if (productStore.error || !productStore.product) {
+  if (productStore.productMeta.isError || !productStore.product) {
     return <div className={styles['product-page__text']}>Error</div>;
   }
 
@@ -84,7 +87,13 @@ const ProductPage = observer(() => {
             </div>
           </div>
         </div>
-        <RelatedItems products={productStore.relatedProducts}></RelatedItems>
+        {productStore.relatedMeta.isLoading && <PageLoader />}
+        {productStore.relatedMeta.isError && (
+          <Text color="secondary">Похожие товары недоступны</Text>
+        )}
+        {!productStore.relatedMeta.isLoading && !productStore.relatedMeta.isError && productStore.relatedProducts.length > 0 && (
+          <RelatedItems products={productStore.relatedProducts} />
+        )}
       </div>
     </div>
   );

@@ -1,5 +1,5 @@
 import { setJWTToken } from '@api/axios';
-import { makeAutoObservable } from 'mobx';
+import { action, computed, makeObservable, observable } from 'mobx';
 import { signIn, signUp, AuthResponse } from '@api/authApi';
 
 export type AuthUser = {
@@ -22,7 +22,17 @@ class AuthStore {
   user: AuthUser | null = null;
 
   constructor() {
-    makeAutoObservable(this);
+    makeObservable(this, {
+      user: observable,
+      isAuthenticated: computed,
+      email: computed,
+      username: computed,
+      setSignedIn: action,
+      setSignOut: action,
+      login: action,
+      register: action,
+    });
+
     if (typeof window !== 'undefined'){
       this.restoreFromStorage();
       setJWTToken(this.user?.jwt ?? null);

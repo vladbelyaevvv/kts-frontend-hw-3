@@ -10,11 +10,11 @@ import ProductsGrid from '@/components/ProductsGrid';
 import PageLoader from '@/components/PageLoader/PageLoader';
 import { observer } from 'mobx-react-lite';
 import Button from '@/components/Button';
-import { useStores } from '@/providers/StoreProvider';
 import { useSearchParams, useRouter } from 'next/navigation';
+import { ProductsStore } from '@/stores/productsStore';
 
 const ProductsPage = observer(() => {
-  const { productsStore } = useStores();
+  const [ productsStore ] = useState(() => new ProductsStore())
   const [searchValue, setSearchValue] = useState('');
   const [selectedCategories, setSelectedCategories] = useState<Option[]>([]);
   const searchParams = useSearchParams();
@@ -99,7 +99,7 @@ const ProductsPage = observer(() => {
     productsStore.loadMore();
   };
 
-  if (productsStore.loading) {
+  if (productsStore.productsMeta.isLoading) {
     return (
       <div className={styles['products-page__text']}>
         <PageLoader />
@@ -107,7 +107,7 @@ const ProductsPage = observer(() => {
     );
   }
 
-  if (productsStore.error) {
+  if (productsStore.productsMeta.isError) {
     return <div className={styles['products-page__text']}>Error</div>;
   }
 
@@ -133,13 +133,14 @@ const ProductsPage = observer(() => {
           totalProducts={productsStore.total}
           onSearchSubmit={handleSearch}
           onClearFilters={handleClearFilters}
+          productsStore={productsStore}
         />
 
         <ProductsGrid products={productsStore.products} />
 
         <div className={styles['products-page__show-more']}>
-          {productsStore.loading && <PageLoader />}
-          {!productsStore.loading && productsStore.hasMore && (
+          {productsStore.productsMeta.isLoading && <PageLoader />}
+          {!productsStore.productsMeta.isLoading && productsStore.hasMore && (
             <Button onClick={handleShowMore}>Show more</Button>
           )}
           {!productsStore.hasMore && productsStore.products.length > 0 && (

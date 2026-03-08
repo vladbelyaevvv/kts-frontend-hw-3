@@ -3,14 +3,10 @@
 import { createContext, useContext, useEffect, useState } from 'react';
 import { authStore } from '@stores/authStore';
 import { cartStore } from '@stores/cartStore';
-import { productsStore } from '@stores/productsStore';
-import { productStore } from '@stores/productStore';
 
 interface Stores {
   authStore: typeof authStore;
   cartStore: typeof cartStore;
-  productsStore: typeof productsStore;
-  productStore: typeof productStore;
 }
 
 const StoresContext = createContext<Stores | null>(null);
@@ -30,8 +26,6 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
     setStores({
       authStore,
       cartStore,
-      productsStore,
-      productStore,
     });
   }, []);
 

@@ -1,59 +1,74 @@
 import { getProductById, getRelatedProducts, Product } from '@api/productsApi';
-import { makeAutoObservable, runInAction } from 'mobx';
+import { action, makeObservable, observable, runInAction } from 'mobx';
+import { LoadingStageModel } from './loadingState';
 
-class ProductStore {
+export class ProductStore {
   product: Product | null = null;
   relatedProducts: Product[] = [];
-  loading = false;
-  error = '';
+
+  productMeta = new LoadingStageModel();
+  relatedMeta = new LoadingStageModel();
 
   constructor() {
-    makeAutoObservable(this);
+    makeObservable(this, {
+      product: observable,
+      relatedProducts: observable,
+      productMeta: observable,
+      relatedMeta: observable,
+      fetchProduct: action,
+      fetchRelatedProducts: action,
+      init: action,
+      clear: action,
+    });
   }
 
+  //загрузка только товара
   async fetchProduct(documentId: string) {
     if (!documentId) {
       return;
     }
+    this.productMeta.start();
 
     try {
-      runInAction(() => {
-        this.loading = true;
-        this.error = '';
-      });
       const data = await getProductById(documentId);
       runInAction(() => {
         this.product = data;
-      });
-
-      if (data.productCategory?.id) {
-        const related = await getRelatedProducts(
-          data.productCategory.id,
-          data.id
-        );
-        runInAction(() => {
-          this.relatedProducts = related;
-        });
-      }
+        this.productMeta.success();
+      })
+      return data;
     } catch (err) {
+      this.productMeta.error('Ошибка при загрузке товара');
+      return null;
+    }
+  }
+
+  // загрузка только связанных товаров
+  async fetchRelatedProducts(productId: number, categoryId: number){
+    this.relatedMeta.start();
+
+    try {
+      const related = await getRelatedProducts(categoryId, productId);
       runInAction(() => {
-        this.error = 'Ошибка при загрузке товара';
-      });
-    } finally {
-      runInAction(() => {
-        this.loading = false;
-      });
+        this.relatedProducts = related;
+        this.relatedMeta.success();
+      })
+    } catch(err) {
+      this.relatedMeta.error('Не удалось загрузить похожие товары');
+    }
+  }
+
+  async init(documentId: string) {
+    const product = await this.fetchProduct(documentId);
+
+    if(product?.productCategory?.id){
+      this.fetchRelatedProducts(product.id, product.productCategory.id);
     }
   }
 
   clear() {
-    runInAction(() => {
-      this.product = null;
-      this.relatedProducts = [];
-      this.loading = false;
-      this.error = '';
-    });
+    this.product = null;
+    this.relatedProducts = [];
+    this.productMeta.reset();
+    this.relatedMeta.reset();
   }
 }
-
-export const productStore = new ProductStore();

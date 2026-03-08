@@ -7,7 +7,7 @@ import Text from '@/components/Text';
 import styles from './SearchSection.module.scss';
 import { observer } from 'mobx-react-lite';
 import { useEffect } from 'react';
-import { productsStore } from '@/stores/productsStore';
+import { ProductsStore } from '@/stores/productsStore';
 
 interface SearchSectionProps {
   searchValue: string;
@@ -17,6 +17,7 @@ interface SearchSectionProps {
   totalProducts: number;
   onSearchSubmit: () => void;
   onClearFilters?: () => void;
+  productsStore: ProductsStore;
 }
 
 const SearchSection = observer(
@@ -28,6 +29,7 @@ const SearchSection = observer(
     totalProducts,
     onSearchSubmit,
     onClearFilters,
+    productsStore,
   }: SearchSectionProps) => {
     useEffect(() => {
       productsStore.fetchCategories();

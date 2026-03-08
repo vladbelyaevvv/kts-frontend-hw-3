@@ -1,6 +1,6 @@
 import { addToCart, getCart, removeFromCart } from '@api/cartApi';
 import { Product } from '@api/productsApi';
-import { makeAutoObservable, runInAction } from 'mobx';
+import { action, computed, makeAutoObservable, makeObservable, observable, runInAction } from 'mobx';
 
 type cartItem = {
   product: Product;
@@ -8,11 +8,21 @@ type cartItem = {
 };
 
 class CartStore {
-  private storage: Map<number, cartItem> = new Map();
+  private storage = observable.map<number, cartItem>();
+
 
   constructor() {
-    makeAutoObservable(this);
+    makeObservable(this, {
+      count: computed,
+      total: computed,
+      list: computed,
+      fetch: action,
+      add: action,
+      remove: action,
+      clear: action,
+    });
   }
+
 
   // количество товаров в корзине
   get count(): number {

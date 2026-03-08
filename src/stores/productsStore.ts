@@ -5,26 +5,41 @@ import {
   GetProductsParams,
   Product,
 } from '@api/productsApi';
-import { makeAutoObservable, runInAction } from 'mobx';
+import { action, computed, makeObservable, observable, runInAction } from 'mobx';
+import { LoadingStageModel } from './loadingState';
 
 const PAGE_SIZE = 9;
 
-class ProductsStore {
+export class ProductsStore {
   products: Product[] = [];
-  loading = false;
-  error = '';
   total = 0;
   search = '';
   selectedCategoryIds: number[] = [];
 
   categories: Category[] = [];
-  categoriesLoading = false;
-  categoriesError = '';
+  categoriesMeta = new LoadingStageModel();
+  productsMeta = new LoadingStageModel();
 
   currentPage = 1;
 
   constructor() {
-    makeAutoObservable(this);
+    makeObservable(this, {
+      products: observable,
+      productsMeta: observable,
+      total: observable,
+      search: observable,
+      selectedCategoryIds: observable,
+      categories: observable,
+      categoriesMeta: observable,
+      currentPage: observable,
+      hasMore: computed,
+      setSearch: action,
+      setCategories: action,
+      fetchCategories: action,
+      fetchProducts: action,
+      loadMore: action,
+      clear: action,
+    });
   }
 
   setSearch(value: string) {
@@ -36,23 +51,16 @@ class ProductsStore {
   }
 
   async fetchCategories() {
+    this.categoriesMeta.start();
+
     try {
-      runInAction(() => {
-        this.categoriesLoading = true;
-        this.categoriesError = '';
-      });
       const data = await getCategories();
       runInAction(() => {
         this.categories = data.data;
-      });
+        this.categoriesMeta.success();
+      })
     } catch (err) {
-      runInAction(() => {
-        this.categoriesError = 'Ошибка при загрузке категорий';
-      });
-    } finally {
-      runInAction(() => {
-        this.categoriesLoading = false;
-      });
+        this.categoriesMeta.error('Не удалось загрузить категории');
     }
   }
 
@@ -63,17 +71,13 @@ class ProductsStore {
   }
 
   async fetchProducts(append = false) {
+    if (!append) {
+      this.productsMeta.start();
+      this.currentPage = 1;
+      this.products = [];
+    }
+
     try {
-      if (!append) {
-        runInAction(() => {
-          this.loading = true;
-          this.currentPage = 1;
-          this.products = [];
-        });
-      }
-
-      this.error = '';
-
       const params: GetProductsParams = {
         page: this.currentPage,
         pageSize: PAGE_SIZE,
@@ -86,28 +90,19 @@ class ProductsStore {
 
       const data = await getProducts(params);
 
-      if (append) {
-        runInAction(() => {
+      runInAction(() => {
+        if (append) {
           this.products = [...this.products, ...data.data];
-        });
-      } else {
-        runInAction(() => {
+        } else {
           this.products = data.data;
-        });
-      }
-
-      runInAction(() => {
+        }
         this.total = data.meta.pagination.total;
-      });
+        this.productsMeta.success();
+      })
+
     } catch (err) {
-      runInAction(() => {
-        this.error = 'Ошибка при загрузке товаров';
-      });
-    } finally {
-      runInAction(() => {
-        this.loading = false;
-      });
-    }
+        this.productsMeta.error('Не удалось загрузить товары');
+    } 
   }
 
   async loadMore() {
@@ -120,16 +115,12 @@ class ProductsStore {
   }
 
   clear() {
-    runInAction(() => {
-      this.products = [];
-      this.loading = false;
-      this.error = '';
-      this.total = 0;
-      this.search = '';
-      this.selectedCategoryIds = [];
-      this.currentPage = 1;
-    });
+    this.products = [];
+    this.total = 0;
+    this.search = '';
+    this.selectedCategoryIds = [];
+    this.currentPage = 1;
+    this.categoriesMeta.reset();
+    this.productsMeta.reset();
   }
 }
-
-export const productsStore = new ProductsStore();
