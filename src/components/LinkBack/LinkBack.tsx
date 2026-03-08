@@ -1,12 +1,14 @@
-import { useNavigate } from 'react-router-dom';
+'use client';
+
+import { useRouter } from 'next/navigation';
 import styles from './LinkBack.module.scss';
 import Text from '@/components/Text';
 import React from 'react';
 
 const LinkBack = React.memo(() => {
-  const navigate = useNavigate();
+  const router = useRouter();
   return (
-    <div className={styles['link-back']} onClick={() => navigate(-1)}>
+    <div className={styles['link-back']} onClick={() => router.back()}>
       <svg
         width="32"
         height="32"

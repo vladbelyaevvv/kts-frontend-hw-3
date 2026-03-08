@@ -1,5 +1,5 @@
-import { addToCart, getCart, removeFromCart } from '@/api/cartApi';
-import { Product } from '@/api/productsApi';
+import { addToCart, getCart, removeFromCart } from '@api/cartApi';
+import { Product } from '@api/productsApi';
 import { makeAutoObservable, runInAction } from 'mobx';
 
 type cartItem = {

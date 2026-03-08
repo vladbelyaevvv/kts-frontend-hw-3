@@ -1,5 +1,7 @@
+'use client';
+
 import Text from '@/components/Text';
-import styles from './ProductsPage.module.scss';
+import styles from './page.module.scss';
 import { useEffect, useState } from 'react';
 import Navbar from '@/components/Navbar';
 import SearchSection from '@/components/SearchSection';
@@ -7,15 +9,17 @@ import { Option } from '@/components/MultiDropdown';
 import ProductsGrid from '@/components/ProductsGrid';
 import PageLoader from '@/components/PageLoader/PageLoader';
 import { observer } from 'mobx-react-lite';
-import { productsStore } from '@/stores/productsStore';
 import Button from '@/components/Button';
-import { useSearchParams } from 'react-router-dom';
+import { useStores } from '@/providers/StoreProvider';
+import { useSearchParams, useRouter } from 'next/navigation';
 
 const ProductsPage = observer(() => {
+  const { productsStore } = useStores();
   const [searchValue, setSearchValue] = useState('');
   const [selectedCategories, setSelectedCategories] = useState<Option[]>([]);
-  const [searchParams, setSearchParams] = useSearchParams();
+  const searchParams = useSearchParams();
   const [isRestored, setIsRestored] = useState(false);
+  const router = useRouter();
 
   //загрузка категорий про монтировании
   useEffect(() => {
@@ -75,7 +79,7 @@ const ProductsPage = observer(() => {
     if (categoryIds.length > 0) {
       params.set('categories', categoryIds.join(','));
     }
-    setSearchParams(params);
+    router.push(`/?${params.toString()}`);
   };
 
   const handleClearFilters = () => {
@@ -84,7 +88,7 @@ const ProductsPage = observer(() => {
     productsStore.setSearch('');
     productsStore.setCategories([]);
     productsStore.fetchProducts();
-    setSearchParams(new URLSearchParams());
+    router.push('/');
   };
 
   const handleCategoriesChange = (options: Option[]) => {

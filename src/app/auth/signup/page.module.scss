@@ -1,0 +1,72 @@
+@use '@/styles/variables.scss' as *;
+@use '@/styles/mixins.scss' as *;
+
+.auth-page {
+  &__container {
+    @include flex-center(column);
+    padding: 0 100px 143px 100px;
+    max-width: 1440px;
+    margin: 0 auto;
+    width: 100%;
+    box-sizing: border-box;
+
+    @include sm {
+      padding: 0 20px 143px 20px;
+    }
+  }
+
+  &__wrapper {
+    margin-top: $spacing-l;
+    max-width: 400px;
+    width: 100%;
+    padding: $spacing-l;
+    background-color: $WHITE;
+    border-radius: 8px;
+  }
+
+  &__title {
+    text-align: center;
+    margin-bottom: $spacing-l;
+    color: $text-primary;
+  }
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-m;
+  }
+
+  &__input {
+    width: 100%;
+
+    input {
+      background-color: #fcfafa;
+    }
+  }
+
+  &__error {
+    color: #d32f2f;
+    font-size: 14px;
+    text-align: center;
+  }
+
+  &__button {
+    width: 100%;
+    margin-top: $spacing-s;
+  }
+
+  &__switch {
+    margin-top: $spacing-l;
+    text-align: center;
+    color: $text-secondary;
+  }
+
+  &__link {
+    color: $brand;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}

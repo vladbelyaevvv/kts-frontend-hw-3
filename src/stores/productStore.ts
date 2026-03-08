@@ -1,4 +1,4 @@
-import { getProductById, getRelatedProducts, Product } from '@/api/productsApi';
+import { getProductById, getRelatedProducts, Product } from '@api/productsApi';
 import { makeAutoObservable, runInAction } from 'mobx';
 
 class ProductStore {

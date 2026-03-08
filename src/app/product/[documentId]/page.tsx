@@ -1,6 +1,7 @@
-import { useNavigate, useParams } from 'react-router-dom';
+'use client';
+
 import Navbar from '@/components/Navbar';
-import styles from './ProductPage.module.scss';
+import styles from './page.module.scss';
 import LinkBack from '@/components/LinkBack';
 import Text from '@/components/Text';
 import Button from '@/components/Button';
@@ -9,13 +10,13 @@ import ProductImage from '@/components/ProductImage';
 import PageLoader from '@/components/PageLoader/PageLoader';
 import { observer } from 'mobx-react-lite';
 import { useEffect } from 'react';
-import { productStore } from '@/stores/productStore';
-import { authStore } from '@/stores/authStore';
-import { cartStore } from '@/stores/cartStore';
+import { useParams, useRouter } from 'next/navigation';
+import { useStores } from '@/providers/StoreProvider';
 
 const ProductPage = observer(() => {
   const { documentId } = useParams<{ documentId: string }>();
-  const navigate = useNavigate();
+  const router = useRouter();
+  const { productStore, authStore, cartStore } = useStores();
 
   useEffect(() => {
     if (documentId) {
@@ -25,7 +26,7 @@ const ProductPage = observer(() => {
 
   const handleAddToCart = async () => {
     if (!authStore.isAuthenticated) {
-      navigate('/auth/signin');
+      router.push('/auth/signin');
       return;
     }
 

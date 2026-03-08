@@ -4,7 +4,7 @@ import {
   getProducts,
   GetProductsParams,
   Product,
-} from '@/api/productsApi';
+} from '@api/productsApi';
 import { makeAutoObservable, runInAction } from 'mobx';
 
 const PAGE_SIZE = 9;

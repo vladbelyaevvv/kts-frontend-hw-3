@@ -1,3 +1,5 @@
+'use client';
+
 import Input from '@/components/Input';
 import Button from '@/components/Button';
 import MultiDropdown, { Option } from '@/components/MultiDropdown';

@@ -1,7 +1,8 @@
+'use client';
+
 import * as React from 'react';
 import classNames from 'classnames';
 import styles from './Text.module.scss';
-import { text } from 'node:stream/consumers';
 
 export type TextProps = {
   /** Дополнительный класс */

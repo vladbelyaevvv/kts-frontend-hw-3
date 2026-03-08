@@ -1,5 +1,5 @@
 import Text from '@/components/Text';
-import styles from './AboutPage.module.scss';
+import styles from './page.module.scss';
 import Navbar from '@/components/Navbar';
 
 const AboutPage = () => {

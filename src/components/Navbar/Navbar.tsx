@@ -1,14 +1,18 @@
+'use client';
+
 import styles from './Navbar.module.scss';
 import Text from '@/components/Text';
 import React, { useEffect } from 'react';
 import classNames from 'classnames';
-import { Link, NavLink } from 'react-router-dom';
-import { cartStore } from '@/stores/cartStore';
+import Link from 'next/link';
 import { observer } from 'mobx-react-lite';
-import { authStore } from '@/stores/authStore';
+import { useStores } from '@/providers/StoreProvider';
+import { usePathname } from 'next/navigation';
 
 const Navbar = observer(() => {
+  const { authStore, cartStore } = useStores();
   const { isAuthenticated } = authStore;
+  const pathname = usePathname();
 
   useEffect(() => {
     if (isAuthenticated) {
@@ -96,41 +100,35 @@ const Navbar = observer(() => {
 
       {/* Навигационные ссылки по центру */}
       <nav className={styles['navbar__header-nav']}>
-        <NavLink
-          to="/"
-          className={({ isActive }) =>
-            classNames(styles['navbar__link'], {
-              [styles['navbar__link--active']]: isActive,
-            })
-          }
+        <Link
+          href="/"
+          className={classNames(styles['navbar__link'], {
+            [styles['navbar__link--active']]: pathname === '/',
+          })}
         >
           <Text view="p-18">Products</Text>
-        </NavLink>
-        <NavLink
-          to="/categories"
-          className={({ isActive }) =>
-            classNames(styles['navbar__link'], {
-              [styles['navbar__link--active']]: isActive,
-            })
-          }
+        </Link>
+        <Link
+          href="/categories"
+           className={classNames(styles['navbar__link'], {
+            [styles['navbar__link--active']]: pathname === '/categories',
+          })}
         >
           <Text view="p-18">Categories</Text>
-        </NavLink>
-        <NavLink
-          to="/about"
-          className={({ isActive }) =>
-            classNames(styles['navbar__link'], {
-              [styles['navbar__link--active']]: isActive,
-            })
-          }
+        </Link>
+        <Link
+          href="/about"
+          className={classNames(styles['navbar__link'], {
+            [styles['navbar__link--active']]: pathname === '/about',
+          })}
         >
           <Text view="p-18">About us</Text>
-        </NavLink>
+        </Link>
       </nav>
 
       {/* Иконки справа */}
       <div className={styles['navbar__icons']}>
-        <Link to="/cart" className={styles['navbar__icon']}>
+        <Link href="/cart" className={styles['navbar__icon']}>
           <div className={styles['navbar__cart-wrapper']}>
             <svg
               width="30"
@@ -180,7 +178,7 @@ const Navbar = observer(() => {
         </Link>
 
         <Link
-          to="/profile"
+          href="/profile"
           className={styles['navbar__icon']}
           onClick={handleProfileClick}
         >

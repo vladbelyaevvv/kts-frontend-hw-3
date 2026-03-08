@@ -1,26 +1,28 @@
+'use client';
+
 import Text from '@/components/Text';
 import Button from '@/components/Button';
 import Card from '@/components/Card';
 import { Product } from '@/api/productsApi';
 import styles from './RelatedItems.module.scss';
 import React from 'react';
-import { authStore } from '@/stores/authStore';
-import { cartStore } from '@/stores/cartStore';
-import { useNavigate } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
+import { useRouter } from 'next/navigation';
+import { useStores } from '@/providers/StoreProvider';
 
 interface RelatedItemsProps {
   products: Product[];
 }
 
 const RelatedItems = observer(({ products }: RelatedItemsProps) => {
-  const navigate = useNavigate();
+  const router = useRouter();
+  const { authStore, cartStore } = useStores();
 
   const handleAddToCart = async (e: React.MouseEvent, product: Product) => {
     e.stopPropagation();
 
     if (!authStore.isAuthenticated) {
-      navigate('/auth/signin');
+      router.push('/auth/signin');
       return;
     }
 
@@ -28,7 +30,7 @@ const RelatedItems = observer(({ products }: RelatedItemsProps) => {
   };
 
   const handleCardClick = (documentId: string) => {
-    navigate(`/product/${documentId}`);
+    router.push(`/product/${documentId}`);
   };
 
   return (

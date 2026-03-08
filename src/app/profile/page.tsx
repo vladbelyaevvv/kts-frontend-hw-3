@@ -1,21 +1,28 @@
+'use client';
+
 import Navbar from '@/components/Navbar';
 import Text from '@/components/Text';
-import { authStore } from '@/stores/authStore';
 import { observer } from 'mobx-react-lite';
-import { Navigate } from 'react-router-dom';
-import styles from './ProfilePage.module.scss';
+import { useRouter } from 'next/navigation';
+import styles from './page.module.scss';
 import Button from '@/components/Button';
+import { useEffect } from 'react';
+import { useStores } from '@/providers/StoreProvider';
 
 const ProfilePage = observer(() => {
+  const { authStore } = useStores();
+  const router = useRouter();
   const { user } = authStore;
 
   const handleLogout = () => {
     authStore.setSignOut();
   };
 
-  if (!authStore.isAuthenticated) {
-    return <Navigate to="/auth/signin" replace />;
-  }
+  useEffect(() => {
+    if (!authStore.isAuthenticated) {
+      router.replace('/auth/signin');
+    }
+  });
 
   return (
     <div className={styles['profile-page']}>

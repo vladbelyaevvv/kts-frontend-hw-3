@@ -1,4 +1,6 @@
-import { useNavigate } from 'react-router-dom';
+'use client';
+
+import { useRouter } from 'next/navigation';
 import Card from '@/components/Card';
 import Button from '@/components/Button';
 import { Product } from '@/api/productsApi';
@@ -13,17 +15,17 @@ interface ProductsGridProps {
 }
 
 const ProductsGrid = observer(({ products }: ProductsGridProps) => {
-  const navigate = useNavigate();
+  const router = useRouter();
 
   const handleCardClick = (documentId: string) => {
-    navigate(`/product/${documentId}`);
+    router.push(`/product/${documentId}`);
   };
 
   const handleAddToCart = async (e: React.MouseEvent, product: Product) => {
     e.stopPropagation();
 
     if (!authStore.isAuthenticated) {
-      navigate('/auth/signin');
+      router.push('/auth/signin');
       return;
     }
 

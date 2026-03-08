@@ -1,17 +1,20 @@
+'use client';
+
 import { observer } from 'mobx-react-lite';
-import styles from './CartPage.module.scss';
-import { cartStore } from '@/stores/cartStore';
-import { Link, useNavigate } from 'react-router-dom';
+import styles from './page.module.scss';
 import { useEffect } from 'react';
-import { authStore } from '@/stores/authStore';
 import Navbar from '@/components/Navbar';
 import Text from '@/components/Text';
 import Button from '@/components/Button';
+import { useRouter } from 'next/navigation';
+import { useStores } from '@/providers/StoreProvider';
+import Link from 'next/link';
 
 const CartPage = observer(() => {
+  const { cartStore, authStore } = useStores();
+  const router = useRouter();
   const cart = cartStore;
   const items = cart.list; // массив товаров из стора
-  const navigate = useNavigate();
 
   //загрузка данных корзины с сервера при загрузке страницы
   useEffect(() => {
@@ -37,7 +40,7 @@ const CartPage = observer(() => {
           <Text view="p-20" color="secondary">
             Please log in to work with the shopping cart
           </Text>
-          <Button onClick={() => navigate('/auth/signin')}>Log in</Button>
+          <Button onClick={() => router.push('/auth/signin')}>Log in</Button>
         </div>
       </div>
     );
@@ -58,7 +61,7 @@ const CartPage = observer(() => {
               <Text view="p-20" color="secondary">
                 The cart is empty
               </Text>
-              <Link to="/">
+              <Link href="/">
                 <Button>Go to shopping</Button>
               </Link>
             </div>

@@ -1,3 +1,5 @@
+'use client';
+
 import Loader from '@/components/Loader';
 import Text from '@/components/Text';
 import React from 'react';

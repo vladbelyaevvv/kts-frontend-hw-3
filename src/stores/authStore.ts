@@ -1,6 +1,6 @@
-import { setJWTToken } from '@/api/axios';
+import { setJWTToken } from '@api/axios';
 import { makeAutoObservable } from 'mobx';
-import { signIn, signUp, AuthResponse } from '@/api/authApi';
+import { signIn, signUp, AuthResponse } from '@api/authApi';
 
 export type AuthUser = {
   email: string;
@@ -23,8 +23,10 @@ class AuthStore {
 
   constructor() {
     makeAutoObservable(this);
-    this.restoreFromStorage();
-    setJWTToken(this.user?.jwt ?? null);
+    if (typeof window !== 'undefined'){
+      this.restoreFromStorage();
+      setJWTToken(this.user?.jwt ?? null);
+    }
   }
 
   get isAuthenticated() {
@@ -42,6 +44,7 @@ class AuthStore {
   // загрузка из локал стораджа
   private saveToStorage() {
     try {
+      if (typeof window === 'undefined') {return;}
       if (this.user) {
         const userData = JSON.stringify(this.user);
         localStorage.setItem(USER_DATA_KEY, userData);
