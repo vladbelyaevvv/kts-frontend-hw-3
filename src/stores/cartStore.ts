@@ -18,7 +18,7 @@ type CartItemResponse = {
   quantity: number;
 }
 
-class CartStore {
+export class CartStore {
   private storage = observable.map<number, cartItem>();
 
   constructor() {
@@ -145,5 +145,3 @@ class CartStore {
     return item?.quantity ?? 0;
   }
 }
-
-export const cartStore = new CartStore();

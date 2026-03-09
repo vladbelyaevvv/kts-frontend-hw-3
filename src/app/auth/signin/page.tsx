@@ -8,11 +8,12 @@ import { useRouter } from 'next/navigation';
 import styles from './page.module.scss';
 import Input from '@/components/Input';
 import Button from '@/components/Button';
-import { authStore } from '@/stores/authStore';
+import { useStores } from '@/providers/StoreProvider'; 
 import Navbar from '@/components/Navbar';
 import LinkBack from '@/components/LinkBack';
 
 const SignInPage = observer(() => {
+  const { authStore } = useStores();
   const router = useRouter();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');

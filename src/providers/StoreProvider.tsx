@@ -1,12 +1,11 @@
 'use client';
 
 import { createContext, useContext, useEffect, useState } from 'react';
-import { authStore } from '@stores/authStore';
-import { cartStore } from '@stores/cartStore';
+import { rootStore } from '@stores/rootStore';
 
 interface Stores {
-  authStore: typeof authStore;
-  cartStore: typeof cartStore;
+  authStore: typeof rootStore.authStore;
+  cartStore: typeof rootStore.cartStore;
 }
 
 const StoresContext = createContext<Stores | null>(null);
@@ -24,8 +23,8 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     setStores({
-      authStore,
-      cartStore,
+      authStore: rootStore.authStore,
+      cartStore: rootStore.cartStore,
     });
   }, []);
 

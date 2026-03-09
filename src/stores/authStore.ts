@@ -18,7 +18,7 @@ export type SignInResponse = {
 
 const USER_DATA_KEY = 'auth_user';
 
-class AuthStore {
+export class AuthStore {
   user: AuthUser | null = null;
 
   constructor() {
@@ -114,5 +114,3 @@ class AuthStore {
     this.setSignedIn(response);
   }
 }
-
-export const authStore = new AuthStore();

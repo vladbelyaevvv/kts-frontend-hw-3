@@ -6,15 +6,15 @@ import Button from '@/components/Button';
 import { Product } from '@/api/productsApi';
 import styles from './ProductsGrid.module.scss';
 import React from 'react';
-import { authStore } from '@/stores/authStore';
-import { cartStore } from '@/stores/cartStore';
 import { observer } from 'mobx-react-lite';
+import { useStores } from '@/providers/StoreProvider';
 
 interface ProductsGridProps {
   products: Product[];
 }
 
 const ProductsGrid = observer(({ products }: ProductsGridProps) => {
+  const { authStore, cartStore } = useStores();
   const router = useRouter();
 
   const handleCardClick = (documentId: string) => {
