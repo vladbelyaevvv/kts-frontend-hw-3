@@ -5,7 +5,22 @@ const nextConfig: NextConfig = {
   sassOptions: {
     includePaths: [path.join(__dirname, 'src')],
   },
-  /* config options here */
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'front-school-strapi.ktsdev.ru',
+        port: '',
+        pathname: '/uploads/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'front-school.minio.ktsdev.ru',
+        port: '',
+        pathname: '/**',
+      },
+    ],
+  },
 };
 
 export default nextConfig;

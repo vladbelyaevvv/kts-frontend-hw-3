@@ -2,13 +2,13 @@
 
 import { observer } from 'mobx-react-lite';
 import styles from './page.module.scss';
-import { useEffect } from 'react';
 import Navbar from '@/components/Navbar';
 import Text from '@/components/Text';
 import Button from '@/components/Button';
 import { useRouter } from 'next/navigation';
 import { useStores } from '@/providers/StoreProvider';
 import Link from 'next/link';
+import Image from 'next/image';
 
 const CartPage = observer(() => {
   const { cartStore, authStore } = useStores();
@@ -76,9 +76,11 @@ const CartPage = observer(() => {
                   >
                     <div className={styles['cart-item__image']}>
                       {item.product.images?.[0]?.url && (
-                        <img
+                        <Image
                           src={item.product.images[0].url}
                           alt={item.product.title}
+                          width={100}
+                          height={100}
                         />
                       )}
                     </div>

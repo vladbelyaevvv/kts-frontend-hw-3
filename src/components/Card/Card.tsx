@@ -2,6 +2,7 @@
 
 import React from 'react';
 import classNames from 'classnames';
+import Image from 'next/image';
 import styles from './Card.module.scss';
 import Text from '../Text';
 
@@ -37,7 +38,13 @@ const Card: React.FC<CardProps> = React.memo(
   }) => {
     return (
       <div className={classNames(styles.card, className)} onClick={onClick}>
-        <img src={image} alt="card-image" className={styles.card__image} />
+        <Image
+          src={image} 
+          alt="card-image" 
+          className={styles.card__image}
+          width={348}
+          height={348}
+        />
 
         <div className={styles.card__body}>
           {captionSlot && (
