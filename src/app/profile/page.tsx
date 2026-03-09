@@ -14,9 +14,7 @@ const ProfilePage = observer(() => {
   const router = useRouter();
   const { user } = authStore;
 
-  const handleLogout = () => {
-    authStore.setSignOut();
-  };
+  const handleLogout = () => authStore.setSignOut();
 
   useEffect(() => {
     if (!authStore.isAuthenticated) {

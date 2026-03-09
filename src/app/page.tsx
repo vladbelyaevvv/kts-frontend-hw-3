@@ -15,10 +15,7 @@ import { ProductsStore } from '@/stores/productsStore';
 
 const ProductsPage = observer(() => {
   const [ productsStore ] = useState(() => new ProductsStore())
-  const [searchValue, setSearchValue] = useState('');
-  const [selectedCategories, setSelectedCategories] = useState<Option[]>([]);
   const searchParams = useSearchParams();
-  const [isRestored, setIsRestored] = useState(false);
   const router = useRouter();
 
   //загрузка категорий про монтировании
@@ -31,68 +28,32 @@ const ProductsPage = observer(() => {
     if (productsStore.categories.length === 0) {
       return;
     } // надо дождаться загрузки категорий
-    if (isRestored) {
+    if (productsStore.isRestored) {
       return;
     } // если уже восстановили - чтобы один раз толкьо сработало
 
-    const searchFromUrl = searchParams.get('search') || '';
-    const categoriesFromUrl =
-      searchParams.get('categories')?.split(',').filter(Boolean) || [];
-
-    setSearchValue(searchFromUrl);
-
-    if (categoriesFromUrl.length > 0) {
-      const options: Option[] = categoriesFromUrl
-        .map((id) => {
-          const category = productsStore.categories.find(
-            (categ) => String(categ.id) === id
-          );
-          return category ? { key: id, value: category.title } : null;
-        })
-        .filter((opt): opt is Option => opt !== null);
-      setSelectedCategories(options);
-      productsStore.setCategories(options.map((opt) => Number(opt.key)));
-    }
-
-    //загрузка товаров с учетом параметров
-    if (searchFromUrl) {
-      productsStore.setSearch(searchFromUrl);
-    }
-    if (categoriesFromUrl.length > 0) {
-      productsStore.setCategories(categoriesFromUrl.map(Number));
-    }
+    productsStore.restoreFromUrl(searchParams);
     productsStore.fetchProducts();
-
-    setIsRestored(true);
   }, [productsStore.categories]);
 
   const handleSearch = () => {
-    const categoryIds = selectedCategories.map((opt) => Number(opt.key));
-    productsStore.setCategories(categoryIds);
-    productsStore.setSearch(searchValue);
     productsStore.fetchProducts();
-
-    const params = new URLSearchParams();
-    if (searchValue) {
-      params.set('search', searchValue);
-    }
-    if (categoryIds.length > 0) {
-      params.set('categories', categoryIds.join(','));
-    }
+    const params = productsStore.toUrlSearchParams();
     router.push(`/?${params.toString()}`);
   };
 
   const handleClearFilters = () => {
-    setSearchValue('');
-    setSelectedCategories([]);
-    productsStore.setSearch('');
-    productsStore.setCategories([]);
+    productsStore.clear();
     productsStore.fetchProducts();
     router.push('/');
   };
 
   const handleCategoriesChange = (options: Option[]) => {
-    setSelectedCategories(options);
+    productsStore.setSelectedCategoryIds(options.map((opt) => Number(opt.key)));
+  };
+
+  const handleSearchChange = (value: string) => {
+    productsStore.setSearch(value);
   };
 
   const handleShowMore = () => {
@@ -113,7 +74,7 @@ const ProductsPage = observer(() => {
 
   return (
     <div className="main_page">
-      <Navbar></Navbar>
+      <Navbar/>
       <div className={styles['products-page__content']}>
         <div className={styles['products-page__text']}>
           <Text view="title" className={styles['products-page__title']}>
@@ -126,9 +87,9 @@ const ProductsPage = observer(() => {
         </div>
 
         <SearchSection
-          searchValue={searchValue}
-          onSearchChange={setSearchValue}
-          selectedCategories={selectedCategories}
+          searchValue={productsStore.search}
+          onSearchChange={handleSearchChange}
+          selectedCategories={productsStore.selectedCategories}
           onCategoriesChange={handleCategoriesChange}
           totalProducts={productsStore.total}
           onSearchSubmit={handleSearch}

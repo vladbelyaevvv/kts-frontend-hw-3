@@ -29,7 +29,7 @@ export type MultiDropdownProps = {
   getTitle: (value: Option[]) => string;
 };
 
-const MultiDropdown: React.FC<MultiDropdownProps> = ({
+const MultiDropdown: React.FC<MultiDropdownProps> = React.memo(({
   className,
   options,
   value,
@@ -127,6 +127,6 @@ const MultiDropdown: React.FC<MultiDropdownProps> = ({
       )}
     </div>
   );
-};
+});
 
 export default MultiDropdown;
