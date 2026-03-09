@@ -1,25 +1,10 @@
 import { addToCart, getCart, removeFromCart } from '@api/cartApi';
 import { Product } from '@api/productsApi';
 import { action, computed, makeObservable, observable, runInAction } from 'mobx';
-
-type cartItem = {
-  product: Product;
-  quantity: number;
-};
-
-type CartItemResponse = {
-  product: {
-    id: number;
-    documentId: string;
-    title: string;
-    price: number;
-    images?: { url: string}[];
-  };
-  quantity: number;
-}
+import { type CartItem, type CartItemResponse } from './types';
 
 export class CartStore {
-  private storage = observable.map<number, cartItem>();
+  private storage = observable.map<number, CartItem>();
 
   constructor() {
     makeObservable(this, {
@@ -33,7 +18,7 @@ export class CartStore {
     });
   }
 
-  private normalizeCartItem(item: CartItemResponse): cartItem {
+  private normalizeCartItem(item: CartItemResponse): CartItem {
     return {
       product: {
         id: item.product.id,
@@ -66,7 +51,7 @@ export class CartStore {
   }
 
   //Массив всех товаров корзине
-  get list(): cartItem[] {
+  get list(): CartItem[] {
     return Array.from(this.storage.values());
   }
 

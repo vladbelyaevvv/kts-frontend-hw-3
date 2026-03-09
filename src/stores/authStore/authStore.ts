@@ -1,20 +1,7 @@
 import { setJWTToken } from '@api/axios';
 import { action, computed, makeObservable, observable } from 'mobx';
 import { signIn, signUp, AuthResponse } from '@api/authApi';
-
-export type AuthUser = {
-  email: string;
-  username: string;
-  jwt: string;
-};
-
-export type SignInResponse = {
-  jwt: string;
-  user: {
-    email: string;
-    username: string;
-  };
-};
+import { type AuthUser } from './types';
 
 const USER_DATA_KEY = 'auth_user';
 

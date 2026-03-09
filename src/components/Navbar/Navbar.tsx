@@ -11,17 +11,16 @@ import { usePathname } from 'next/navigation';
 
 const Navbar = observer(() => {
   const { authStore, cartStore } = useStores();
-  const { isAuthenticated } = authStore;
   const pathname = usePathname();
 
   useEffect(() => {
-    if (isAuthenticated) {
+    if (authStore.isAuthenticated) {
       cartStore.fetch();
     }
-  }, [isAuthenticated]);
+  }, [authStore.isAuthenticated]);
 
   const handleProfileClick = (e: React.MouseEvent) => {
-    if (!isAuthenticated) {
+    if (!authStore.isAuthenticated) {
       e.preventDefault();
       window.location.href = '/auth/signin';
     }
