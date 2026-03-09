@@ -25,7 +25,7 @@ export type Product = {
   id: number;
   documentId: string;
   title: string;
-  description: string;
+  description?: string;
   price: number;
   images?: { url: string }[];
   productCategory?: { title: string; id?: number };

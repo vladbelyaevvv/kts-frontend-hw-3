@@ -17,9 +17,9 @@ const CartPage = observer(() => {
   const items = cart.list; // массив товаров из стора
 
   //загрузка данных корзины с сервера при загрузке страницы
-  useEffect(() => {
-    cart.fetch();
-  }, [cart]);
+  // useEffect(() => {
+  //   cart.fetch();
+  // }, [cart]);
 
   //очистка айтема из корзины
   const handleRemove = (productId: number) => {
