@@ -31,15 +31,8 @@
   &__button {
     padding: 16px 32px;
     border: 1px solid $text-secondary;
-    border-radius: 8px;
-    background-color: $WHITE;
-    color: $text-primary;
+    border-radius: $border-radius;
     transition: all $transition-duration $transition-easing;
     cursor: pointer;
-
-    &:hover {
-      border-color: $brand;
-      background-color: $brand-hover;
-    }
   }
 }

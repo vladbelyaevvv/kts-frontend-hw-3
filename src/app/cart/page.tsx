@@ -57,7 +57,7 @@ const CartPage = observer(() => {
                 The cart is empty
               </Text>
               <Link href="/">
-                <Button>Go to shopping</Button>
+                <Button className={styles['cart-page__empty-button']}>Go to shopping</Button>
               </Link>
             </div>
           ) : (

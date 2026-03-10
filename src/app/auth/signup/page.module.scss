@@ -21,7 +21,7 @@
     width: 100%;
     padding: $spacing-l;
     background-color: $WHITE;
-    border-radius: 8px;
+    border-radius: $border-radius;
   }
 
   &__title {
@@ -53,6 +53,8 @@
   &__button {
     width: 100%;
     margin-top: $spacing-s;
+    border-radius: $border-radius;
+    transition: all $transition-duration $transition-easing;
   }
 
   &__switch {

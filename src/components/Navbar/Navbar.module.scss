@@ -29,6 +29,11 @@
     overflow: visible;
     height: 42px;
     @include flex-center;
+    transition: transform $transition-duration $transition-easing;
+
+    &:hover {
+      transform: scale(1.05);
+    }
 
     @include sm {
       height: 35px;
@@ -48,6 +53,7 @@
   &__link {
     text-decoration: none;
     color: $text-primary;
+    transition: color $transition-duration $transition-easing;
 
     * {
       color: inherit;
@@ -73,9 +79,15 @@
   &__icon {
     text-decoration: none;
     color: #555;
+    transition: color $transition-duration $transition-easing;
 
     &:hover {
       color: $brand;
+
+      svg {
+        transform: scale(1.1);
+        transition: transform $transition-duration $transition-easing;
+      }
     }
   }
 

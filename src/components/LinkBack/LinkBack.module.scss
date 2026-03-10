@@ -18,9 +18,11 @@
 
   &:hover {
     color: $brand;
+    transition: all $transition-duration $transition-easing;
 
     .link-back__text {
       color: $brand;
+      transition: all $transition-duration $transition-easing;
     }
   }
 

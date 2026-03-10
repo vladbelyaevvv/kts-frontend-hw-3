@@ -82,7 +82,7 @@ const ProductPage = observer(({ documentId, initialProduct, initialRelatedProduc
                 ${productStore.product.price}
               </Text>
               <div className={styles['product-page__actions']}>
-                <Button>Buy Now</Button>
+                <Button className={styles['product-page__buy-now']}>Buy Now</Button>
                 <Button
                   className={styles['product-page__add-to-cart']}
                   onClick={handleAddToCart}

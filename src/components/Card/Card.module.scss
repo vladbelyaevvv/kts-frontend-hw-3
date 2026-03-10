@@ -7,15 +7,22 @@
   width: 348px;
   padding: 0px 0px 24px;
   background: $card-bg;
+  border-radius: $border-radius;
   overflow: hidden;
+  transition: box-shadow $transition-duration $transition-easing;
 
   &:hover {
     box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.25);
+
+    .card__image {
+      transform: scale(1.05);
+    }
   }
 
   &__image {
     height: 348px;
     background-color: $card-image-bg;
+    transition: transform $transition-duration $transition-easing;
   }
 
   &__body {
@@ -31,5 +38,10 @@
     @include flex-center;
     justify-content: space-between;
     margin: 0 14px;
+
+    button {
+      border-radius: $border-radius;
+      transition: all $transition-duration $transition-easing;
+    }
   }
 }

@@ -46,5 +46,7 @@
 
   &__logout {
     width: 100%;
+    border-radius: $border-radius;
+    transition: all $transition-duration $transition-easing;
   }
 }

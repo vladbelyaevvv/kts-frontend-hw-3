@@ -78,10 +78,17 @@
   display: flex;
   gap: 48px;
 
+  .product-page__buy-now {
+    border-radius: $border-radius;
+    transition: all $transition-duration $transition-easing;
+  }
+
   .product-page__add-to-cart {
     border: 1px solid $text-secondary;
     background-color: $WHITE;
     color: $BLACK;
+    border-radius: $border-radius;
+    transition: all $transition-duration $transition-easing;
 
     &:hover {
       background-color: #d9d9d9 !important;

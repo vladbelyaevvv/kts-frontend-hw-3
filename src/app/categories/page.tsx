@@ -36,7 +36,7 @@ const CategoriesPage = observer(() => {
               className={styles['categories-page__button']}
               onClick={() => handleCategoryClick(category.id)}
             >
-              <Text view="p-18">{category.title}</Text>
+              {category.title}
             </Button>
           ))}
         </div>

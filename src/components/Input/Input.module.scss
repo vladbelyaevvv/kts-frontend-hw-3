@@ -10,11 +10,17 @@
     padding: 5px 0;
     font-size: 16px;
     border: 1px solid $input-border;
+    border-radius: $border-radius;
+    transition: border-color $transition-duration $transition-easing;
 
     &.input--disabled {
       background-color: $input-bg-disabled;
       color: $input-text-disabled;
       cursor: not-allowed;
+    }
+
+    &:hover:not(.input--disabled) {
+      border-color: $brand-hover;
     }
 
     &:focus-within {
