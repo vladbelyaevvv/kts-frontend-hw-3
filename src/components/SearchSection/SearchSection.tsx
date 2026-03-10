@@ -6,7 +6,6 @@ import MultiDropdown, { Option } from '@/components/MultiDropdown';
 import Text from '@/components/Text';
 import styles from './SearchSection.module.scss';
 import { observer } from 'mobx-react-lite';
-import { useEffect } from 'react';
 import { ProductsStore } from '@/stores/productsStore';
 
 interface SearchSectionProps {
@@ -31,10 +30,6 @@ const SearchSection = observer(
     onClearFilters,
     productsStore,
   }: SearchSectionProps) => {
-    useEffect(() => {
-      productsStore.fetchCategories();
-    }, []);
-
     const categoryOptions: Option[] = productsStore.categories.map(
       (category) => ({
         key: String(category.id),

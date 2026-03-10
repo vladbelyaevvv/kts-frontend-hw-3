@@ -72,6 +72,10 @@ export class ProductsStore {
 
   //Загрузить список категорий с сервера 
   async fetchCategories() {
+    if (this.categories.length > 0 || this.categoriesMeta.isLoading) {
+      return;
+    }
+
     this.categoriesMeta.start();
 
     try {

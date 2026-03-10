@@ -2,7 +2,7 @@
 
 import Text from '@/components/Text';
 import styles from './page.module.scss';
-import { useEffect, useState } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 import Navbar from '@/components/Navbar';
 import SearchSection from '@/components/SearchSection';
 import { Option } from '@/components/MultiDropdown';
@@ -13,7 +13,7 @@ import Button from '@/components/Button';
 import { useSearchParams, useRouter } from 'next/navigation';
 import { ProductsStore } from '@/stores/productsStore';
 
-const ProductsPage = observer(() => {
+const ProductsContent = observer(() => {
   const [ productsStore ] = useState(() => new ProductsStore());
   const searchParams = useSearchParams();
   const router = useRouter();
@@ -60,13 +60,13 @@ const ProductsPage = observer(() => {
     productsStore.loadMore();
   };
 
-  if (productsStore.productsMeta.isLoading) {
-    return (
-      <div className={styles['products-page__text']}>
-        <PageLoader />
-      </div>
-    );
-  }
+  // if (productsStore.productsMeta.isLoading) {
+  //   return (
+  //     <div className={styles['products-page__text']}>
+  //       <PageLoader />
+  //     </div>
+  //   );
+  // }
 
   if (productsStore.productsMeta.isError) {
     return <div className={styles['products-page__text']}>Error</div>;
@@ -96,23 +96,40 @@ const ProductsPage = observer(() => {
           onClearFilters={handleClearFilters}
           productsStore={productsStore}
         />
-
-        <ProductsGrid products={productsStore.products} />
-
-        <div className={styles['products-page__show-more']}>
-          {productsStore.productsMeta.isLoading && <PageLoader />}
-          {!productsStore.productsMeta.isLoading && productsStore.hasMore && (
-            <Button onClick={handleShowMore}>Show more</Button>
-          )}
-          {!productsStore.hasMore && productsStore.products.length > 0 && (
-            <Text view="p-20" color="secondary">
-              No more products
-            </Text>
-          )}
-        </div>
-      </div>
+        
+        {productsStore.productsMeta.isLoading && productsStore.products.length === 0 ? (
+          <div className={styles['products-page__loader']}>
+            <PageLoader />
+          </div>
+        ) : (
+          <>
+            <ProductsGrid products={productsStore.products} />
+            <div className={styles['products-page__show-more']}>
+              {productsStore.productsMeta.isLoading && <PageLoader />}
+              {!productsStore.productsMeta.isLoading && productsStore.hasMore && (
+                <Button onClick={handleShowMore}>Show more</Button>
+              )}
+              {!productsStore.hasMore && productsStore.products.length > 0 && (
+                <Text view="p-20" color="secondary">
+                  No more products
+                </Text>
+              )}
+            </div>
+          </>
+        )
+      } 
+    </div>
     </div>
   );
 });
+
+//это чтобы yarn build работал, без этого не проходил
+const ProductsPage = () => {
+  return (
+    <Suspense fallback={<div className={styles['products-page__loader']}><PageLoader /></div>}>
+      <ProductsContent />
+    </Suspense>
+  );
+};
 
 export default ProductsPage;

@@ -9,7 +9,7 @@ import RelatedItems from '@/components/RelatedItems';
 import ProductImage from '@/components/ProductImage';
 import PageLoader from '@/components/PageLoader/PageLoader';
 import { observer } from 'mobx-react-lite';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import { useStores } from '@/providers/StoreProvider';
 import { ProductStore } from '@/stores/productStore';
@@ -18,17 +18,20 @@ import { Product } from '@/api/productsApi';
 type Props = {
   documentId: string;
   initialProduct: Product;
+  initialRelatedProducts: Product[];
 };
 
-const ProductPage = observer(({ documentId, initialProduct }: Props) => {
+const ProductPage = observer(({ documentId, initialProduct, initialRelatedProducts }: Props) => {
   const router = useRouter();
   const { authStore, cartStore } = useStores();
 
   const [productStore] = useState(() => new ProductStore());
+  const initializedRef = useRef(false);
 
   useEffect(() => {
-    if (documentId) {
-      productStore.init(documentId, initialProduct);
+    if (documentId  && !initializedRef.current) {
+      initializedRef.current = true;
+      productStore.init(documentId, initialProduct, initialRelatedProducts);
     }
   }, [documentId, initialProduct]);
 

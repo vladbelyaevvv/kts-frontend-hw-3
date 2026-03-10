@@ -27,6 +27,7 @@
   &__empty {
     text-align: center;
     padding: $spacing-xlarge;
+    margin: $spacing-l;
     gap: $spacing-l;
   }
 
@@ -94,6 +95,8 @@
   background-color: $card-bg;
   padding: $spacing-l;
   border-radius: 8px;
+  display: flex;
+  flex-direction: column;
 
   &__row {
     display: flex;
@@ -108,7 +111,7 @@
   }
 
   &__clear {
-    margin-top: $spacing-l;
+    margin-top: $spacing-m;
     background-color: transparent;
     color: #d32f2f;
     border: 1px solid #d32f2f;

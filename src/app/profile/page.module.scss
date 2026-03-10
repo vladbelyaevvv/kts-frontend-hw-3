@@ -20,6 +20,11 @@
     padding: $spacing-l;
   }
 
+  &__loader {
+    @include flex-center;
+    min-height: 400px;
+  }
+
   &__title {
     margin-bottom: $spacing-l;
   }

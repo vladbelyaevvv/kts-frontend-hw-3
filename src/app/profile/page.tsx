@@ -6,13 +6,20 @@ import { observer } from 'mobx-react-lite';
 import { useRouter } from 'next/navigation';
 import styles from './page.module.scss';
 import Button from '@/components/Button';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useStores } from '@/providers/StoreProvider';
+import PageLoader from '@/components/PageLoader/PageLoader';
+
 
 const ProfilePage = observer(() => {
   const { authStore } = useStores();
   const router = useRouter();
   const { user } = authStore;
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const handleLogout = () => authStore.setSignOut();
 
@@ -21,6 +28,17 @@ const ProfilePage = observer(() => {
       router.replace('/auth/signin');
     }
   });
+
+  if (!mounted || !user) {
+    return (
+      <div className={styles['profile-page']}>
+        <Navbar />
+          <div className={styles['profile-page__loader']}>
+            <PageLoader />
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className={styles['profile-page']}>

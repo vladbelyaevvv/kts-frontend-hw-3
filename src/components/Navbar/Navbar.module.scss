@@ -11,6 +11,10 @@
   border-bottom: 2px solid #f3f3f3;
   padding: 0 100px;
 
+  @include md {
+    padding: 0 50px;
+  }
+
   @include sm {
     padding: 0 20px;
     height: 70px;

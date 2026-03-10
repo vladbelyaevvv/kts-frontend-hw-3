@@ -1,0 +1,45 @@
+@use '@/styles/variables.scss' as *;
+@use '@/styles/mixins.scss' as *;
+
+.categories-page {
+
+  &__container {
+    padding: 0 100px;
+    max-width: 1440px;
+    margin: 0 auto;
+    width: 100%;
+    box-sizing: border-box;
+    margin-top: 100px;
+    @include flex-center(column);
+
+    @include md {
+      padding: 0 50px;
+    }
+
+    @include sm {
+      padding: 0 20px;
+    }
+  }
+
+  &__list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-top: 32px;
+  }
+
+  &__button {
+    padding: 16px 32px;
+    border: 1px solid $text-secondary;
+    border-radius: 8px;
+    background-color: $WHITE;
+    color: $text-primary;
+    transition: all $transition-duration $transition-easing;
+    cursor: pointer;
+
+    &:hover {
+      border-color: $brand;
+      background-color: $brand-hover;
+    }
+  }
+}

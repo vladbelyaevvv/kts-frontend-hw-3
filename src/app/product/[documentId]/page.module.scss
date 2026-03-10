@@ -8,6 +8,10 @@
   width: 100%;
   box-sizing: border-box;
 
+  @include md {
+    padding: 0 50px 143px 50px;
+  }
+
   @include sm {
     padding: 0 20px 143px 20px;
   }
@@ -32,6 +36,12 @@
     max-width: 600px;
     width: 100%;
     margin: 0 auto;
+  }
+
+  @include sm {
+    flex: 0 0 auto;
+    max-width: 100%;
+    width: 100%;
   }
 
   & img {

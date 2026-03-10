@@ -58,14 +58,18 @@ export class ProductStore {
     }
   }
 
-  async init(documentId: string, initialProduct?: Product) {
+  async init(documentId: string, initialProduct?: Product, initialRelatedProducts?: Product[]) {
     // если есть начальные данные с сервера - используем их
     if (initialProduct) {
       this.setProduct(initialProduct);
       this.productMeta.success();
       
       // загрузка только связанных товаров
-      if (initialProduct.productCategory?.id) {
+      if (initialRelatedProducts && initialRelatedProducts.length > 0) {
+        this.relatedProducts = initialRelatedProducts;
+        this.relatedMeta.success();
+      } else if (initialProduct.productCategory?.id) {
+        // иначе загружаем связанные товары на клиенте
         this.fetchRelatedProducts(initialProduct.id, initialProduct.productCategory.id);
       }
     } else {
