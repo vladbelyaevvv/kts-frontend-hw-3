@@ -19,18 +19,11 @@ export function useStores() {
 }
 
 export function StoreProvider({ children }: { children: React.ReactNode }) {
-  const [stores, setStores] = useState<Stores | null>(null);
-
-  useEffect(() => {
-    setStores({
-      authStore: rootStore.authStore,
-      cartStore: rootStore.cartStore,
-    });
-  }, []);
-
-  if (!stores) {
-    return null;
-  }
+  
+  const [stores] = useState<Stores>(() => ({
+    authStore: rootStore.authStore,
+    cartStore: rootStore.cartStore,
+  }));
 
   return (
     <StoresContext.Provider value={stores}>{children}</StoresContext.Provider>

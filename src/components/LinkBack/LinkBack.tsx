@@ -32,4 +32,6 @@ const LinkBack = React.memo(() => {
   );
 });
 
+LinkBack.displayName = 'LinkBack';
+
 export default LinkBack;

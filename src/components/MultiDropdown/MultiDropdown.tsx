@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useMemo } from 'react';
 import classNames from 'classnames';
 import Input from '../Input';
 import styles from './MultiDropdown.module.scss';
@@ -38,7 +38,6 @@ const MultiDropdown: React.FC<MultiDropdownProps> = React.memo(({
   getTitle,
 }) => {
   const [isOpen, setIsOpen] = useState(false); // открыт ли список опций
-  const [filter, setFilter] = useState(options); // отфильтрованные опции
   const [currentInput, setCurrentInput] = useState(''); // текущий текст, введенный в поле
   const dropdownRef = useRef<HTMLDivElement>(null); // ссылка на корневой компонент
 
@@ -49,13 +48,17 @@ const MultiDropdown: React.FC<MultiDropdownProps> = React.memo(({
     }
 
     setCurrentInput(inputValue);
-
-    //фильтрация исходных опций
-    const newFilteredOptions = options.filter((option) =>
-      option.value.toLowerCase().startsWith(inputValue.toLowerCase())
-    );
-    setFilter(newFilteredOptions);
   };
+
+  // фильтрация опций на основе текущего ввода
+  const filter = useMemo(() => {
+    if (value.length) {
+      return options;
+    }
+    return options.filter((option) =>
+      option.value.toLowerCase().startsWith(currentInput.toLowerCase())
+    );
+  }, [options, value, currentInput]);
 
   //обработчик клика по опции
   const handleOptionClick = (option: Option) => {
@@ -88,11 +91,6 @@ const MultiDropdown: React.FC<MultiDropdownProps> = React.memo(({
     document.addEventListener('click', handleClickOutside);
     return () => document.removeEventListener('click', handleClickOutside);
   }, []);
-
-  // для синхронизации отфильтрованных с исходными
-  useEffect(() => {
-    setFilter(options);
-  }, [options, setFilter]);
 
   return (
     <div
@@ -128,5 +126,7 @@ const MultiDropdown: React.FC<MultiDropdownProps> = React.memo(({
     </div>
   );
 });
+
+MultiDropdown.displayName = 'MultiDropdown';
 
 export default MultiDropdown;

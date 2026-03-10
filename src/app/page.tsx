@@ -14,7 +14,7 @@ import { useSearchParams, useRouter } from 'next/navigation';
 import { ProductsStore } from '@/stores/productsStore';
 
 const ProductsPage = observer(() => {
-  const [ productsStore ] = useState(() => new ProductsStore())
+  const [ productsStore ] = useState(() => new ProductsStore());
   const searchParams = useSearchParams();
   const router = useRouter();
 

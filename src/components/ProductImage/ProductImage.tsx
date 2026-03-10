@@ -49,4 +49,6 @@ const ProductImage = React.memo(({ product }: ProductImageProps) => {
   );
 });
 
+ProductImage.displayName = 'ProductImage';
+
 export default ProductImage;

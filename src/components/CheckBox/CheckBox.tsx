@@ -50,4 +50,6 @@ const CheckBox: React.FC<CheckBoxProps> = React.memo(
   }
 );
 
+CheckBox.displayName = 'CheckBox';
+
 export default CheckBox;

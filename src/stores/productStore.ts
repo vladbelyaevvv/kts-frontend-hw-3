@@ -18,6 +18,7 @@ export class ProductStore {
       fetchProduct: action,
       fetchRelatedProducts: action,
       init: action,
+      setProduct: action,
       clear: action,
     });
   }
@@ -34,7 +35,7 @@ export class ProductStore {
       runInAction(() => {
         this.product = data;
         this.productMeta.success();
-      })
+      });
       return data;
     } catch (err) {
       this.productMeta.error('Ошибка при загрузке товара');
@@ -51,18 +52,34 @@ export class ProductStore {
       runInAction(() => {
         this.relatedProducts = related;
         this.relatedMeta.success();
-      })
+      });
     } catch(err) {
       this.relatedMeta.error('Не удалось загрузить похожие товары');
     }
   }
 
-  async init(documentId: string) {
-    const product = await this.fetchProduct(documentId);
+  async init(documentId: string, initialProduct?: Product) {
+    // если есть начальные данные с сервера - используем их
+    if (initialProduct) {
+      this.setProduct(initialProduct);
+      this.productMeta.success();
+      
+      // загрузка только связанных товаров
+      if (initialProduct.productCategory?.id) {
+        this.fetchRelatedProducts(initialProduct.id, initialProduct.productCategory.id);
+      }
+    } else {
+      const product = await this.fetchProduct(documentId);
 
-    if(product?.productCategory?.id){
-      this.fetchRelatedProducts(product.id, product.productCategory.id);
+      if (product?.productCategory?.id) {
+        this.fetchRelatedProducts(product.id, product.productCategory.id);
+      }
     }
+  }
+
+  // для серверной загрузки
+  setProduct(product: Product) {
+    this.product = product;
   }
 
   clear() {

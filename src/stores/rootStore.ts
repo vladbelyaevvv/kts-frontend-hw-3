@@ -1,5 +1,5 @@
-import { AuthStore } from "./authStore";
-import { CartStore } from "./cartStore";
+import { AuthStore } from './authStore';
+import { CartStore } from './cartStore';
 
 export class RootStore {
     authStore: AuthStore;

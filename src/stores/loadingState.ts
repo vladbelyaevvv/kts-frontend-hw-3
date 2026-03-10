@@ -1,4 +1,4 @@
-import { action, computed, makeObservable, observable } from "mobx";
+import { action, computed, makeObservable, observable } from 'mobx';
 
 export enum LoadingStage {
     notStarted = 'notStarted',
@@ -23,7 +23,7 @@ export class LoadingStageModel {
             success: action,
             error: action,
             reset: action,
-        })
+        });
     }
 
     get isSuccess(): boolean {

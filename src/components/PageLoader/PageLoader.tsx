@@ -13,4 +13,6 @@ const PageLoader = React.memo(() => {
   );
 });
 
+PageLoader.displayName = 'PageLoader';
+
 export default PageLoader;

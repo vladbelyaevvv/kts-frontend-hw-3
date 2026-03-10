@@ -41,4 +41,6 @@ const Button: React.FC<ButtonProps> = React.memo(
   }
 );
 
+Button.displayName = 'Button';
+
 export default Button;

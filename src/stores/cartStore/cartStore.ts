@@ -28,7 +28,7 @@ export class CartStore {
         images: item.product.images,
       },
       quantity: item.quantity,
-    }
+    };
   }
 
   // количество товаров в корзине
@@ -91,7 +91,7 @@ export class CartStore {
           images: product.images,
         },
         quantity,
-      })
+      });
     }
     await addToCart(product.id, quantity);
   }

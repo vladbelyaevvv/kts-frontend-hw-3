@@ -79,7 +79,7 @@ export class ProductsStore {
       runInAction(() => {
         this.categories = data.data;
         this.categoriesMeta.success();
-      })
+      });
     } catch (err) {
         this.categoriesMeta.error('Не удалось загрузить категории');
     }
@@ -120,7 +120,7 @@ export class ProductsStore {
         }
         this.total = data.meta.pagination.total;
         this.productsMeta.success();
-      })
+      });
 
     } catch (err) {
         this.productsMeta.error('Не удалось загрузить товары');
