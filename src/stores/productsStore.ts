@@ -5,9 +5,10 @@ import {
   GetProductsParams,
   Product,
 } from '@api/productsApi';
-import { action, computed, makeObservable, observable, runInAction } from 'mobx';
-import { LoadingStageModel } from './loadingState';
+import { action, computed, IObservableArray, makeObservable, observable, runInAction } from 'mobx';
+import { LoadingStageModel } from './LoadingStageModel';
 import { Option } from '@/components/MultiDropdown';
+import queryString from 'query-string';
 
 const PAGE_SIZE = 9; // кол-во товаров на одной странице
 
@@ -15,10 +16,10 @@ export class ProductsStore {
   products: Product[] = []; //список загруженных товаров
   total = 0;// общее кол-во товаров с учетом фильтров
   search = '';//поисковой запрос
-  selectedCategoryIds: number[] = [];//выбранные фильтрующие категории (их ID)
+  selectedCategoryIds: IObservableArray<number> = observable.array([]);//выбранные фильтрующие категории (их ID)
   isRestored = false; // восстановлено ли состояние из URL 
 
-  categories: Category[] = [];//список всех категорий
+  categories: IObservableArray<Category> = observable.array([]);//список всех категорий
   categoriesMeta = new LoadingStageModel();//Статус загрузки категорий (loading/success/error)
   productsMeta = new LoadingStageModel();//Статус загрузки товаров (loading/success/error)
 
@@ -52,7 +53,7 @@ export class ProductsStore {
 
   //установить выбранные категории по ID
   setSelectedCategoryIds(ids: number[]) {
-    this.selectedCategoryIds = ids;
+    this.selectedCategoryIds.replace(ids);
   }
 
   // Установить флаг восстановления из URL 
@@ -81,7 +82,7 @@ export class ProductsStore {
     try {
       const data = await getCategories();
       runInAction(() => {
-        this.categories = data.data;
+        this.categories.replace(data.data);
         this.categoriesMeta.success();
       });
     } catch (err) {
@@ -118,7 +119,7 @@ export class ProductsStore {
 
       runInAction(() => {
         if (append) {
-          this.products = [...this.products, ...data.data];
+          this.products.push(...data.data);
         } else {
           this.products = data.data;
         }
@@ -143,12 +144,14 @@ export class ProductsStore {
 
   // восстановление состояния стора из url параметров - извлекаеn search и categories из URL и устанавливает в стор
   restoreFromUrl(searchParams: URLSearchParams) {
-    const searchFromUrl = searchParams.get('search') ?? '';
-    const categoriesFromUrl =
-      searchParams.get('categories')?.split(',').filter(Boolean).map(Number) ?? [];
+    const query = queryString.parse(searchParams.toString());
+    const searchFromUrl = String(query.search ?? '');
+    const categoriesFromUrl = query.categories
+      ? String(query.categories).split(',').filter(Boolean).map(Number)
+      : [];
 
     this.search = searchFromUrl;
-    this.selectedCategoryIds = categoriesFromUrl;
+    this.selectedCategoryIds.replace(categoriesFromUrl);
     this.isRestored = true;
 
     return {
@@ -158,22 +161,20 @@ export class ProductsStore {
   }
 
   //из текущего состояния стора создает URLSearchParams(то есть обновляет URL при применении фильтров)
-  toUrlSearchParams(): URLSearchParams {
-    const params = new URLSearchParams();
-    if (this.search) {
-      params.set('search', this.search);
-    }
-    if (this.selectedCategoryIds.length > 0) {
-      params.set('categories', this.selectedCategoryIds.join(','));
-    }
-    return params;
+  toUrlSearchParams(): string {
+    return queryString.stringify({
+      search: this.search || undefined,
+      categories: this.selectedCategoryIds.length > 0
+        ? this.selectedCategoryIds.join(',')
+        : undefined,
+    });
   }
 
   clear() {
     this.products = [];
     this.total = 0;
     this.search = '';
-    this.selectedCategoryIds = [];
+    this.selectedCategoryIds.replace([]);
     this.currentPage = 1;
     this.isRestored = false;
     this.categoriesMeta.reset();

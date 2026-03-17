@@ -60,9 +60,14 @@
     line-height: 113%;
     @include flex-center;
     gap: 24px;
+    opacity: 0;
 
     @include sm {
       font-size: 24px;
+    }
+
+    &--visible {
+      opacity: 1;
     }
   }
 }

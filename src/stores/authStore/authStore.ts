@@ -2,22 +2,37 @@ import { setJWTToken } from '@api/axios';
 import { action, computed, makeObservable, observable } from 'mobx';
 import { signIn, signUp, AuthResponse } from '@api/authApi';
 import { type AuthUser } from './types';
+import { LoadingStageModel } from '../LoadingStageModel';
 
 const USER_DATA_KEY = 'auth_user';
 
 export class AuthStore {
   user: AuthUser | null = null;
 
+  formUsername = '';
+  formEmail = '';
+  formPassword = '';
+
+  authMeta = new LoadingStageModel();
+
   constructor() {
     makeObservable(this, {
       user: observable,
+      formUsername: observable,
+      formEmail: observable,
+      formPassword: observable,
+      authMeta: observable,
       isAuthenticated: computed,
       email: computed,
       username: computed,
-      setSignedIn: action,
-      setSignOut: action,
-      login: action,
-      register: action,
+      setSignedIn: action.bound,
+      setSignOut: action.bound,
+      setFormUsername: action.bound,
+      setFormEmail: action.bound,
+      setFormPassword: action.bound,
+      clearForm: action.bound,
+      login: action.bound,
+      register: action.bound,
     });
 
     if (typeof window !== 'undefined'){
@@ -91,13 +106,48 @@ export class AuthStore {
     this.saveToStorage();
   }
 
+  setFormUsername(value: string) {
+    this.formUsername = value;
+  }
+
+  setFormEmail(value: string) {
+    this.formEmail = value;
+  }
+
+  setFormPassword(value: string) {
+    this.formPassword = value;
+  }
+
+  clearForm() {
+    this.formUsername = '';
+    this.formEmail = '';
+    this.formPassword = '';
+  }
+
   async login(username: string, password: string) {
-    const response = await signIn(username, password);
-    this.setSignedIn(response);
+    this.authMeta.start();
+    try {
+      const response = await signIn(username, password);
+      this.setSignedIn(response);
+      this.authMeta.success();
+    } catch (error) {
+      const message =
+        (error as any)?.response?.data?.error?.message || 'An error has occurred';
+      this.authMeta.error(message);
+    }
   }
 
   async register(username: string, email: string, password: string) {
-    const response = await signUp(username, email, password);
-    this.setSignedIn(response);
+    this.authMeta.start();
+    try {
+      const response = await signUp(username, email, password);
+      this.setSignedIn(response);
+      this.authMeta.success();
+      this.clearForm();
+    } catch (error) {
+      const message =
+        (error as any)?.response?.data?.error?.message || 'An error has occurred';
+      this.authMeta.error(message);
+    }
   }
 }

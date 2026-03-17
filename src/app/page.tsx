@@ -34,12 +34,12 @@ const ProductsContent = observer(() => {
 
     productsStore.restoreFromUrl(searchParams);
     productsStore.fetchProducts();
-  }, [productsStore.categories]);
+  }, [productsStore.categories.length]);
 
   const handleSearch = () => {
     productsStore.fetchProducts();
     const params = productsStore.toUrlSearchParams();
-    router.push(`/?${params.toString()}`);
+    router.push(`/?${params}`);
   };
 
   const handleClearFilters = () => {
@@ -60,21 +60,12 @@ const ProductsContent = observer(() => {
     productsStore.loadMore();
   };
 
-  // if (productsStore.productsMeta.isLoading) {
-  //   return (
-  //     <div className={styles['products-page__text']}>
-  //       <PageLoader />
-  //     </div>
-  //   );
-  // }
-
   if (productsStore.productsMeta.isError) {
     return <div className={styles['products-page__text']}>Error</div>;
   }
 
   return (
     <div className="main_page">
-      <Navbar/>
       <div className={styles['products-page__content']}>
         <div className={styles['products-page__text']}>
           <Text view="title" className={styles['products-page__title']}>

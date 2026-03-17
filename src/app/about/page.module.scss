@@ -1,6 +1,110 @@
+@use '@/styles/variables.scss' as *;
+@use '@/styles/mixins.scss' as *;
+
 .about-page {
-  &__content {
-    margin-top: 200px;
+  &__container {
+    padding: 0 100px;
+    max-width: 1440px;
+    margin: 0 auto;
+    width: 100%;
+    box-sizing: border-box;
+
+    @include md {
+      padding: 0 50px;
+    }
+
+    @include sm {
+      padding: 0 20px;
+    }
+  }
+
+  &__title {
+    max-width: 653px;
     text-align: center;
+    margin: 100px auto 80px;
+
+    &-name {
+      margin-bottom: 24px;
+    }
+  }
+
+
+  &__feature {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: $spacing-l;
+    margin-bottom: 80px;
+
+    @include md {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    @include sm {
+      grid-template-columns: 1fr;
+    }
+
+    &-card {
+      background-color: $card-bg;
+      border-radius: $border-radius;
+      padding: $spacing-xlarge;
+      display: flex;
+      flex-direction: column;
+      gap: $spacing-m;
+    }
+
+    &-icon {
+      width: 56px;
+      height: 56px;
+      background-color: rgba(81, 133, 129, 0.1);
+      border-radius: $border-radius;
+      @include flex-center;
+      flex-shrink: 0;
+    }
+  }
+
+  &__stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: $spacing-l;
+    margin-bottom: 80px;
+
+    @include md {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    @include sm {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  &__stat {
+    background-color: $card-bg;
+    border-radius: $border-radius;
+    padding: $spacing-xlarge $spacing-l;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-xxs;
+  }
+
+
+  &__mission {
+    background-color: $card-bg;
+    border-radius: $border-radius;
+    padding: $spacing-xlarge * 2;
+    max-width: 800px;
+    margin: 0 auto 80px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-l;
+
+    @include sm {
+      padding: $spacing-xlarge;
+    }
+
+    &-title {
+      margin-bottom: $spacing-xxs;
+    }
   }
 }

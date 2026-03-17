@@ -7,6 +7,7 @@ import Text from '@/components/Text';
 import styles from './SearchSection.module.scss';
 import { observer } from 'mobx-react-lite';
 import { ProductsStore } from '@/stores/productsStore';
+import classNames from 'classnames';
 
 interface SearchSectionProps {
   searchValue: string;
@@ -74,7 +75,11 @@ const SearchSection = observer(
             Clear filters
           </Button>
         )}
-        <div className={styles['search-section__total']}>
+        <div
+          className={classNames(styles['search-section__total'], {
+            [styles['search-section__total--visible']]: !productsStore.productsMeta.isLoading && totalProducts > 0,
+          })}
+        >
           <Text tag="h4" weight="bold">
             Total products
           </Text>

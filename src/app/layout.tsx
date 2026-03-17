@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import localFont from 'next/font/local';
 import './globals.scss';
 import { StoreProvider } from '@providers/StoreProvider';
+import Navbar from '@/components/Navbar';
 
 const roboto = localFont({
   src: [
@@ -21,7 +22,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="ru">
       <body className={roboto.className}>
-        <StoreProvider>{children}</StoreProvider>
+        <StoreProvider>
+            <Navbar />
+            {children}
+        </StoreProvider>
       </body>
     </html>
   );

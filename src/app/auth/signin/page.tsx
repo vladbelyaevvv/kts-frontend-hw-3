@@ -2,44 +2,28 @@
 
 import Text from '@/components/Text';
 import { observer } from 'mobx-react-lite';
-import React, { useState } from 'react';
+import React from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import styles from './page.module.scss';
 import Input from '@/components/Input';
 import Button from '@/components/Button';
 import { useStores } from '@/providers/StoreProvider'; 
-import Navbar from '@/components/Navbar';
 import LinkBack from '@/components/LinkBack';
 
 const SignInPage = observer(() => {
   const { authStore } = useStores();
   const router = useRouter();
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState<string | null>(null);
-  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError(null);
-    setLoading(true);
 
-    try {
-      await authStore.login(email, password);
-      router.push('/');
-    } catch (error) {
-      const message =
-        (error as any)?.response?.data?.error?.message || 'An error has occurred';
-      setError(message);
-    } finally {
-      setLoading(false);
-    }
+    await authStore.login(authStore.formUsername, authStore.formPassword);
+    router.push('/');
   };
 
   return (
     <div className={styles['auth-page']}>
-      <Navbar />
       <div className={styles['auth-page__container']}>
         <LinkBack />
         <div className={styles['auth-page__wrapper']}>
@@ -49,25 +33,29 @@ const SignInPage = observer(() => {
             <Input
               placeholder="Email"
               type="email"
-              value={email}
-              onChange={setEmail}
+              value={authStore.formUsername}
+              onChange={authStore.setFormUsername}
               className={styles['auth-page__input']}
               required
             />
 
             <Input
               placeholder="Password"
-              value={password}
-              onChange={setPassword}
+              value={authStore.formPassword}
+              onChange={authStore.setFormPassword}
               className={styles['auth-page__input']}
               required
             />
 
-            {error && <div className={styles['auth-page__error']}>{error}</div>}
+            {authStore.authMeta.isError && (
+              <div className={styles['auth-page__error']}>
+                {authStore.authMeta.errorMessage}
+              </div>
+            )}
 
             <Button
               type="submit"
-              loading={loading}
+              loading={authStore.authMeta.isLoading}
               className={styles['auth-page__button']}
             >
               Log in

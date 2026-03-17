@@ -15,6 +15,8 @@ export class CartStore {
       add: action,
       remove: action,
       clear: action,
+      increment: action,
+      decrement: action,
     });
   }
 
@@ -96,19 +98,40 @@ export class CartStore {
     await addToCart(product.id, quantity);
   }
 
-  //удаление товара из корзины
-  async remove(productId: number, quantity: number = 1) {
+  //увеличить количество товара
+  async increment(productId: number) {
     const currentItem = this.storage.get(productId);
-
     if (!currentItem) {
-      return; //товар не найден
+      return;
     }
+    currentItem.quantity += 1;
+    await addToCart(productId, 1);
+  }
 
-    if (currentItem.quantity > quantity){
-      currentItem.quantity -= quantity;
-    } else {
-      this.storage.delete(productId);
+  //уменьшить количество товара (если quantity > 1) или удалить (если quantity = 1)
+  async decrement(productId: number) {
+    const currentItem = this.storage.get(productId);
+    if (!currentItem) {
+      return;
     }
+    if (currentItem.quantity > 1) {
+      currentItem.quantity -= 1;
+      await removeFromCart(productId, 1);
+    } else {
+      // если количество равно 1, удаляем товар из корзины полностью
+      this.storage.delete(productId);
+      await removeFromCart(productId, 1);
+    }
+  }
+
+  //удалить товар полностью из корзины
+  async remove(productId: number) {
+    const currentItem = this.storage.get(productId);
+    if (!currentItem) {
+      return;
+    }
+    const {quantity} = currentItem;
+    this.storage.delete(productId);
     await removeFromCart(productId, quantity);
   }
 

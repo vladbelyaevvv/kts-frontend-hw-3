@@ -1,6 +1,6 @@
 import { getProductById, getRelatedProducts, Product } from '@api/productsApi';
 import { action, makeObservable, observable, runInAction } from 'mobx';
-import { LoadingStageModel } from './loadingState';
+import { LoadingStageModel } from './LoadingStageModel';
 
 export class ProductStore {
   product: Product | null = null;

@@ -9,15 +9,13 @@
     width: 100%;
     box-sizing: border-box;
 
+    @include md {
+      padding: 0 50px 100px;
+    }
+
     @include sm {
       padding: 0 20px 143px 20px;
     }
-  }
-
-  &__wrapper {
-    max-width: 600px;
-    margin: 0 auto;
-    padding: $spacing-l;
   }
 
   &__loader {
@@ -25,28 +23,116 @@
     min-height: 400px;
   }
 
-  &__title {
-    margin-bottom: $spacing-l;
+  // Хедер с аватаром
+  &__header {
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+    gap: 32px;
+    padding: 40px;
+    background: $card-bg;
+    border-radius: $border-radius;
+    margin-bottom: 32px;
+    max-width: 720px;
+    margin-left: auto;
+    margin-right: auto;
   }
 
+  &__avatar {
+    width: 96px;
+    height: 96px;
+    border-radius: 50%;
+    background-color: $brand;
+    color: $WHITE;
+    font-size: 40px;
+    font-weight: 700;
+    @include flex-center;
+    flex-shrink: 0;
+  }
+
+  &__header-info {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  &__body {
+    max-width: 720px;
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  // Секции
+  &__section {
+    margin-bottom: 32px;
+  }
+
+  &__section-title {
+    margin-bottom: 16px;
+  }
+
+  // Информация
   &__info {
     background-color: $card-bg;
-    border-radius: 8px;
-    padding: $spacing-l;
-    margin-bottom: $spacing-l;
+    border-radius: $border-radius;
+    padding: 0 $spacing-l;
   }
 
   &__field {
-    display: flex;
+    @include flex-center;
     justify-content: space-between;
-    align-items: center;
     padding: $spacing-m 0;
-    border-bottom: 1px solid $text-secondary;
   }
 
-  &__logout {
-    width: 100%;
+  // Быстрые ссылки
+  &__actions {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  &__action-card {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 20px 24px;
+    background: $card-bg;
     border-radius: $border-radius;
+    text-decoration: none;
+    transition: box-shadow $transition-duration $transition-easing;
+    color: $text-primary;
+
+    &:hover {
+      box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.1);
+    }
+  }
+
+  &__action-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background-color: rgba(81, 133, 129, 0.1);
+    @include flex-center;
+  }
+
+  // Кнопка выхода
+  &__logout {
+    margin-top: 8px;
+    width: 100%;
+    max-width: 720px;
+    border-radius: $border-radius;
+    background-color: transparent;
+    color: #d32f2f;
+    border: 1px solid #d32f2f;
     transition: all $transition-duration $transition-easing;
+    cursor: pointer;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+
+    &:hover {
+      background-color: #d32f2f !important;
+      color: $WHITE;
+    }
   }
 }

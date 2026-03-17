@@ -2,51 +2,33 @@
 
 import Text from '@/components/Text';
 import { observer } from 'mobx-react-lite';
-import React, { useState } from 'react';
+import React from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import styles from './page.module.scss';
 import Input from '@/components/Input';
 import Button from '@/components/Button';
 import { useStores } from '@/providers/StoreProvider'; 
-import Navbar from '@/components/Navbar';
 import LinkBack from '@/components/LinkBack';
 
 const SignUpPage = observer(() => {
   const { authStore } = useStores();
   const router = useRouter();
-  const [username, setUsername] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState<string | null>(null);
-  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError(null);
-    setLoading(true);
 
-    try {
-      if (!username) {
-        setError('Enter the username');
-        setLoading(false);
-        return;
-      }
-
-      await authStore.register(username, email, password);
-      router.push('/');
-    } catch (error) {
-      const message =
-        (error as any)?.response?.data?.error?.message || 'An error has occurred';
-      setError(message);
-    } finally {
-      setLoading(false);
+    if (!authStore.formUsername) {
+      authStore.authMeta.error('Enter the username');
+      return;
     }
+
+    await authStore.register(authStore.formUsername, authStore.formEmail, authStore.formPassword);
+    router.push('/');
   };
 
   return (
     <div className={styles['auth-page']}>
-      <Navbar />
       <div className={styles['auth-page__container']}>
         <LinkBack />
         <div className={styles['auth-page__wrapper']}>
@@ -55,8 +37,8 @@ const SignUpPage = observer(() => {
           <form onSubmit={handleSubmit} className={styles['auth-page__form']}>
             <Input
               placeholder="Username"
-              value={username}
-              onChange={setUsername}
+              value={authStore.formUsername}
+              onChange={authStore.setFormUsername}
               className={styles['auth-page__input']}
               required
             />
@@ -64,25 +46,29 @@ const SignUpPage = observer(() => {
             <Input
               placeholder="Email"
               type="email"
-              value={email}
-              onChange={setEmail}
+              value={authStore.formEmail}
+              onChange={authStore.setFormEmail}
               className={styles['auth-page__input']}
               required
             />
 
             <Input
               placeholder="Password"
-              value={password}
-              onChange={setPassword}
+              value={authStore.formPassword}
+              onChange={authStore.setFormPassword}
               className={styles['auth-page__input']}
               required
             />
 
-            {error && <div className={styles['auth-page__error']}>{error}</div>}
+            {authStore.authMeta.isError && (
+              <div className={styles['auth-page__error']}>
+                {authStore.authMeta.errorMessage}
+              </div>
+            )}
 
             <Button
               type="submit"
-              loading={loading}
+              loading={authStore.authMeta.isLoading}
               className={styles['auth-page__button']}
             >
               Sign in

@@ -2,7 +2,6 @@
 
 import { observer } from 'mobx-react-lite';
 import styles from './page.module.scss';
-import Navbar from '@/components/Navbar';
 import Text from '@/components/Text';
 import Button from '@/components/Button';
 import { useRouter } from 'next/navigation';
@@ -16,7 +15,17 @@ const CartPage = observer(() => {
   const cart = cartStore;
   const items = cart.list; // массив товаров из стора
 
-  //очистка айтема из корзины
+  // Увеличить количество
+  const handleIncrement = (productId: number) => {
+    cart.increment(productId);
+  };
+
+  // Уменьшить количество
+  const handleDecrement = (productId: number) => {
+    cart.decrement(productId);
+  };
+
+  // Удалить товар полностью
   const handleRemove = (productId: number) => {
     cart.remove(productId);
   };
@@ -30,7 +39,6 @@ const CartPage = observer(() => {
   if (!authStore.isAuthenticated) {
     return (
       <div className={styles['cart-page']}>
-        <Navbar />
         <div className={styles['cart-page__centered']}>
           <Text view="p-20" color="secondary">
             Please log in to work with the shopping cart
@@ -44,7 +52,6 @@ const CartPage = observer(() => {
   //основной рендер корзины
   return (
     <div className={styles['cart-page']}>
-      <Navbar />
       <div className={styles['cart-page__container']}>
         <div className={styles['cart-page__wrapper']}>
           <Text view="title" className={styles['cart-page__title']}>
@@ -88,13 +95,28 @@ const CartPage = observer(() => {
                     </div>
 
                     <div>
-                      <Text view="p-20">x {item.quantity}</Text>
-                    </div>
-
-                    <div>
                       <Text view="p-20">
                         ${item.product.price * item.quantity}
                       </Text>
+                    </div>
+
+                    {/* Счётчик количества */}
+                    <div className={styles['cart-item__quantity']}>
+                      <Button
+                        onClick={() => handleDecrement(item.product.id)}
+                        className={styles['cart-item__qty-btn-decrement']}
+                      >
+                        -
+                      </Button>
+                      <Text view="p-20" className={styles['cart-item__qty-value']}>
+                        {item.quantity}
+                      </Text>
+                      <Button
+                        onClick={() => handleIncrement(item.product.id)}
+                        className={styles['cart-item__qty-btn']}
+                      >
+                        +
+                      </Button>
                     </div>
 
                     <Button

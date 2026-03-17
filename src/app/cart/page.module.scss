@@ -85,12 +85,54 @@
     gap: $spacing-xxs;
   }
 
+  &__quantity {
+    display: flex;
+    align-items: center;
+    gap: $spacing-s;
+  }
+
+  &__qty-btn {
+    min-width: 32px;
+    height: 32px;
+    padding: 0;
+    @include flex-center();
+    border-radius: $border-radius;
+    transition: all $transition-duration $transition-easing;
+    cursor: pointer;
+
+    &:hover {
+      background-color: $text-secondary;
+      color: $WHITE;
+    }
+  }
+
+  &__qty-btn-decrement {
+    min-width: 32px;
+    height: 32px;
+    padding: 0;
+    @include flex-center();
+    border-radius: $border-radius;
+    transition: all $transition-duration $transition-easing;
+    cursor: pointer;
+
+    &:hover {
+      background-color: #d32f2f !important;
+      color: $WHITE;
+    }
+  }
+
+  &__qty-value {
+    min-width: 24px;
+    text-align: center;
+  }
+
   &__remove {
     background-color: transparent;
     color: #d32f2f;
     border: 1px solid #d32f2f;
     border-radius: $border-radius;
     transition: all $transition-duration $transition-easing;
+    cursor: pointer;
 
     &:hover {
       background-color: #d32f2f !important;
@@ -118,6 +160,7 @@
     margin: 0;
     border-radius: $border-radius;
     transition: all $transition-duration $transition-easing;
+    cursor: pointer;
   }
 
   &__clear {
@@ -127,6 +170,7 @@
     border: 1px solid #d32f2f;
     border-radius: $border-radius;
     transition: all $transition-duration $transition-easing;
+    cursor: pointer;
 
     &:hover {
       background-color: #d32f2f !important;

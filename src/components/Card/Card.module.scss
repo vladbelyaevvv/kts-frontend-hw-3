@@ -28,6 +28,7 @@
   &__body {
     display: flex;
     flex-direction: column;
+    flex-grow: 1;
     gap: 8px;
     margin: 12px;
     margin-top: 24px;

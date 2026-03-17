@@ -1,6 +1,5 @@
 'use client';
 
-import Navbar from '@/components/Navbar';
 import styles from './page.module.scss';
 import LinkBack from '@/components/LinkBack';
 import Text from '@/components/Text';
@@ -9,8 +8,8 @@ import RelatedItems from '@/components/RelatedItems';
 import ProductImage from '@/components/ProductImage';
 import PageLoader from '@/components/PageLoader/PageLoader';
 import { observer } from 'mobx-react-lite';
-import { useEffect, useRef, useState } from 'react';
-import { useParams, useRouter } from 'next/navigation';
+import { useCallback, useRef } from 'react';
+import { useRouter } from 'next/navigation';
 import { useStores } from '@/providers/StoreProvider';
 import { ProductStore } from '@/stores/productStore';
 import { Product } from '@/api/productsApi';
@@ -18,24 +17,20 @@ import { Product } from '@/api/productsApi';
 type Props = {
   documentId: string;
   initialProduct: Product;
-  initialRelatedProducts: Product[];
 };
 
-const ProductPage = observer(({ documentId, initialProduct, initialRelatedProducts }: Props) => {
+const ProductPage = observer(({ documentId, initialProduct }: Props) => {
   const router = useRouter();
   const { authStore, cartStore } = useStores();
 
-  const [productStore] = useState(() => new ProductStore());
-  const initializedRef = useRef(false);
+  const productStoreRef = useRef<ProductStore | null>(null);
+  if (!productStoreRef.current) {
+    productStoreRef.current = new ProductStore();
+    productStoreRef.current.init(documentId, initialProduct);
+  }
+  const productStore = productStoreRef.current;
 
-  useEffect(() => {
-    if (documentId  && !initializedRef.current) {
-      initializedRef.current = true;
-      productStore.init(documentId, initialProduct, initialRelatedProducts);
-    }
-  }, [documentId, initialProduct]);
-
-  const handleAddToCart = async () => {
+  const handleAddToCart = useCallback(async () => {
     if (!authStore.isAuthenticated) {
       router.push('/auth/signin');
       return;
@@ -44,7 +39,7 @@ const ProductPage = observer(({ documentId, initialProduct, initialRelatedProduc
     if (productStore.product) {
       await cartStore.add(productStore.product);
     }
-  };
+  }, [authStore.isAuthenticated, cartStore, productStore, router]);
 
   if (productStore.productMeta.isLoading) {
     return (
@@ -60,7 +55,6 @@ const ProductPage = observer(({ documentId, initialProduct, initialRelatedProduc
 
   return (
     <div className={styles['product-page']}>
-      <Navbar />
       <div className={styles['product-page__wrapper']}>
         <LinkBack />
         <div className={styles['product-page__content']}>
