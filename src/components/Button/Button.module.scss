@@ -1,0 +1,45 @@
+@use '@/styles/mixins.scss' as *;
+@use '@/styles/variables.scss' as *;
+
+.button {
+  width: auto;
+  height: 52px;
+  padding: $spacing-s $spacing-l;
+  gap: $spacing-xxs;
+  min-width: 52px;
+  color: $button-primary-text;
+  border: none;
+  background-color: $button-primary-bg;
+
+  font-family: var(--font-family);
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 100%;
+  color: $WHITE;
+
+  /* hover loading=false */
+  &:hover:not(.button--disabled):not(.button--loading) {
+    background: $button-primary-bg-hover;
+  }
+
+  /* hover loading=false */
+  &:active:hover:not(.button-disabled):not(.button-loading) {
+    background: $button-primary-bg-active;
+  }
+
+  /* disabled, Loading=false */
+  &--disabled:not(.button-loading) {
+    background: $button-primary-bg-disabled;
+  }
+
+  /* default, Loading=true */
+  &--loading {
+    background: $button-primary-bg;
+    @include flex-center;
+    padding: 14px 20px;
+
+    &.button--disabled {
+      background: $button-primary-bg-disabled;
+    }
+  }
+}

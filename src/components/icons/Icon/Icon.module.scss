@@ -1,0 +1,17 @@
+@use '@/styles/variables.scss' as *;
+
+.icon {
+  color: currentColor;
+
+  &--color-primary {
+    color: $text-primary;
+  }
+
+  &--color-secondary {
+    color: $text-secondary;
+  }
+
+  &--color-accent {
+    color: $text-accent;
+  }
+}

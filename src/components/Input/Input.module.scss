@@ -1,0 +1,61 @@
+@use '@/styles/mixins.scss' as *;
+@use '@/styles/variables.scss' as *;
+
+.input {
+  &__wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    background-color: $input-bg;
+    padding: 5px 0;
+    font-size: 16px;
+    border: 1px solid $input-border;
+    border-radius: $border-radius;
+    transition: border-color $transition-duration $transition-easing;
+
+    &.input--disabled {
+      background-color: $input-bg-disabled;
+      color: $input-text-disabled;
+      cursor: not-allowed;
+    }
+
+    &:hover:not(.input--disabled) {
+      border-color: $brand-hover;
+    }
+
+    &:focus-within {
+      border: 1px solid $input-border-focus;
+    }
+  }
+
+  &__element {
+    width: 100%;
+    padding-left: 8px;
+    height: 40px;
+    font-size: 16px;
+    border: none;
+    color: $input-text;
+
+    &:focus {
+      outline: none;
+      color: $input-text-focus;
+    }
+
+    &::placeholder {
+      color: $input-placeholder;
+    }
+
+    &:disabled {
+      background-color: $input-bg-disabled;
+      color: $input-text-disabled;
+      opacity: 0.6;
+    }
+  }
+
+  &__after-slot {
+    position: absolute;
+    right: 14px;
+    @include flex-center;
+    color: #999999;
+  }
+}

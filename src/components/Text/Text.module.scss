@@ -1,0 +1,73 @@
+@use '@/styles/variables.scss' as *;
+
+.text {
+  font-family: var(--font-family);
+  color: inherit;
+
+  //weights
+  &--normal {
+    font-weight: normal;
+  }
+  &--medium {
+    font-weight: 500;
+  }
+  &--bold {
+    font-weight: bold;
+  }
+
+  //views
+  &--title {
+    font-weight: 700;
+    font-size: 44px;
+    line-height: 109%;
+    color: $BLACK;
+  }
+
+  &--button {
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 100%;
+    color: $BLACK;
+  }
+
+  &--p-20 {
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 120%;
+    color: $BLACK;
+  }
+
+  &--p-18 {
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 122%;
+    color: $BLACK;
+  }
+
+  &--p-16 {
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 125%;
+    color: $BLACK;
+  }
+
+  &--p-14 {
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 129%;
+    color: $BLACK;
+  }
+
+  //colors
+  &--color-primary {
+    color: $text-primary;
+  }
+
+  &--color-secondary {
+    color: $text-secondary;
+  }
+
+  &--color-accent {
+    color: $text-accent;
+  }
+}

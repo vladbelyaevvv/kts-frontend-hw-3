@@ -1,0 +1,32 @@
+@use '@/styles/mixins.scss' as *;
+@use '@/styles/variables.scss' as *;
+
+.link-back {
+  margin-top: 60px;
+  @include flex-center;
+  justify-content: flex-start;
+  cursor: pointer;
+  color: $BLACK;
+
+  @include sm {
+    margin-top: 40px;
+  }
+
+  @include xs {
+    margin-top: 24px;
+  }
+
+  &:hover {
+    color: $brand;
+    transition: all $transition-duration $transition-easing;
+
+    .link-back__text {
+      color: $brand;
+      transition: all $transition-duration $transition-easing;
+    }
+  }
+
+  &__text {
+    margin-left: 8px;
+  }
+}

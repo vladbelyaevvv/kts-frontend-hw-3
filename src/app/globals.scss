@@ -1,0 +1,33 @@
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #fafafa;
+  overflow-x: hidden;
+
+  /* скрытие скроллбара */
+  scrollbar-width: none;
+  -ms-overflow-style: none; 
+}
+
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+  display: none; 
+}
+
+* {
+  box-sizing: border-box;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+figure,
+pre {
+  margin: 0;
+}

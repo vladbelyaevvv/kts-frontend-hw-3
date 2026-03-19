@@ -1,0 +1,112 @@
+@use '@/styles/mixins.scss' as *;
+@use '@/styles/variables.scss' as *;
+
+.navbar {
+  display: flex;
+  height: 90px;
+  justify-content: space-between;
+  align-items: center;
+  background-color: $card-bg;
+  box-shadow: 0px 2px 0px #f3f3f3;
+  border-bottom: 2px solid #f3f3f3;
+  padding: 0 100px;
+
+  @include md {
+    padding: 0 50px;
+  }
+
+  @include sm {
+    padding: 0 20px;
+    height: 70px;
+  }
+
+  @include xs {
+    padding: 0 12px;
+    height: 60px;
+  }
+
+  &__logo {
+    overflow: visible;
+    height: 42px;
+    @include flex-center;
+    transition: transform $transition-duration $transition-easing;
+
+    &:hover {
+      transform: scale(1.05);
+    }
+
+    @include sm {
+      height: 35px;
+    }
+  }
+
+  &__header-nav {
+    display: flex;
+    flex-direction: row;
+    gap: $spacing-xl;
+
+    @include sm {
+      gap: $spacing-m;
+    }
+  }
+
+  &__link {
+    text-decoration: none;
+    color: $text-primary;
+    transition: color $transition-duration $transition-easing;
+
+    * {
+      color: inherit;
+    }
+
+    &:hover {
+      color: $brand;
+    }
+
+    &.active {
+      color: $brand;
+      font-weight: 500;
+    }
+  }
+
+  &__icons {
+    width: 132px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 20px;
+  }
+
+  &__icon {
+    text-decoration: none;
+    color: #555;
+    transition: color $transition-duration $transition-easing;
+
+    &:hover {
+      color: $brand;
+
+      svg {
+        transform: scale(1.1);
+        transition: transform $transition-duration $transition-easing;
+      }
+    }
+  }
+
+  &__cart-wrapper {
+    position: relative;
+    display: inline-block;
+  }
+
+  &__cart-badge {
+    position: absolute;
+    top: -4px;
+    right: -4px;
+    background-color: $brand;
+    color: $WHITE;
+    font-size: 10px;
+    font-weight: 600;
+    min-width: 16px;
+    height: 16px;
+    border-radius: 8px;
+    @include flex-center;
+  }
+}

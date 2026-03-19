@@ -1,0 +1,161 @@
+import { addToCart, getCart, removeFromCart } from '@api/cartApi';
+import { Product } from '@api/productsApi';
+import {
+  action,
+  computed,
+  makeObservable,
+  observable,
+  runInAction,
+} from 'mobx';
+import { type CartItem, type CartItemResponse } from './types';
+
+export class CartStore {
+  private storage = observable.map<number, CartItem>();
+
+  constructor() {
+    makeObservable(this, {
+      count: computed,
+      total: computed,
+      list: computed,
+      fetch: action,
+      add: action,
+      remove: action,
+      clear: action,
+      increment: action,
+      decrement: action,
+    });
+  }
+
+  private normalizeCartItem(item: CartItemResponse): CartItem {
+    return {
+      product: {
+        id: item.product.id,
+        documentId: item.product.documentId,
+        title: item.product.title,
+        price: item.product.price,
+        images: item.product.images,
+      },
+      quantity: item.quantity,
+    };
+  }
+
+  // количество товаров в корзине
+  get count(): number {
+    let totalCount = 0;
+    this.storage.forEach((item) => {
+      totalCount += item.quantity;
+    });
+    return totalCount;
+  }
+
+  //стоимость всех товаров в корзине
+  get total(): number {
+    let totalPrice = 0;
+    this.storage.forEach((item) => {
+      const price = item.product.price ?? 0;
+      totalPrice += price * item.quantity;
+    });
+    return totalPrice;
+  }
+
+  //Массив всех товаров корзине
+  get list(): CartItem[] {
+    return Array.from(this.storage.values());
+  }
+
+  // Загрузка корзины с сервера
+  async fetch() {
+    try {
+      const response = await getCart();
+
+      runInAction(() => {
+        this.storage.clear();
+        response.forEach((cartItem) => {
+          const normalized = this.normalizeCartItem(cartItem);
+          this.storage.set(cartItem.product.id, normalized);
+        });
+      });
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.warn('Error loading the shopping cart: ', error);
+    }
+  }
+
+  // добавление товара в корзину
+  async add(product: Product, quantity: number = 1) {
+    const existingItem = this.storage.get(product.id);
+
+    if (existingItem) {
+      // если товар уже существует то прибавляем кол-во
+      existingItem.quantity += quantity;
+    } else {
+      //если товара еще нет - то добавляем новый
+      this.storage.set(product.id, {
+        product: {
+          id: product.id,
+          documentId: product.documentId,
+          title: product.title,
+          price: product.price,
+          images: product.images,
+        },
+        quantity,
+      });
+    }
+    await addToCart(product.id, quantity);
+  }
+
+  //увеличить количество товара
+  async increment(productId: number) {
+    const currentItem = this.storage.get(productId);
+    if (!currentItem) {
+      return;
+    }
+    currentItem.quantity += 1;
+    await addToCart(productId, 1);
+  }
+
+  //уменьшить количество товара (если quantity > 1) или удалить (если quantity = 1)
+  async decrement(productId: number) {
+    const currentItem = this.storage.get(productId);
+    if (!currentItem) {
+      return;
+    }
+    if (currentItem.quantity > 1) {
+      currentItem.quantity -= 1;
+      await removeFromCart(productId, 1);
+    } else {
+      // если количество равно 1, удаляем товар из корзины полностью
+      this.storage.delete(productId);
+      await removeFromCart(productId, 1);
+    }
+  }
+
+  //удалить товар полностью из корзины
+  async remove(productId: number) {
+    const currentItem = this.storage.get(productId);
+    if (!currentItem) {
+      return;
+    }
+    const { quantity } = currentItem;
+    this.storage.delete(productId);
+    await removeFromCart(productId, quantity);
+  }
+
+  async clear() {
+    const allItems = this.list;
+    this.storage.clear();
+
+    for (const item of allItems) {
+      await removeFromCart(item.product.id, item.quantity);
+    }
+  }
+
+  isInCart(productId: number): boolean {
+    return this.storage.has(productId);
+  }
+
+  getQuantity(productId: number): number {
+    const item = this.storage.get(productId);
+    return item?.quantity ?? 0;
+  }
+}

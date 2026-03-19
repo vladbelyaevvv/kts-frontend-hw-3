@@ -1,0 +1,91 @@
+@use '@/styles/mixins.scss' as *;
+@use '@/styles/variables.scss' as *;
+
+.product-image {
+  flex: 0 0 600px;
+  position: relative;
+
+  @include md {
+    flex: 0 0 auto;
+    max-width: 600px;
+    width: 100%;
+    margin: 0 auto;
+  }
+
+  &__image {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+  }
+
+  &__controls {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: space-between;
+    transform: translateY(-50%);
+    padding: 0 10px;
+    pointer-events: none;
+  }
+
+  &__control-button {
+    background-color: rgba(0, 0, 0, 0.5);
+    border: none;
+    border-radius: 50%;
+    width: 64px;
+    height: 64px;
+    @include flex-center;
+    cursor: pointer;
+    pointer-events: auto;
+    color: $WHITE;
+    transition: all $transition-duration $transition-easing;
+
+    &:hover {
+      background-color: rgba(0, 0, 0, 1);
+      transform: scale(1.05);
+    }
+  }
+
+  &__control-icon {
+    transform: rotate(-90deg);
+
+    &--prev {
+      transform: rotate(90deg); // стрелка влево
+    }
+    &--next {
+      transform: rotate(-90deg); // стрелка вправо
+    }
+  }
+
+  &__indicators {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 8px;
+  }
+
+  &__indicator {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    border: none;
+    background-color: rgba(255, 255, 255, 0.5);
+    cursor: pointer;
+    padding: 0;
+    transition: all $transition-duration $transition-easing;
+
+    &--active {
+      background-color: $WHITE;
+    }
+
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.8);
+      transform: scale(1.2);
+    }
+  }
+}

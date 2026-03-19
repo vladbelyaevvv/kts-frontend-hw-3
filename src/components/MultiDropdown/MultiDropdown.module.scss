@@ -1,0 +1,44 @@
+@use '@/styles/variables.scss' as *;
+
+.multi-dropdown {
+  &__container {
+    position: relative;
+    width: 100%;
+  }
+
+  &__options {
+    margin-top: 8px;
+    width: 100%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: $dropdown-options-bg;
+    border: 1px solid #ccc;
+    max-height: 150px;
+    overflow-y: auto;
+    z-index: 10;
+  }
+
+  &__option {
+    &-wrapper {
+      cursor: pointer;
+    }
+
+    &-text {
+      padding: 14px 12px;
+      height: 48px;
+      cursor: pointer;
+      color: $text-primary;
+      font-size: 16px;
+
+      &:hover {
+        background-color: $text-secondary;
+      }
+
+      &--selected {
+        color: $text-accent;
+      }
+    }
+  }
+}
