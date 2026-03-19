@@ -17,8 +17,18 @@ export default function Error({
   }, [error]);
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', minHeight: '100vh' }}>
-      <Text view="title" tag="h1">Something went wrong</Text>
+    <div
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        minHeight: '100vh',
+      }}
+    >
+      <Text view="title" tag="h1">
+        Something went wrong
+      </Text>
       <div style={{ margin: '24px 0' }}>
         <Text view="p-20" color="secondary">
           {error.message || 'An unexpected error occurred'}

@@ -31,7 +31,7 @@ export const signIn = async (identifier: string, password: string) => {
 export const signUp = async (
   username: string,
   email: string,
-  password: string
+  password: string,
 ) => {
   const response = await api.post<AuthResponse>('/auth/local/register', {
     username,

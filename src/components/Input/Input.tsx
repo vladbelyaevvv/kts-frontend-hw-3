@@ -28,7 +28,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
       placeholder,
       ...props
     },
-    ref
+    ref,
   ) => {
     const wrapperClassNames = classNames(styles['input__wrapper'], className, {
       [styles['input--disabled']]: disabled,
@@ -53,7 +53,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
         )}
       </div>
     );
-  }
+  },
 );
 
 Input.displayName = 'Input';

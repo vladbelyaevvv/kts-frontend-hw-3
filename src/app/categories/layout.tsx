@@ -5,6 +5,10 @@ export const metadata: Metadata = {
   description: 'Browse all furniture and home decor categories at Lalasia.',
 };
 
-export default function CategoriesLayout({ children }: { children: React.ReactNode }) {
+export default function CategoriesLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return children;
 }

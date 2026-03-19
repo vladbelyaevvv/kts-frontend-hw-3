@@ -38,7 +38,7 @@ const Button: React.FC<ButtonProps> = React.memo(
         )}
       </button>
     );
-  }
+  },
 );
 
 Button.displayName = 'Button';

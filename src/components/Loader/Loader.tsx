@@ -64,13 +64,13 @@ const Loader: React.FC<LoaderProps> = React.memo(
         className={classNames(
           styles.loader,
           styles[`loader-${size}`],
-          className
+          className,
         )}
       >
         {svgs[size || 'm']}
       </div>
     );
-  }
+  },
 );
 
 Loader.displayName = 'Loader';

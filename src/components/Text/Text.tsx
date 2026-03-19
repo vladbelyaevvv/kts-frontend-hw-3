@@ -69,7 +69,7 @@ const Text: React.FC<TextProps> = React.memo(
         {children}
       </Tag>
     );
-  }
+  },
 );
 
 Text.displayName = 'Text';

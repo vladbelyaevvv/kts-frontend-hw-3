@@ -5,6 +5,10 @@ export const metadata: Metadata = {
   description: 'Your shopping cart at Lalasia.',
 };
 
-export default function CartLayout({ children }: { children: React.ReactNode }) {
+export default function CartLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return children;
 }

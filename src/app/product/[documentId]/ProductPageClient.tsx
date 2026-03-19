@@ -13,11 +13,48 @@ import { useRouter } from 'next/navigation';
 import { useStores } from '@/providers/StoreProvider';
 import { ProductStore } from '@/stores/productStore';
 import { Product } from '@/api/productsApi';
+import { motion } from 'framer-motion';
 
 type Props = {
   documentId: string;
   initialProduct: Product;
 };
+
+const pageVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      duration: 0.5,
+      ease: [0.25, 0.1, 0.25, 1.0],
+    },
+  },
+} as const;
+
+const contentVariants = {
+  hidden: { opacity: 0, x: -30 },
+  visible: {
+    opacity: 1,
+    x: 0,
+    transition: {
+      duration: 0.5,
+      ease: [0.25, 0.1, 0.25, 1.0],
+    },
+  },
+} as const;
+
+const infoVariants = {
+  hidden: { opacity: 0, x: 30 },
+  visible: {
+    opacity: 1,
+    x: 0,
+    transition: {
+      duration: 0.5,
+      delay: 0.2,
+      ease: [0.25, 0.1, 0.25, 1.0],
+    },
+  },
+} as const;
 
 const ProductPage = observer(({ documentId, initialProduct }: Props) => {
   const router = useRouter();
@@ -42,11 +79,15 @@ const ProductPage = observer(({ documentId, initialProduct }: Props) => {
   }, [authStore.isAuthenticated, cartStore, productStore, router]);
 
   const handleIncrement = () => {
-    if (productStore.product) cartStore.increment(productStore.product.id);
+    if (productStore.product) {
+      cartStore.increment(productStore.product.id);
+    }
   };
 
   const handleDecrement = () => {
-    if (productStore.product) cartStore.decrement(productStore.product.id);
+    if (productStore.product) {
+      cartStore.decrement(productStore.product.id);
+    }
   };
 
   if (productStore.productMeta.isLoading) {
@@ -62,23 +103,44 @@ const ProductPage = observer(({ documentId, initialProduct }: Props) => {
   }
 
   return (
-    <div className={styles['product-page']}>
+    <motion.div
+      className={styles['product-page']}
+      variants={pageVariants}
+      initial="hidden"
+      animate="visible"
+    >
       <div className={styles['product-page__wrapper']}>
         <LinkBack />
-        <div className={styles['product-page__content']}>
+        <motion.div
+          className={styles['product-page__content']}
+          variants={contentVariants}
+        >
           <ProductImage product={productStore.product}></ProductImage>
           {/* Информация о товаре */}
-          <div className={styles['product-page__info']}>
+          <motion.div
+            className={styles['product-page__info']}
+            variants={infoVariants}
+          >
             <Text view="title" tag="h1">
               {productStore.product.title}
             </Text>
             {productStore.product.rating !== undefined && (
               <div className={styles['product-page__rating']}>
-                <svg width="20" height="20" viewBox="0 0 14 14" fill="#f5c518" xmlns="http://www.w3.org/2000/svg">
+                <svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 14 14"
+                  fill="#f5c518"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
                   <path d="M7 1L8.854 4.756L13 5.364L10 8.292L10.708 12.42L7 10.47L3.292 12.42L4 8.292L1 5.364L5.146 4.756L7 1Z" />
                 </svg>
-                <Text view="p-20" weight="bold">{productStore.product.rating}</Text>
-                <Text view="p-16" color="secondary">/ 5</Text>
+                <Text view="p-20" weight="bold">
+                  {productStore.product.rating}
+                </Text>
+                <Text view="p-18" color="secondary">
+                  / 5
+                </Text>
               </div>
             )}
             <Text
@@ -95,30 +157,45 @@ const ProductPage = observer(({ documentId, initialProduct }: Props) => {
               <div className={styles['product-page__actions']}>
                 {cartStore.isInCart(productStore.product.id) ? (
                   <div className={styles['product-page__counter']}>
-                    <button className={`${styles['product-page__counter-btn']} ${styles['product-page__counter-btn--minus']}`} onClick={handleDecrement}>−</button>
+                    <button
+                      className={`${styles['product-page__counter-btn']} ${styles['product-page__counter-btn--minus']}`}
+                      onClick={handleDecrement}
+                    >
+                      −
+                    </button>
                     <span className={styles['product-page__counter-qty']}>
                       {cartStore.getQuantity(productStore.product.id)}
                     </span>
-                    <button className={styles['product-page__counter-btn']} onClick={handleIncrement}>+</button>
+                    <button
+                      className={styles['product-page__counter-btn']}
+                      onClick={handleIncrement}
+                    >
+                      +
+                    </button>
                   </div>
                 ) : (
-                  <Button className={styles['product-page__add-to-cart']} onClick={handleAddToCart}>
+                  <Button
+                    className={styles['product-page__add-to-cart']}
+                    onClick={handleAddToCart}
+                  >
                     Add to Cart
                   </Button>
                 )}
               </div>
             </div>
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
         {productStore.relatedMeta.isLoading && <PageLoader />}
         {productStore.relatedMeta.isError && (
           <Text color="secondary">Похожие товары недоступны</Text>
         )}
-        {!productStore.relatedMeta.isLoading && !productStore.relatedMeta.isError && productStore.relatedProducts.length > 0 && (
-          <RelatedItems products={productStore.relatedProducts} />
-        )}
+        {!productStore.relatedMeta.isLoading &&
+          !productStore.relatedMeta.isError &&
+          productStore.relatedProducts.length > 0 && (
+            <RelatedItems products={productStore.relatedProducts} />
+          )}
       </div>
-    </div>
+    </motion.div>
   );
 });
 

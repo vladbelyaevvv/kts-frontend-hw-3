@@ -6,7 +6,14 @@ import {
   Product,
   SortOrder,
 } from '@api/productsApi';
-import { action, computed, IObservableArray, makeObservable, observable, runInAction } from 'mobx';
+import {
+  action,
+  computed,
+  IObservableArray,
+  makeObservable,
+  observable,
+  runInAction,
+} from 'mobx';
 import { LoadingStageModel } from './LoadingStageModel';
 import { Option } from '@/components/MultiDropdown';
 import queryString from 'query-string';
@@ -15,18 +22,17 @@ const PAGE_SIZE = 9; // кол-во товаров на одной страни�
 
 export class ProductsStore {
   products: Product[] = []; //список загруженных товаров
-  total = 0;// общее кол-во товаров с учетом фильтров
-  search = '';//поисковой запрос
-  selectedCategoryIds: IObservableArray<number> = observable.array([]);//выбранные фильтрующие категории (их ID)
-  isRestored = false; // восстановлено ли состояние из URL 
+  total = 0; // общее кол-во товаров с учетом фильтров
+  search = ''; //поисковой запрос
+  selectedCategoryIds: IObservableArray<number> = observable.array([]); //выбранные фильтрующие категории (их ID)
+  isRestored = false; // восстановлено ли состояние из URL
   sortOrder: SortOrder | undefined = undefined;
 
+  categories: IObservableArray<Category> = observable.array([]); //список всех категорий
+  categoriesMeta = new LoadingStageModel(); //Статус загрузки категорий (loading/success/error)
+  productsMeta = new LoadingStageModel(); //Статус загрузки товаров (loading/success/error)
 
-  categories: IObservableArray<Category> = observable.array([]);//список всех категорий
-  categoriesMeta = new LoadingStageModel();//Статус загрузки категорий (loading/success/error)
-  productsMeta = new LoadingStageModel();//Статус загрузки товаров (loading/success/error)
-
-  currentPage = 1;// текущая страница пагинации
+  currentPage = 1; // текущая страница пагинации
 
   constructor() {
     makeObservable(this, {
@@ -71,7 +77,7 @@ export class ProductsStore {
     this.sortOrder = undefined;
   }
 
-  // Установить флаг восстановления из URL 
+  // Установить флаг восстановления из URL
   setIsRestored(value: boolean) {
     this.isRestored = value;
   }
@@ -86,7 +92,7 @@ export class ProductsStore {
       .filter((opt): opt is Option => opt !== null);
   }
 
-  //Загрузить список категорий с сервера 
+  //Загрузить список категорий с сервера
   async fetchCategories() {
     if (this.categories.length > 0 || this.categoriesMeta.isLoading) {
       return;
@@ -101,7 +107,7 @@ export class ProductsStore {
         this.categoriesMeta.success();
       });
     } catch (err) {
-        this.categoriesMeta.error('Не удалось загрузить категории');
+      this.categoriesMeta.error('Не удалось загрузить категории');
     }
   }
 
@@ -142,10 +148,9 @@ export class ProductsStore {
         this.total = data.meta.pagination.total;
         this.productsMeta.success();
       });
-
     } catch (err) {
-        this.productsMeta.error('Не удалось загрузить товары');
-    } 
+      this.productsMeta.error('Не удалось загрузить товары');
+    }
   }
 
   //загрузить следующую страницу товаров (кнопка showMore)
@@ -165,7 +170,7 @@ export class ProductsStore {
     this.selectedCategoryIds.replace(
       query.categories
         ? String(query.categories).split(',').filter(Boolean).map(Number)
-        : []
+        : [],
     );
     this.sortOrder = (query.sortOrder as SortOrder) || undefined;
     this.isRestored = true;
@@ -175,7 +180,10 @@ export class ProductsStore {
   toUrlSearchParams(): string {
     return queryString.stringify({
       search: this.search || undefined,
-      categories: this.selectedCategoryIds.length > 0 ? this.selectedCategoryIds.join(',') : undefined,
+      categories:
+        this.selectedCategoryIds.length > 0
+          ? this.selectedCategoryIds.join(',')
+          : undefined,
       sortOrder: this.sortOrder,
     });
   }

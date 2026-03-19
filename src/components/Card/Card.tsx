@@ -42,23 +42,28 @@ const Card: React.FC<CardProps> = React.memo(
     return (
       <div className={classNames(styles.card, className)} onClick={onClick}>
         <div className={styles['card__image-wrapper']}>
-        <Image
-          src={image} 
-          alt="card-image" 
-          className={styles.card__image}
-          width={348}
-          height={348}
-        />
-        {rating !== undefined && (
+          <Image
+            src={image}
+            alt="card-image"
+            className={styles.card__image}
+            width={348}
+            height={348}
+          />
+          {rating !== undefined && (
             <div className={styles['card__rating']}>
-              <svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+              <svg
+                width="14"
+                height="14"
+                viewBox="0 0 14 14"
+                fill="currentColor"
+                xmlns="http://www.w3.org/2000/svg"
+              >
                 <path d="M7 1L8.854 4.756L13 5.364L10 8.292L10.708 12.42L7 10.47L3.292 12.42L4 8.292L1 5.364L5.146 4.756L7 1Z" />
               </svg>
               <span>{rating}</span>
             </div>
-          )
-        }
-      </div>
+          )}
+        </div>
 
         <div className={styles.card__body}>
           {captionSlot && (
@@ -103,7 +108,7 @@ const Card: React.FC<CardProps> = React.memo(
         </div>
       </div>
     );
-  }
+  },
 );
 
 Card.displayName = 'Card';

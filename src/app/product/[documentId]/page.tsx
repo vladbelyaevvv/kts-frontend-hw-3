@@ -35,10 +35,5 @@ export default async function ProductPage({ params }: Props) {
   }
 
   // начальные данные в клиентский компонент
-  return (
-    <ProductPageClient 
-      documentId={documentId} 
-      initialProduct={product}
-    />
-  );
+  return <ProductPageClient documentId={documentId} initialProduct={product} />;
 }

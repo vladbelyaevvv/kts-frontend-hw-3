@@ -46,11 +46,12 @@ const SearchSection = observer(
       (category) => ({
         key: String(category.id),
         value: category.title,
-      })
+      }),
     );
 
-    const hasFilters = searchValue || selectedCategories.length > 0 || productsStore.sortOrder;
-    
+    const hasFilters =
+      searchValue || selectedCategories.length > 0 || productsStore.sortOrder;
+
     const handleSortClick = (opt: SortOption) => {
       const isActive = productsStore.sortOrder === opt.order;
       if (isActive) {
@@ -91,22 +92,22 @@ const SearchSection = observer(
           />
 
           <div className={styles['search-section__sort']}>
-              {SORT_OPTIONS.map((opt) => {
-                const isActive = productsStore.sortOrder === opt.order;
-                return (
-                  <button
-                    key={opt.order}
-                    type="button"
-                    className={classNames(styles['search-section__sort-btn'], {
-                      [styles['search-section__sort-btn--active']]: isActive,
-                    })}
-                    onClick={() => handleSortClick(opt)}
-                  >
-                    {opt.label}
-                  </button>
-                );
-              })}
-            </div>
+            {SORT_OPTIONS.map((opt) => {
+              const isActive = productsStore.sortOrder === opt.order;
+              return (
+                <button
+                  key={opt.order}
+                  type="button"
+                  className={classNames(styles['search-section__sort-btn'], {
+                    [styles['search-section__sort-btn--active']]: isActive,
+                  })}
+                  onClick={() => handleSortClick(opt)}
+                >
+                  {opt.label}
+                </button>
+              );
+            })}
+          </div>
         </div>
 
         {hasFilters && onClearFilters && (
@@ -119,7 +120,8 @@ const SearchSection = observer(
         )}
         <div
           className={classNames(styles['search-section__total'], {
-            [styles['search-section__total--visible']]: !productsStore.productsMeta.isLoading && totalProducts > 0,
+            [styles['search-section__total--visible']]:
+              !productsStore.productsMeta.isLoading && totalProducts > 0,
           })}
         >
           <Text tag="h4" weight="bold">
@@ -131,7 +133,7 @@ const SearchSection = observer(
         </div>
       </div>
     );
-  }
+  },
 );
 
 export default SearchSection;

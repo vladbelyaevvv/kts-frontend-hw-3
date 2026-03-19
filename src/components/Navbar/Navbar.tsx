@@ -109,7 +109,7 @@ const Navbar = observer(() => {
         </Link>
         <Link
           href="/categories"
-           className={classNames(styles['navbar__link'], {
+          className={classNames(styles['navbar__link'], {
             [styles['navbar__link--active']]: pathname === '/categories',
           })}
         >

@@ -97,7 +97,7 @@ export const getProductById = async (documentId: string) => {
   });
 
   const response = await api.get<{ data: Product }>(
-    `/products/${documentId}?${query}`
+    `/products/${documentId}?${query}`,
   );
   return response.data.data;
 };
@@ -105,13 +105,15 @@ export const getProductById = async (documentId: string) => {
 // получить список категорий
 export const getCategories = async () => {
   const query = qs.stringify({ populate: 'image' });
-  const response = await api.get<CategoriesResponse>(`/product-categories?${query}`);
+  const response = await api.get<CategoriesResponse>(
+    `/product-categories?${query}`,
+  );
   return response.data;
 };
 
 export const getRelatedProducts = async (
   categoryId: number,
-  currentProductId: number
+  currentProductId: number,
 ) => {
   const query = qs.stringify({
     filters: {

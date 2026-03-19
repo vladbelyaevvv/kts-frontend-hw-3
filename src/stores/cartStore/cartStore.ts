@@ -1,6 +1,12 @@
 import { addToCart, getCart, removeFromCart } from '@api/cartApi';
 import { Product } from '@api/productsApi';
-import { action, computed, makeObservable, observable, runInAction } from 'mobx';
+import {
+  action,
+  computed,
+  makeObservable,
+  observable,
+  runInAction,
+} from 'mobx';
 import { type CartItem, type CartItemResponse } from './types';
 
 export class CartStore {
@@ -79,7 +85,7 @@ export class CartStore {
   async add(product: Product, quantity: number = 1) {
     const existingItem = this.storage.get(product.id);
 
-    if(existingItem){
+    if (existingItem) {
       // если товар уже существует то прибавляем кол-во
       existingItem.quantity += quantity;
     } else {
@@ -130,7 +136,7 @@ export class CartStore {
     if (!currentItem) {
       return;
     }
-    const {quantity} = currentItem;
+    const { quantity } = currentItem;
     this.storage.delete(productId);
     await removeFromCart(productId, quantity);
   }

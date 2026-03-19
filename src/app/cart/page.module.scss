@@ -2,6 +2,8 @@
 @use '@/styles/mixins.scss' as *;
 
 .cart-page {
+  width: 100%;
+
   &__centered {
     @include flex-center(column);
     min-height: calc(100vh - 90px);

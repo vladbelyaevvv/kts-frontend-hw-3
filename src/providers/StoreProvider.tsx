@@ -19,7 +19,6 @@ export function useStores() {
 }
 
 export function StoreProvider({ children }: { children: React.ReactNode }) {
-  
   const [stores] = useState<Stores>(() => ({
     authStore: rootStore.authStore,
     cartStore: rootStore.cartStore,

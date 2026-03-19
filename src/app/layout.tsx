@@ -18,13 +18,17 @@ export const metadata: Metadata = {
   description: 'Интернет-магазин Lalasia',
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <html lang="ru">
       <body className={roboto.className}>
         <StoreProvider>
-            <Navbar />
-            {children}
+          <Navbar />
+          {children}
         </StoreProvider>
       </body>
     </html>

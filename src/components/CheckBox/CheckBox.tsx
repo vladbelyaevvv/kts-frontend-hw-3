@@ -25,7 +25,7 @@ const CheckBox: React.FC<CheckBoxProps> = React.memo(
         className={classNames(
           styles.checkbox__wrapper,
           { [styles['checkbox--disabled']]: disabled },
-          className
+          className,
         )}
       >
         <input
@@ -47,7 +47,7 @@ const CheckBox: React.FC<CheckBoxProps> = React.memo(
         </div>
       </label>
     );
-  }
+  },
 );
 
 CheckBox.displayName = 'CheckBox';

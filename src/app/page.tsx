@@ -14,7 +14,7 @@ import { useSearchParams, useRouter } from 'next/navigation';
 import { ProductsStore } from '@/stores/productsStore';
 
 const ProductsContent = observer(() => {
-  const [ productsStore ] = useState(() => new ProductsStore());
+  const [productsStore] = useState(() => new ProductsStore());
   const searchParams = useSearchParams();
   const router = useRouter();
 
@@ -87,8 +87,9 @@ const ProductsContent = observer(() => {
           onClearFilters={handleClearFilters}
           productsStore={productsStore}
         />
-        
-        {productsStore.productsMeta.isLoading && productsStore.products.length === 0 ? (
+
+        {productsStore.productsMeta.isLoading &&
+        productsStore.products.length === 0 ? (
           <div className={styles['products-page__loader']}>
             <PageLoader />
           </div>
@@ -97,9 +98,10 @@ const ProductsContent = observer(() => {
             <ProductsGrid products={productsStore.products} />
             <div className={styles['products-page__show-more']}>
               {productsStore.productsMeta.isLoading && <PageLoader />}
-              {!productsStore.productsMeta.isLoading && productsStore.hasMore && (
-                <Button onClick={handleShowMore}>Show more</Button>
-              )}
+              {!productsStore.productsMeta.isLoading &&
+                productsStore.hasMore && (
+                  <Button onClick={handleShowMore}>Show more</Button>
+                )}
               {!productsStore.hasMore && productsStore.products.length > 0 && (
                 <Text view="p-20" color="secondary">
                   No more products
@@ -107,9 +109,8 @@ const ProductsContent = observer(() => {
               )}
             </div>
           </>
-        )
-      } 
-    </div>
+        )}
+      </div>
     </div>
   );
 });
@@ -117,7 +118,13 @@ const ProductsContent = observer(() => {
 //это чтобы yarn build работал, без этого не проходил
 const ProductsPage = () => {
   return (
-    <Suspense fallback={<div className={styles['products-page__loader']}><PageLoader /></div>}>
+    <Suspense
+      fallback={
+        <div className={styles['products-page__loader']}>
+          <PageLoader />
+        </div>
+      }
+    >
       <ProductsContent />
     </Suspense>
   );

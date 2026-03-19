@@ -34,7 +34,7 @@ const ProductImage = React.memo(({ product }: ProductImageProps) => {
         />
       )}
       <div className={styles['product-image__controls']}>
-        <button 
+        <button
           className={styles['product-image__control-button']}
           onClick={handlePrev}
           type="button"
@@ -43,13 +43,13 @@ const ProductImage = React.memo(({ product }: ProductImageProps) => {
           <ArrowDownIcon
             className={classNames(
               styles['product-image__control-icon'],
-              styles['product-image__control-icon--prev']
+              styles['product-image__control-icon--prev'],
             )}
             width={30}
             height={40}
           />
         </button>
-        <button 
+        <button
           className={styles['product-image__control-button']}
           onClick={handleNext}
           type="button"
@@ -58,7 +58,7 @@ const ProductImage = React.memo(({ product }: ProductImageProps) => {
           <ArrowDownIcon
             className={classNames(
               styles['product-image__control-icon'],
-              styles['product-image__control-icon--next']
+              styles['product-image__control-icon--next'],
             )}
             width={30}
             height={40}
@@ -71,7 +71,8 @@ const ProductImage = React.memo(({ product }: ProductImageProps) => {
           <button
             key={index}
             className={classNames(styles['product-image__indicator'], {
-              [styles['product-image__indicator--active']]: index === currentIndex,
+              [styles['product-image__indicator--active']]:
+                index === currentIndex,
             })}
             onClick={() => setCurrentIndex(index)}
             type="button"

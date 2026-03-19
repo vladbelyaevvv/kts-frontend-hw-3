@@ -35,7 +35,7 @@ export class AuthStore {
       register: action.bound,
     });
 
-    if (typeof window !== 'undefined'){
+    if (typeof window !== 'undefined') {
       this.restoreFromStorage();
       setJWTToken(this.user?.jwt ?? null);
     }
@@ -56,7 +56,9 @@ export class AuthStore {
   // загрузка из локал стораджа
   private saveToStorage() {
     try {
-      if (typeof window === 'undefined') {return;}
+      if (typeof window === 'undefined') {
+        return;
+      }
       if (this.user) {
         const userData = JSON.stringify(this.user);
         localStorage.setItem(USER_DATA_KEY, userData);
@@ -132,7 +134,8 @@ export class AuthStore {
       this.authMeta.success();
     } catch (error) {
       const message =
-        (error as any)?.response?.data?.error?.message || 'An error has occurred';
+        (error as any)?.response?.data?.error?.message ||
+        'An error has occurred';
       this.authMeta.error(message);
     }
   }
@@ -146,7 +149,8 @@ export class AuthStore {
       this.clearForm();
     } catch (error) {
       const message =
-        (error as any)?.response?.data?.error?.message || 'An error has occurred';
+        (error as any)?.response?.data?.error?.message ||
+        'An error has occurred';
       this.authMeta.error(message);
     }
   }

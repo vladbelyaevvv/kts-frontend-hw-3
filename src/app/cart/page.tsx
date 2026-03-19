@@ -8,6 +8,29 @@ import { useRouter } from 'next/navigation';
 import { useStores } from '@/providers/StoreProvider';
 import Link from 'next/link';
 import Image from 'next/image';
+import { motion } from 'framer-motion';
+
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.15,
+    },
+  },
+} as const;
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 30 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.5,
+      ease: [0.25, 0.1, 0.25, 1.0],
+    },
+  },
+} as const;
 
 const CartPage = observer(() => {
   const { cartStore, authStore } = useStores();
@@ -37,49 +60,74 @@ const CartPage = observer(() => {
 
   // Оформление заказа
   const handleMakeOrder = () => {
+    // eslint-disable-next-line no-alert
     alert('Order placed successfully!');
   };
 
   //Перенаправление войти если не авторизован
   if (!authStore.isAuthenticated) {
     return (
-      <div className={styles['cart-page']}>
+      <motion.div
+        className={styles['cart-page']}
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
+      >
         <div className={styles['cart-page__centered']}>
           <Text view="p-20" color="secondary">
             Please log in to work with the shopping cart
           </Text>
           <Button onClick={() => router.push('/auth/signin')}>Log in</Button>
         </div>
-      </div>
+      </motion.div>
     );
   }
 
   //основной рендер корзины
   return (
-    <div className={styles['cart-page']}>
+    <motion.div
+      className={styles['cart-page']}
+      variants={containerVariants}
+      initial="hidden"
+      animate="visible"
+    >
       <div className={styles['cart-page__container']}>
         <div className={styles['cart-page__wrapper']}>
-          <Text view="title" className={styles['cart-page__title']}>
-            Shopping cart
-          </Text>
+          <motion.div
+            className={styles['cart-page__title']}
+            variants={itemVariants}
+          >
+            <Text view="title" className={styles['cart-page__title']}>
+              Shopping cart
+            </Text>
+          </motion.div>
 
           {items.length === 0 ? (
-            <div className={styles['cart-page__empty']}>
+            <motion.div
+              className={styles['cart-page__empty']}
+              variants={itemVariants}
+            >
               <Text view="p-20" color="secondary">
                 The cart is empty
               </Text>
               <Link href="/">
-                <Button className={styles['cart-page__empty-button']}>Go to shopping</Button>
+                <Button className={styles['cart-page__empty-button']}>
+                  Go to shopping
+                </Button>
               </Link>
-            </div>
+            </motion.div>
           ) : (
             <>
               {/* список товаров в корзине */}
-              <div className={styles['cart-page__items']}>
+              <motion.div
+                className={styles['cart-page__items']}
+                variants={itemVariants}
+              >
                 {items.map((item, index) => (
-                  <div
+                  <motion.div
                     key={`${item.product.id}-${index}`}
                     className={styles['cart-item']}
+                    variants={itemVariants}
                   >
                     <div className={styles['cart-item__image']}>
                       {item.product.images?.[0]?.url && (
@@ -113,7 +161,10 @@ const CartPage = observer(() => {
                       >
                         -
                       </Button>
-                      <Text view="p-20" className={styles['cart-item__qty-value']}>
+                      <Text
+                        view="p-20"
+                        className={styles['cart-item__qty-value']}
+                      >
                         {item.quantity}
                       </Text>
                       <Button
@@ -130,12 +181,15 @@ const CartPage = observer(() => {
                     >
                       Remove
                     </Button>
-                  </div>
+                  </motion.div>
                 ))}
-              </div>
+              </motion.div>
 
               {/* итоговая инфа по корзине */}
-              <div className={styles['cart-page__summary']}>
+              <motion.div
+                className={styles['cart-page__summary']}
+                variants={itemVariants}
+              >
                 <div className={styles['cart-summary']}>
                   {/* кол-во товаров */}
                   <div className={styles['cart-summary__row']}>
@@ -173,12 +227,12 @@ const CartPage = observer(() => {
                     Empty the cart
                   </Button>
                 </div>
-              </div>
+              </motion.div>
             </>
           )}
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 });
 
