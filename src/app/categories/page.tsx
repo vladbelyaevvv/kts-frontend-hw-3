@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import { observer } from 'mobx-react-lite';
 import { ProductsStore } from '@/stores/productsStore';
 import Text from '@/components/Text';
-import Button from '@/components/Button';
+import Image from 'next/image';
 import styles from './page.module.scss';
 
 const CategoriesPage = observer(() => {
@@ -38,9 +38,18 @@ const CategoriesPage = observer(() => {
               onClick={() => handleCategoryClick(category.id)}
             >
               <div className={styles['categories-page__card-image']}>
-                <span className={styles['categories-page__card-letter']}>
-                  {category.title.charAt(0).toUpperCase()}
-                </span>
+                {category.image?.url ? (
+                  <Image
+                    src={category.image.formats?.small?.url ?? category.image.url}
+                    alt={category.title}
+                    fill
+                    style={{ objectFit: 'cover' }}
+                  />
+                ) : (
+                  <span className={styles['categories-page__card-letter']}>
+                    {category.title.charAt(0).toUpperCase()}
+                  </span>
+                )}
               </div>
               <div className={styles['categories-page__card-body']}>
                 <Text view="p-20" weight="bold">

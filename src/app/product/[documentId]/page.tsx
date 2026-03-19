@@ -1,5 +1,5 @@
 import { notFound } from 'next/navigation';
-import { getProductById, Product } from '@/api/productsApi';
+import { getProductById } from '@/api/productsApi';
 import ProductPageClient from './ProductPageClient';
 import { Metadata } from 'next';
 

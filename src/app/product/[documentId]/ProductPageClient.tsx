@@ -41,6 +41,14 @@ const ProductPage = observer(({ documentId, initialProduct }: Props) => {
     }
   }, [authStore.isAuthenticated, cartStore, productStore, router]);
 
+  const handleIncrement = () => {
+    if (productStore.product) cartStore.increment(productStore.product.id);
+  };
+
+  const handleDecrement = () => {
+    if (productStore.product) cartStore.decrement(productStore.product.id);
+  };
+
   if (productStore.productMeta.isLoading) {
     return (
       <div className={styles['product-page__text']}>
@@ -64,6 +72,15 @@ const ProductPage = observer(({ documentId, initialProduct }: Props) => {
             <Text view="title" tag="h1">
               {productStore.product.title}
             </Text>
+            {productStore.product.rating !== undefined && (
+              <div className={styles['product-page__rating']}>
+                <svg width="20" height="20" viewBox="0 0 14 14" fill="#f5c518" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M7 1L8.854 4.756L13 5.364L10 8.292L10.708 12.42L7 10.47L3.292 12.42L4 8.292L1 5.364L5.146 4.756L7 1Z" />
+                </svg>
+                <Text view="p-20" weight="bold">{productStore.product.rating}</Text>
+                <Text view="p-16" color="secondary">/ 5</Text>
+              </div>
+            )}
             <Text
               tag="p"
               color="secondary"
@@ -76,15 +93,19 @@ const ProductPage = observer(({ documentId, initialProduct }: Props) => {
                 ${productStore.product.price}
               </Text>
               <div className={styles['product-page__actions']}>
-                <Button className={styles['product-page__buy-now']}>Buy Now</Button>
-                <Button
-                  className={styles['product-page__add-to-cart']}
-                  onClick={handleAddToCart}
-                >
-                  {cartStore.isInCart(productStore.product.id)
-                    ? 'Already in cart'
-                    : 'Add to Cart'}
-                </Button>
+                {cartStore.isInCart(productStore.product.id) ? (
+                  <div className={styles['product-page__counter']}>
+                    <button className={`${styles['product-page__counter-btn']} ${styles['product-page__counter-btn--minus']}`} onClick={handleDecrement}>−</button>
+                    <span className={styles['product-page__counter-qty']}>
+                      {cartStore.getQuantity(productStore.product.id)}
+                    </span>
+                    <button className={styles['product-page__counter-btn']} onClick={handleIncrement}>+</button>
+                  </div>
+                ) : (
+                  <Button className={styles['product-page__add-to-cart']} onClick={handleAddToCart}>
+                    Add to Cart
+                  </Button>
+                )}
               </div>
             </div>
           </div>

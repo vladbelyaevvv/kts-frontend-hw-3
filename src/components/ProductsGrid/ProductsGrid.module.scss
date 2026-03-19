@@ -1,4 +1,5 @@
 @use '@/styles/mixins.scss' as *;
+@use '@/styles/variables.scss' as *;
 
 .products-grid {
   margin-top: 40px;
@@ -22,5 +23,48 @@
 
   &__card-pointer {
     cursor: pointer;
+  }
+
+  &__counter {
+    display: flex;
+    align-items: center;
+    height: 52px;
+    border: 1px solid #518581;
+    border-radius: $border-radius;
+    box-sizing: border-box;
+  }
+
+  &__counter-btn {
+    width: 48px;
+    height: 100%;
+    border: none;
+    background: transparent;
+    color: #518581;
+    font-size: 20px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease-in-out;
+
+    &:hover {
+      background: #518581;
+      color: #fff;
+    }
+
+    &--minus {
+      &:hover {
+        background-color: #d32f2f !important;
+        color: $WHITE;
+      }
+    }
+  }
+
+  &__counter-qty {
+    min-width: 32px;
+    text-align: center;
+    font-size: 16px;
+    font-weight: 500;
+    color: #000;
   }
 }

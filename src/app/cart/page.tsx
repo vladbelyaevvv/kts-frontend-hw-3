@@ -35,6 +35,11 @@ const CartPage = observer(() => {
     cart.clear();
   };
 
+  // Оформление заказа
+  const handleMakeOrder = () => {
+    alert('Order placed successfully!');
+  };
+
   //Перенаправление войти если не авторизован
   if (!authStore.isAuthenticated) {
     return (
@@ -154,7 +159,10 @@ const CartPage = observer(() => {
                     </Text>
                   </div>
 
-                  <Button className={styles['cart-summary__checkout']}>
+                  <Button
+                    onClick={handleMakeOrder}
+                    className={styles['cart-summary__checkout']}
+                  >
                     Make an order
                   </Button>
 

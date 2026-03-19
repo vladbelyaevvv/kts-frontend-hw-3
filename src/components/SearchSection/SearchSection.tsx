@@ -8,6 +8,7 @@ import styles from './SearchSection.module.scss';
 import { observer } from 'mobx-react-lite';
 import { ProductsStore } from '@/stores/productsStore';
 import classNames from 'classnames';
+import { SortOrder } from '@/api/productsApi';
 
 interface SearchSectionProps {
   searchValue: string;
@@ -19,6 +20,16 @@ interface SearchSectionProps {
   onClearFilters?: () => void;
   productsStore: ProductsStore;
 }
+
+type SortOption = {
+  label: string;
+  order: SortOrder;
+};
+
+const SORT_OPTIONS: SortOption[] = [
+  { label: 'Price ↑', order: 'asc' },
+  { label: 'Price ↓', order: 'desc' },
+];
 
 const SearchSection = observer(
   ({
@@ -38,7 +49,17 @@ const SearchSection = observer(
       })
     );
 
-    const hasFilters = searchValue || selectedCategories.length > 0;
+    const hasFilters = searchValue || selectedCategories.length > 0 || productsStore.sortOrder;
+    
+    const handleSortClick = (opt: SortOption) => {
+      const isActive = productsStore.sortOrder === opt.order;
+      if (isActive) {
+        productsStore.clearSort();
+      } else {
+        productsStore.setSort(opt.order);
+      }
+      onSearchSubmit();
+    };
 
     return (
       <div className={styles['search-section']}>
@@ -56,17 +77,38 @@ const SearchSection = observer(
             Find now
           </Button>
         </div>
-        <MultiDropdown
-          className={styles['search-section__filter']}
-          options={categoryOptions}
-          value={selectedCategories}
-          onChange={onCategoriesChange}
-          getTitle={(options) =>
-            options.length === 0
-              ? 'Filter'
-              : options.map((opt) => opt.value).join(', ')
-          }
-        />
+        <div className={styles['search-section__filters']}>
+          <MultiDropdown
+            className={styles['search-section__filter']}
+            options={categoryOptions}
+            value={selectedCategories}
+            onChange={onCategoriesChange}
+            getTitle={(options) =>
+              options.length === 0
+                ? 'Filter'
+                : options.map((opt) => opt.value).join(', ')
+            }
+          />
+
+          <div className={styles['search-section__sort']}>
+              {SORT_OPTIONS.map((opt) => {
+                const isActive = productsStore.sortOrder === opt.order;
+                return (
+                  <button
+                    key={opt.order}
+                    type="button"
+                    className={classNames(styles['search-section__sort-btn'], {
+                      [styles['search-section__sort-btn--active']]: isActive,
+                    })}
+                    onClick={() => handleSortClick(opt)}
+                  >
+                    {opt.label}
+                  </button>
+                );
+              })}
+            </div>
+        </div>
+
         {hasFilters && onClearFilters && (
           <Button
             onClick={onClearFilters}

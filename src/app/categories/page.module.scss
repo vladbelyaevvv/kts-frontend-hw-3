@@ -61,6 +61,7 @@
   }
 
   &__card-image {
+    position: relative;
     height: 180px;
     background-color: $brand;
     @include flex-center();

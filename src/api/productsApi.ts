@@ -1,9 +1,15 @@
 import api from './axios';
-import * as qs from 'qs';
+import qs from 'qs';
 
 export type Category = {
   id: number;
   title: string;
+  image?: {
+    url: string;
+    formats?: {
+      small?: { url: string };
+    };
+  };
 };
 
 export type CategoriesResponse = {
@@ -27,15 +33,19 @@ export type Product = {
   title: string;
   description?: string;
   price: number;
+  rating?: number;
   images?: { url: string }[];
   productCategory?: { title: string; id?: number };
 };
+
+export type SortOrder = 'asc' | 'desc';
 
 export interface GetProductsParams {
   search?: string;
   categoryIds?: number[];
   page?: number;
   pageSize?: number;
+  sortOrder?: SortOrder;
 }
 
 // получить весь список товаров
@@ -59,6 +69,10 @@ export const getProducts = async (params?: GetProductsParams) => {
   const queryConfig: Record<string, unknown> = {
     populate: ['images', 'productCategory'],
   };
+
+  if (params?.sortOrder) {
+    queryConfig.sort = [`price:${params.sortOrder}`];
+  }
 
   if (Object.keys(filters).length > 0) {
     queryConfig.filters = filters;
@@ -90,7 +104,8 @@ export const getProductById = async (documentId: string) => {
 
 // получить список категорий
 export const getCategories = async () => {
-  const response = await api.get<CategoriesResponse>('/product-categories');
+  const query = qs.stringify({ populate: 'image' });
+  const response = await api.get<CategoriesResponse>(`/product-categories?${query}`);
   return response.data;
 };
 

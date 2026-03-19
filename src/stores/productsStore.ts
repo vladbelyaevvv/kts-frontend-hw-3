@@ -4,6 +4,7 @@ import {
   getProducts,
   GetProductsParams,
   Product,
+  SortOrder,
 } from '@api/productsApi';
 import { action, computed, IObservableArray, makeObservable, observable, runInAction } from 'mobx';
 import { LoadingStageModel } from './LoadingStageModel';
@@ -18,6 +19,8 @@ export class ProductsStore {
   search = '';//поисковой запрос
   selectedCategoryIds: IObservableArray<number> = observable.array([]);//выбранные фильтрующие категории (их ID)
   isRestored = false; // восстановлено ли состояние из URL 
+  sortOrder: SortOrder | undefined = undefined;
+
 
   categories: IObservableArray<Category> = observable.array([]);//список всех категорий
   categoriesMeta = new LoadingStageModel();//Статус загрузки категорий (loading/success/error)
@@ -32,13 +35,17 @@ export class ProductsStore {
       total: observable,
       search: observable,
       selectedCategoryIds: observable,
+      isRestored: observable,
       categories: observable,
       categoriesMeta: observable,
       currentPage: observable,
+      sortOrder: observable,
       hasMore: computed,
       selectedCategories: computed,
       setSearch: action,
       setSelectedCategoryIds: action,
+      setSort: action,
+      clearSort: action,
       fetchCategories: action,
       fetchProducts: action,
       loadMore: action,
@@ -54,6 +61,14 @@ export class ProductsStore {
   //установить выбранные категории по ID
   setSelectedCategoryIds(ids: number[]) {
     this.selectedCategoryIds.replace(ids);
+  }
+
+  setSort(order: SortOrder) {
+    this.sortOrder = order;
+  }
+
+  clearSort() {
+    this.sortOrder = undefined;
   }
 
   // Установить флаг восстановления из URL 
@@ -113,6 +128,7 @@ export class ProductsStore {
           this.selectedCategoryIds.length > 0
             ? this.selectedCategoryIds
             : undefined,
+        sortOrder: this.sortOrder,
       };
 
       const data = await getProducts(params);
@@ -145,28 +161,22 @@ export class ProductsStore {
   // восстановление состояния стора из url параметров - извлекаеn search и categories из URL и устанавливает в стор
   restoreFromUrl(searchParams: URLSearchParams) {
     const query = queryString.parse(searchParams.toString());
-    const searchFromUrl = String(query.search ?? '');
-    const categoriesFromUrl = query.categories
-      ? String(query.categories).split(',').filter(Boolean).map(Number)
-      : [];
-
-    this.search = searchFromUrl;
-    this.selectedCategoryIds.replace(categoriesFromUrl);
+    this.search = String(query.search ?? '');
+    this.selectedCategoryIds.replace(
+      query.categories
+        ? String(query.categories).split(',').filter(Boolean).map(Number)
+        : []
+    );
+    this.sortOrder = (query.sortOrder as SortOrder) || undefined;
     this.isRestored = true;
-
-    return {
-      search: searchFromUrl,
-      categoryIds: categoriesFromUrl,
-    };
   }
 
   //из текущего состояния стора создает URLSearchParams(то есть обновляет URL при применении фильтров)
   toUrlSearchParams(): string {
     return queryString.stringify({
       search: this.search || undefined,
-      categories: this.selectedCategoryIds.length > 0
-        ? this.selectedCategoryIds.join(',')
-        : undefined,
+      categories: this.selectedCategoryIds.length > 0 ? this.selectedCategoryIds.join(',') : undefined,
+      sortOrder: this.sortOrder,
     });
   }
 
@@ -175,6 +185,7 @@ export class ProductsStore {
     this.total = 0;
     this.search = '';
     this.selectedCategoryIds.replace([]);
+    this.sortOrder = undefined;
     this.currentPage = 1;
     this.isRestored = false;
     this.categoriesMeta.reset();

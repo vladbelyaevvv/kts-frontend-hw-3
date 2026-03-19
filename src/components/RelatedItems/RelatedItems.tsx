@@ -29,6 +29,16 @@ const RelatedItems = observer(({ products }: RelatedItemsProps) => {
     await cartStore.add(product);
   };
 
+  const handleIncrement = (e: React.MouseEvent, productId: number) => {
+    e.stopPropagation();
+    cartStore.increment(productId);
+  };
+
+  const handleDecrement = (e: React.MouseEvent, productId: number) => {
+    e.stopPropagation();
+    cartStore.decrement(productId);
+  };
+
   const handleCardClick = (documentId: string) => {
     router.push(`/product/${documentId}`);
   };
@@ -44,6 +54,7 @@ const RelatedItems = observer(({ products }: RelatedItemsProps) => {
             key={product.id}
             className={styles['related-items__card-pointer']}
             image={product.images?.[0]?.url || ''}
+            rating={product.rating}
             title={product.title}
             subtitle={product.description}
             contentSlot={
@@ -52,11 +63,15 @@ const RelatedItems = observer(({ products }: RelatedItemsProps) => {
               </Text>
             }
             actionSlot={
-              <Button onClick={(e) => handleAddToCart(e, product)}>
-                {cartStore.isInCart(product.id)
-                  ? 'Already in cart'
-                  : 'Add to Cart'}
-              </Button>
+              cartStore.isInCart(product.id) ? (
+                <div className={styles['related-items__counter']}>
+                  <button className={`${styles['related-items__counter-btn']} ${styles['related-items__counter-btn--minus']}`} onClick={(e) => handleDecrement(e, product.id)}>−</button>
+                  <span className={styles['related-items__counter-qty']}>{cartStore.getQuantity(product.id)}</span>
+                  <button className={styles['related-items__counter-btn']} onClick={(e) => handleIncrement(e, product.id)}>+</button>
+                </div>
+              ) : (
+                <Button onClick={(e) => handleAddToCart(e, product)}>Add to Cart</Button>
+              )
             }
             captionSlot={product.productCategory?.title}
             onClick={() => handleCardClick(product.documentId)}
