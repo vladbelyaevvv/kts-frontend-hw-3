@@ -55,17 +55,20 @@
     color: $text-primary;
     transition: color $transition-duration $transition-easing;
 
-    * {
-      color: inherit;
-    }
-
     &:hover {
       color: $brand;
+
+      * {
+        color: $brand !important;
+      }
     }
 
-    &.active {
+    &--active {
       color: $brand;
-      font-weight: 500;
+
+      * {
+        color: $brand !important;
+      }
     }
   }
 

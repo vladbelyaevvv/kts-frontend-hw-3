@@ -100,7 +100,7 @@ const ProductsContent = observer(() => {
               {productsStore.productsMeta.isLoading && <PageLoader />}
               {!productsStore.productsMeta.isLoading &&
                 productsStore.hasMore && (
-                  <Button onClick={handleShowMore}>Show more</Button>
+                  <Button onClick={handleShowMore} className={styles['products-page__show-more-button']}>Show more</Button>
                 )}
               {!productsStore.hasMore && productsStore.products.length > 0 && (
                 <Text view="p-20" color="secondary">

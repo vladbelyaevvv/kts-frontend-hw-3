@@ -23,6 +23,7 @@
     height: 348px;
     background-color: $card-image-bg;
     overflow: hidden;
+    flex-shrink: 0;
   }
 
   &__image {
@@ -55,17 +56,26 @@
   &__body {
     display: flex;
     flex-direction: column;
-    flex-grow: 1;
     gap: 8px;
     margin: 12px;
     margin-top: 24px;
     margin-bottom: 20px;
+    min-height: 120px;
+  }
+
+  &__title {
+    min-height: 56px;
+  }
+
+  &__subtitle {
+    min-height: 48px;
   }
 
   &__footer {
     @include flex-center;
     justify-content: space-between;
     margin: 0 14px;
+    margin-top: auto;
 
     button {
       border-radius: $border-radius;

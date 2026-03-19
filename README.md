@@ -1,36 +1,142 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# KTS E-Commerce Store
 
-## Getting Started
+Интернет-магазин различных вещей. Проект разработан в рамках обучения KTS.
 
-First, run the development server:
+## 🌐 Демо
+
+**Продакшен:** https://kts-frontend-hw-3.vercel.app/
+
+**Репозиторий:** https://github.com/vladbelyaevvv/kts-frontend-hw-3
+
+## 📸 Скриншоты
+
+### Главная страница
+![Главная страница](./screenshots/home.png)
+
+### Страница товара
+![Страница товара](./screenshots/product.png)
+
+### Корзина
+![Корзина](./screenshots/cart.png)
+
+### Категории
+![Категории](screenshots/categoeries.png)
+
+### Профиль пользователя
+![Профиль](./screenshots/profile.png)
+
+### Видео пример работы
+![(./screenshots/video.png)](screenshots/lalasia_video.gif)
+
+## 🛠 Стек технологий
+
+- **React 19** — UI библиотека
+- **Next.js 16** — фреймворк для React
+- **TypeScript** — типизация
+- **MobX** — управление состоянием
+- **Framer Motion** — анимации
+- **Sass/SCSS** — стилизация
+- **Axios** — HTTP-клиент
+
+## 📦 Скрипты
 
 ```bash
-npm run dev
-# or
+# Запуск в режиме разработки
 yarn dev
-# or
-pnpm dev
-# or
-bun dev
+
+# Сборка для продакшена
+yarn build
+
+# Запуск продакшен-сборки
+yarn start
+
+# Линтинг кода
+yarn lint
+
+# Форматирование кода через Prettier
+yarn format
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🚀 Установка
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+1. Клонируйте репозиторий:
+```bash
+git clone https://github.com/vladbelyaevvv/kts-frontend-hw-3.git
+cd kts-frontend-hw-3
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+2. Установите зависимости:
+```bash
+yarn install
+```
 
-## Learn More
+3. Запустите проект:
+```bash
+yarn dev
+```
 
-To learn more about Next.js, take a look at the following resources:
+Приложение будет доступно по адресу: http://localhost:3000
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 📁 Структура проекта
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```
+src/
+├── api/                  # API клиенты
+├── app/                    # Страницы приложения (Next.js App Router)
+│   ├── about/             # Страница "О нас"
+│   ├── cart/              # Корзина
+│   ├── categories/        # Категории товаров
+│   ├── product/[id]/      # Страница товара
+│   ├── profile/           # Профиль пользователя
+│   └── auth/              # Страницы авторизации
+├── components/            # Переиспользуемые компоненты
+│   ├── Button/           # Компонент кнопки
+│   ├── Card/             # Карточка товара
+│   ├── Input/            # Поле ввода
+│   ├── Navbar/           # Навигационная панель
+│   └── ...
+├── providers             # провайдер
+├── stores/               # MobX сторы
+│   ├── productsStore.ts  # Стор товаров и категорий
+│   ├── cartStore.ts      # Стор корзины
+│   └── authStore.ts      # Стор авторизации
+└── styles/               # Глобальные стили и переменные
+```
 
-## Deploy on Vercel
+## ✨ Функционал
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- 📦 Просмотр каталога товаров с фильтрацией по категориям
+- 🔍 Поиск товаров
+- 🛒 Добавление товаров в корзину
+- 📊 Управление количеством товаров в корзине
+- 👤 Авторизация/регистрация
+- 📝 Профиль пользователя
+- 🎨 Адаптивный дизайн
+- ✨ Плавные анимации с Framer Motion
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 🎨 Дизайн-система
+
+Проект использует собственную дизайн-систему с SCSS-миксинами и переменными:
+- Цветовая палитра
+- Типографика
+- Отступы
+- Border radius
+- Transition
+
+## 📱 Адаптивность
+
+Приложение полностью адаптировано для:
+- 📱 Мобильных устройств (320px+)
+- 📱 Планшетов (768px+)
+- 💻 Десктопов (1024px+)
+
+## 🔐 Авторизация
+
+Для работы с корзиной и профилем необходимо авторизоваться. После входа в систему:
+- Товары сохраняются в корзине
+- Доступен профиль пользователя
+- Доступно оформление заказа
+
+---
+
+**Дата:** Март 2025
