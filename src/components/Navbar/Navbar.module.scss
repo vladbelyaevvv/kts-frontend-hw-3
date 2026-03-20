@@ -20,6 +20,11 @@
     height: 70px;
   }
 
+  @media (max-width: 576px) {
+    padding: 0 15px;
+    height: 65px;
+  }
+
   @include xs {
     padding: 0 12px;
     height: 60px;
@@ -38,6 +43,24 @@
     @include sm {
       height: 35px;
     }
+
+    @media (max-width: 576px) {
+      height: 30px;
+
+      svg:first-child {
+        width: 30px;
+        height: 30px;
+      }
+
+      svg:last-child {
+        width: 55px;
+        height: 13px;
+      }
+    }
+
+    @include xs {
+      display: none; // Скрываем логотип на очень маленьких экранах
+    }
   }
 
   &__header-nav {
@@ -46,7 +69,25 @@
     gap: $spacing-xl;
 
     @include sm {
-      gap: $spacing-m;
+      gap: $spacing-s;
+    }
+
+    @media (max-width: 576px) {
+      gap: 8px;
+
+      * {
+        font-size: 13px;
+      }
+    }
+
+    @include xs {
+      flex: 1;
+      justify-content: center;
+      gap: 10px;
+
+      * {
+        font-size: 12px;
+      }
     }
   }
 
@@ -70,13 +111,42 @@
         color: $brand !important;
       }
     }
+
+    @include sm {
+      * {
+        font-size: 14px;
+      }
+    }
   }
 
   &__icons {
-    width: 132px;
     display: flex;
+    align-items: center;
     justify-content: flex-end;
     gap: 20px;
+
+    @include sm {
+      gap: 12px;
+    }
+
+    @media (max-width: 576px) {
+      gap: 10px;
+
+      svg {
+        width: 24px;
+        height: 24px;
+      }
+    }
+
+    @include xs {
+      gap: 8px;
+      flex-shrink: 0;
+
+      svg {
+        width: 20px;
+        height: 20px;
+      }
+    }
   }
 
   &__icon {
@@ -90,6 +160,13 @@
       svg {
         transform: scale(1.1);
         transition: transform $transition-duration $transition-easing;
+      }
+    }
+
+    @include xs {
+      svg {
+        width: 20px;
+        height: 20px;
       }
     }
   }
@@ -111,5 +188,11 @@
     height: 16px;
     border-radius: 8px;
     @include flex-center;
+
+    @include xs {
+      font-size: 8px;
+      min-width: 14px;
+      height: 14px;
+    }
   }
 }
