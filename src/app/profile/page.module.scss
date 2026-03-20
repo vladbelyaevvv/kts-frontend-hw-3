@@ -18,6 +18,14 @@
     @include sm {
       padding: 0 20px 143px 20px;
     }
+
+    @include xs-sm {
+      padding: 0 15px 100px;
+    }
+
+    @include xs {
+      padding: 0 12px 80px;
+    }
   }
 
   &__loader {
@@ -38,6 +46,16 @@
     max-width: 720px;
     margin-left: auto;
     margin-right: auto;
+
+    @include xs-sm {
+      gap: 16px;
+      padding: 20px;
+    }
+
+    @include xs {
+      gap: 12px;
+      padding: 16px;
+    }
   }
 
   &__avatar {
@@ -50,6 +68,14 @@
     font-weight: 700;
     @include flex-center;
     flex-shrink: 0;
+
+    @include xs-sm {
+      display: none; // Скрываем аватар на xs-sm
+    }
+
+    @include xs {
+      display: none; // Скрываем аватар на xs
+    }
   }
 
   &__header-info {
@@ -67,10 +93,27 @@
   // Секции
   &__section {
     margin-bottom: 32px;
+
+    @include xs-sm {
+      margin-bottom: 24px;
+    }
+
+    @include xs {
+      margin-bottom: 20px;
+    }
   }
 
   &__section-title {
     margin-bottom: 16px;
+
+    @include xs-sm {
+      font-size: 20px;
+    }
+
+    @include xs {
+      font-size: 18px;
+      margin-bottom: 12px;
+    }
   }
 
   // Информация
@@ -78,12 +121,32 @@
     background-color: $card-bg;
     border-radius: $border-radius;
     padding: 0 $spacing-l;
+
+    @include xs-sm {
+      padding: 0 $spacing-m;
+    }
+
+    @include xs {
+      padding: 0 $spacing-s;
+    }
   }
 
   &__field {
     @include flex-center;
     justify-content: space-between;
     padding: $spacing-m 0;
+
+    @include xs-sm {
+      flex-direction: column;
+      gap: $spacing-xxs;
+      text-align: center;
+    }
+
+    @include xs {
+      flex-direction: column;
+      gap: $spacing-xxs;
+      text-align: center;
+    }
   }
 
   // Быстрые ссылки
@@ -106,6 +169,26 @@
 
     &:hover {
       box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.1);
+    }
+
+    @include xs-sm {
+      gap: 12px;
+      padding: 16px 20px;
+
+      .profile-page__action-icon {
+        width: 36px;
+        height: 36px;
+      }
+    }
+
+    @include xs {
+      gap: 12px;
+      padding: 14px 18px;
+
+      .profile-page__action-icon {
+        width: 32px;
+        height: 32px;
+      }
     }
   }
 
@@ -131,6 +214,16 @@
     display: block;
     margin-left: auto;
     margin-right: auto;
+
+    @include xs-sm {
+      padding: 12px;
+      font-size: 14px;
+    }
+
+    @include xs {
+      padding: 12px;
+      font-size: 14px;
+    }
 
     &:hover {
       background-color: #d32f2f !important;
